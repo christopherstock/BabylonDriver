@@ -12,7 +12,7 @@ function Demo() {
 var skybox = function (e) {
     "use strict";
     var t = BABYLON.Mesh.CreateBox("skyBox", 1e3, e), i = new BABYLON.StandardMaterial("skyBox", e);
-    i.backFaceCulling = !1, i.reflectionTexture = new BABYLON.CubeTexture("skybox/skybox", e), i.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE, i.diffuseColor = new BABYLON.Color3(0, 0, 0), i.specularColor = new BABYLON.Color3(0, 0, 0), t.material = i
+    i.backFaceCulling = !1, i.reflectionTexture = new BABYLON.CubeTexture("res/image/skybox/skybox", e), i.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE, i.diffuseColor = new BABYLON.Color3(0, 0, 0), i.specularColor = new BABYLON.Color3(0, 0, 0), t.material = i
 };
 Demo.prototype.loadingMessage = function (e) {
     "use strict";
@@ -96,7 +96,7 @@ Demo.prototype.loadingMessage = function (e) {
     }), this.ground.load()
 }, Demo.prototype.loadCar = function () {
     "use strict";
-    this.ds3 = new Car(this.scene, this.physicsWorld.world, "./ds3/caisse/", "DS3_caisse.babylon", "./ds3/roue/", "DS3_roue.babylon", this.physicsWorld.carBodyMaterial, this.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
+    this.ds3 = new Car(this.scene, this.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", this.physicsWorld.carBodyMaterial, this.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
         scaleFactor: .001,
         invertX: !0,
         bodyMass: 2e3,
