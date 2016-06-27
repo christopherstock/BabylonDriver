@@ -199,14 +199,14 @@ function Ground(e, t, i, s, o, a, n, r) {
         t = "undefined" != typeof t ? t : !1;
         var i = null !== e.material ? e.material.diffuseColor : null;
         if (i) {
-            var s = new BABYLON.ShaderMaterial("", this.scene, "./shaders/cellShading", {
+            var s = new BABYLON.ShaderMaterial("", this.scene, "./res/shader/cellShading", {
                 attributes: ["position", "normal"],
                 uniforms: ["world", "view", "worldViewProjection", "lightMatrix", "light0Pos"]
             });
             s.setTexture("shadowSampler", this.shadowGenerator.getShadowMapForRendering()), s.setVector3("diffuseColor", new BABYLON.Vector3(i.r, i.g, i.b)), s.backFaceCulling = !0, e.material = s, this.buildingsShaderMaterials.push(s)
         }
     }, Ground.prototype._setFlagShader = function (e) {
-        var t = new BABYLON.ShaderMaterial("", this.scene, "./shaders/flag", {
+        var t = new BABYLON.ShaderMaterial("", this.scene, "./res/shader/flag", {
             attributes: ["position", "uv"],
             uniforms: ["worldViewProjection"]
         }), i = new BABYLON.Texture("./pics/flag.png", this.scene);
