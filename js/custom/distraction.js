@@ -74,19 +74,19 @@ Demo.prototype.loadingMessage = function (e) {
 }, Demo.prototype.loadGround = function () {
     "use strict";
     var e = 50;
-    this.ground = new Ground(this.scene, this.physicsWorld.world, "./paris/", "paris_heightmap.babylon", "Ground", 6 * e, this.physicsWorld.groundMaterial, {
-        groundTexture: "./paris/plan.png",
+    this.ground = new Ground(this.scene, this.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, this.physicsWorld.groundMaterial, {
+        groundTexture: "./res/paris/plan.png",
         groundCollisionFilterGroup: this.physicsWorld.GROUP1,
         groundCollisionFilterMask: this.physicsWorld.GROUP2,
         scaleFactor: e,
         buildingBaseHeight: e,
-        solidBuildingsPath: "./paris/",
+        solidBuildingsPath: "./res/paris/",
         solidBuildingsName: "paris_solid_buildings.babylon",
-        buildingsPath: "./paris/",
+        buildingsPath: "./res/paris/",
         buildingsName: "paris_3D_buildings.babylon",
-        treesPath: "./paris/",
+        treesPath: "./res/paris/",
         treesName: "paris_trees.babylon",
-        particlesPath: "./paris/",
+        particlesPath: "./res/paris/",
         particlesName: "paris_particles.babylon",
         buildingCelShading: !0,
         outlineShaderDeltaHeight: .15 * (e / 50),
@@ -108,7 +108,7 @@ Demo.prototype.loadingMessage = function (e) {
     }), this.ds3.load()
 }, Demo.prototype.loadCheckpoints = function () {
     "use strict";
-    this.checkpoints = new Chekpoints(this.scene, this.ds3.getCarMainMesh(), this.ground, "./paris/", "paris_poi.babylon", "./pics/poi.png", 9, 512, {
+    this.checkpoints = new Chekpoints(this.scene, this.ds3.getCarMainMesh(), this.ground, "./res/paris/", "paris_poi.babylon", "./res/image/misc/poi.png", 9, 512, {
         msgCallback: this.loadingMessage.bind(this),
         chekpointsCallback: this.checkpointsStatusUpdate.bind(this),
         onLoadFinished: this.start.bind(this)
