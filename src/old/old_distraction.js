@@ -261,7 +261,19 @@ Demo.prototype.activateCamera = function(e)
 Demo.prototype.registerMoves = function()
 {
     "use strict";
-    window.addEventListener("keydown", this.keydownHandler), window.addEventListener("keyup", this.keyupHandler), this.scene.registerBeforeRender(this.registerBeforeRender)
+    window.addEventListener(
+        "keydown",
+        this.keydownHandler
+    );
+
+    window.addEventListener(
+        "keyup",
+        this.keyupHandler
+    );
+
+    this.scene.registerBeforeRender(
+        this.registerBeforeRender
+    );
 };
 
 Demo.prototype.resetCarPosition = function()
@@ -306,6 +318,7 @@ Demo.prototype.start = function()
     {
         37 === i.keyCode && (e.left = 1), 38 === i.keyCode && (e.forward = 1), 39 === i.keyCode && (e.right = 1), 40 === i.keyCode && (e.back = 1), 16 === i.keyCode && (e.changeDir = 1), 27 === i.keyCode && t.leaveGame(), 32 === i.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
     };
+
     this.keyupHandler = function(t)
     {
         37 === t.keyCode && (e.left = 0), 38 === t.keyCode && (e.forward = 0), 39 === t.keyCode && (e.right = 0), 40 === t.keyCode && (e.back = 0)
@@ -371,5 +384,7 @@ Demo.prototype.start = function()
     this.activateCamera(this.arcCamera);
     this.toggleLoadingMessage();
 
-    $("#menus").toggle()
+    $("#menus").toggle();
+
+    this.startDriving();
 };
