@@ -1,24 +1,18 @@
 
-function Tree( e, t, i, s, o )
+function Tree( e, t, i, s )
 {
     "use strict";
     BABYLON.Mesh.call( this, "tree", s );
     this._init( e );
 
     // colors that don't appear?
-    var n = [ 0.0, 0.0, 0.0 ];
-    var r = [ 0.0, 0.0, 0.0 ];
-
     this.material = new BABYLON.StandardMaterial(
         "mat",
         s
     );
 
-    this.material.diffuseColor = BABYLON.Color3.FromInts(
-        n[ 0 ],
-        n[ 1 ],
-        n[ 2 ]
-    );
+    this.material.diffuseColor = BABYLON.Color3.FromInts( 0, 0, 0 );
+
     this.material.specularColor = BABYLON.Color3.Black();
 
     this.position.y = t + e / 2 - 2;
@@ -27,21 +21,21 @@ function Tree( e, t, i, s, o )
     a.position.y = -e / 2 + 2 - t / 2;
     a.material   = new BABYLON.StandardMaterial( "trunk", s );
 
-    a.material.diffuseColor  = BABYLON.Color3.FromInts(
-        r[0],
-        r[1],
-        r[2]
-    );
+    a.material.diffuseColor  = BABYLON.Color3.FromInts( 0, 0, 0 );
 
     a.material.specularColor = BABYLON.Color3.Black();
+
     a.convertToFlatShadedMesh();
 
     this.trunk = a;
-    void 0 !== o && (o.getShadowMap().renderList.push(this), o.getShadowMap().renderList.push(this.trunk))
+
+    //void 0 !== o && (o.getShadowMap().renderList.push( this ), o.getShadowMap().renderList.push(this.trunk))
 }
 
 Tree.prototype = Object.create(BABYLON.Mesh.prototype);
+
 Tree.prototype.constructor = Tree;
+
 Tree.prototype._init = function ( e )
 {
     "use strict";
@@ -65,6 +59,7 @@ Tree.prototype._init = function ( e )
         var i = Math.random();
         return i * (t - e) + e
     };
+
     n.forEach(
         function (t)
         {

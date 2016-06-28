@@ -209,7 +209,12 @@ function Ground(e, t, i, s, o, a, n, r)
                 var a, n, s = [], o = [];
                 for (a = 0; a < i.length; a++)if (n = i[a], null !== n.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
                     t._moveAndScaleMesh(n);
-                    var r = e(t.minSizeBranch, t.maxSizeBranch), d = e(t.minSizeTrunk, t.maxSizeTrunk), h = e(t.minRadius, t.maxRadius), l = new Tree(r, d, h, t.scene);
+
+                    var r = e(t.minSizeBranch, t.maxSizeBranch);
+                    var d = e(t.minSizeTrunk, t.maxSizeTrunk);
+                    var h = e(t.minRadius, t.maxRadius);
+                    var l = new Tree(r, d, h, t.scene);
+
                     l.scaling = new BABYLON.Vector3(.3, .3, .3), l.scaling.scaleInPlace(t.scaleFactor / 50), l.position.x = n.position.x, l.position.y *= .3, l.position.y += n.position.y, l.position.z = n.position.z, t._createCannonTrunk(l.trunk, n.position), n.dispose(), t.buildingCelShading && (t._addDeltaHeight(l), t._addOutlineMesh(l, !0)), l.computeWorldMatrix(!0), l.trunk.computeWorldMatrix(!0), s.push(l), o.push(l.trunk)
                 } else t._testEmptyMesh(n);
                 if (o.length > 0) {
