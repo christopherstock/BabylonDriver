@@ -42,25 +42,47 @@ Demo.prototype.initUI = function()
     var e = this;
     $("#start_btn").click(function() {
         $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed()), e.activateCamera(e.followCamera), e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60)), e.ds3.update(), e.registerMoves()
-    }), $("#options input").iCheck({
+    });
+
+    $("#options input").iCheck({
         handle: "checkbox",
         checkboxClass: "icheckbox_flat-blue"
-    }), $('#options input[name="shadows"]').iCheck("check"), $('#options input[name="antialias"]').iCheck("uncheck"), $('#options input[name="shadows"]').on("ifChecked", function(t) {
+    });
+
+    $('#options input[name="shadows"]').iCheck("check");
+
+    $('#options input[name="antialias"]').iCheck("uncheck"), $('#options input[name="shadows"]').on("ifChecked", function(t) {
         e.enableShadows()
-    }), $('#options input[name="shadows"]').on("ifUnchecked", function(t) {
+    });
+
+    $('#options input[name="shadows"]').on("ifUnchecked", function(t) {
         e.disableShadows()
-    }), $('#options input[name="antialias"]').on("ifChecked", function(t) {
+    });
+
+    $('#options input[name="antialias"]').on("ifChecked", function(t) {
         e.enablePostProcessPipeline()
-    }), $('#options input[name="antialias"]').on("ifUnchecked", function(t) {
+    });
+
+    $('#options input[name="antialias"]').on("ifUnchecked", function(t) {
         e.disablePostProcessPipeline()
-    }), $("#game_options input").iCheck({
+    });
+
+
+
+
+/*
+    $("#game_options input").iCheck({
         handle: "radio",
         radioClass: "iradio_flat-blue"
-    }), $('#game_options input[value="checkpoints"]').on("ifChecked", function(t) {
-        e.checkpoints.enableSprites(), $("#tdb #tdb_checkpoints").toggle()
-    }), $('#game_options input[value="free_ride"]').on("ifChecked", function(t) {
+    });
+
+    $('#game_options input[value="checkpoints"]').on("ifChecked", function(t) {
+    });
+
+    $('#game_options input[value="free_ride"]').on("ifChecked", function(t) {
         e.checkpoints.disableSprites(), $("#tdb #tdb_checkpoints").toggle()
     })
+*/
 };
 
 Demo.prototype.displayDirection = function(e)
@@ -270,6 +292,15 @@ Demo.prototype.leaveGame = function()
 
 Demo.prototype.start = function()
 {
+
+    // set feature 'checkpoints' on!
+    this.checkpoints.enableSprites();
+    $("#tdb #tdb_checkpoints").toggle();
+
+
+
+
+
     "use strict";
     var e, t, i, s, o, a, n, r, d;
     e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0}, t = this, this.keydownHandler = function(i) {

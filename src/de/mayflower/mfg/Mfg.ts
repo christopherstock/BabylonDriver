@@ -26,10 +26,8 @@
         *****************************************************************************/
         public static main():void
         {
-            MfgDebug.acclaim.log( "Mfg.main() being invoked!" );
-
             //init game engine
-            //MfgInit.init();
+            MfgInit.init();
         }
     }
 

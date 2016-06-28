@@ -27,13 +27,16 @@
         *****************************************************************************/
         public static init()
         {
-            MfgDebug.init.log( "Acclaiming and setting title." );
-
             //acclaim debug console
             MfgDebug.acclaim.log( MfgSettings.TITLE );
 
             //set document title
             document.title = MfgSettings.TITLE;
+
+
+// so long for now
+if ( true ) return;
+
 
             //reference canvas element and fps counter div
             MfgInit.canvas = <HTMLCanvasElement>document.getElementById( "renderCanvas" );
