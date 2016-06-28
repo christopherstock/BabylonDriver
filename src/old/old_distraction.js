@@ -19,11 +19,6 @@ function Demo()
         this.engine = new BABYLON.Engine(this.canvas, !0);
         this.initUI();
         this.createScene();
-
-
-        //apply settings directly!
-
-
     }
 }
 
@@ -54,19 +49,6 @@ Demo.prototype.initUI = function()
     var e = this;
     $("#start_btn").click(function() {
         $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed()), e.activateCamera(e.followCamera), e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60)), e.ds3.update(), e.registerMoves()
-    });
-
-
-    $("#options input").iCheck({
-        handle: "checkbox",
-        checkboxClass: "icheckbox_flat-blue"
-    });
-    $('#options input[name="shadows"]').iCheck("check");
-    $('#options input[name="shadows"]').on("ifChecked", function(t) {
-        e.enableShadows()
-    });
-    $('#options input[name="shadows"]').on("ifUnchecked", function(t) {
-        e.disableShadows()
     });
 };
 
@@ -326,6 +308,7 @@ Demo.prototype.start = function()
 
 
 
+
     n = new FPSMeter(
         {
             graph: 1,
@@ -350,7 +333,7 @@ Demo.prototype.start = function()
         }
     );
 
-
+console.log( "Starting game .." );
 
     d = function()
     {
