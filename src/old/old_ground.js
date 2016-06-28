@@ -18,7 +18,8 @@ function Ground(e, t, i, s, o, a, n, r)
         this.outlineMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         this.outlineMaterial.backFaceCulling = !0;
         this.outlineMeshes = [];
-        Ground.prototype._copyMesh = function (e, t, i)
+
+        Ground.prototype._copyMesh = function( e, t, i )
         {
             var s = new BABYLON.Mesh(t, this.scene, e.parent);
             s.position = new BABYLON.Vector3(e.position.x, e.position.y, e.position.z), s.rotation = new BABYLON.Vector3(e.rotation.x, e.rotation.y, e.rotation.z), s.scaling = new BABYLON.Vector3(e.scaling.x * i.x, e.scaling.y * i.y, e.scaling.z * i.z), s.computeWorldMatrix(!0);
@@ -33,7 +34,7 @@ function Ground(e, t, i, s, o, a, n, r)
             return o.applyToMesh(s), s
         };
 
-        Ground.prototype._addOutlineMesh = function (t, i, s)
+        Ground.prototype._addOutlineMesh = function( t, i, s )
         {
             var o = new BABYLON.Mesh("Outline", this.scene, s);
             o.material = this.outlineMaterial, o.position = t.position, o.rotation = t.rotation, o.scaling = t.scaling, o.computeWorldMatrix(!0);
@@ -44,7 +45,7 @@ function Ground(e, t, i, s, o, a, n, r)
             var r = o.getWorldMatrix().clone();
             r.invert();
             var h, d = t.getVerticesData(BABYLON.VertexBuffer.PositionKind), l = BABYLON.Vector3.Zero();
-            for (h = 0; h < d.length; h += 3) {
+            for ( h = 0; h < d.length; h += 3 ) {
                 BABYLON.Vector3.FromArrayToRef(d, h, l);
                 var c = BABYLON.Vector3.TransformCoordinates(l, n), p = BABYLON.Vector3.TransformCoordinates(l, o.getWorldMatrix());
                 c.x >= 0 ? p.x += .06 * this.scaleFactor / 50 : p.x -= .06 * this.scaleFactor / 50, c.y >= 0 ? p.y += .06 * this.scaleFactor / 50 : p.y -= .06 * this.scaleFactor / 50, c.z >= 0 ? p.z += .06 * this.scaleFactor / 50 : p.z -= .06 * this.scaleFactor / 50;

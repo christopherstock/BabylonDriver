@@ -12,7 +12,19 @@ function PhysicsWorld()
 function Demo()
 {
     "use strict";
-    BABYLON.Engine.isSupported() && (this.canvas = document.getElementById("renderCanvas"), this.message = document.getElementById("message"), this.engine = new BABYLON.Engine(this.canvas, !0), this.initUI(), this.createScene())
+    if ( BABYLON.Engine.isSupported() )
+    {
+        this.canvas = document.getElementById("renderCanvas");
+        this.message = document.getElementById("message");
+        this.engine = new BABYLON.Engine(this.canvas, !0);
+        this.initUI();
+        this.createScene();
+
+
+        //apply settings directly!
+
+
+    }
 }
 
 var skybox = function(e)
@@ -44,45 +56,18 @@ Demo.prototype.initUI = function()
         $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed()), e.activateCamera(e.followCamera), e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60)), e.ds3.update(), e.registerMoves()
     });
 
+
     $("#options input").iCheck({
         handle: "checkbox",
         checkboxClass: "icheckbox_flat-blue"
     });
-
     $('#options input[name="shadows"]').iCheck("check");
-
-    $('#options input[name="antialias"]').iCheck("uncheck"), $('#options input[name="shadows"]').on("ifChecked", function(t) {
+    $('#options input[name="shadows"]').on("ifChecked", function(t) {
         e.enableShadows()
     });
-
     $('#options input[name="shadows"]').on("ifUnchecked", function(t) {
         e.disableShadows()
     });
-
-    $('#options input[name="antialias"]').on("ifChecked", function(t) {
-        e.enablePostProcessPipeline()
-    });
-
-    $('#options input[name="antialias"]').on("ifUnchecked", function(t) {
-        e.disablePostProcessPipeline()
-    });
-
-
-
-
-/*
-    $("#game_options input").iCheck({
-        handle: "radio",
-        radioClass: "iradio_flat-blue"
-    });
-
-    $('#game_options input[value="checkpoints"]').on("ifChecked", function(t) {
-    });
-
-    $('#game_options input[value="free_ride"]').on("ifChecked", function(t) {
-        e.checkpoints.disableSprites(), $("#tdb #tdb_checkpoints").toggle()
-    })
-*/
 };
 
 Demo.prototype.displayDirection = function(e)
@@ -135,7 +120,15 @@ Demo.prototype.updateTimer = function()
 Demo.prototype.createScene = function()
 {
     "use strict";
-    this.physicsWorld = new PhysicsWorld, this.scene = new BABYLON.Scene(this.engine), this.scene.clearColor = new BABYLON.Color3(.8, .8, .8), this.createLights(), this.createShadowGenerator(this.shadowLight), skybox(this.scene), this.loadGround()
+    this.physicsWorld = new PhysicsWorld;
+    this.scene = new BABYLON.Scene(this.engine);
+    this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
+    this.createLights();
+    this.createShadowGenerator(this.shadowLight);
+
+    skybox(this.scene);
+
+    this.loadGround();
 };
 
 Demo.prototype.loadGround = function()
@@ -302,26 +295,81 @@ Demo.prototype.start = function()
 
 
     "use strict";
+
     var e, t, i, s, o, a, n, r, d;
-    e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0}, t = this, this.keydownHandler = function(i) {
+
+    e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0};
+    t = this;
+
+    this.keydownHandler = function(i)
+    {
         37 === i.keyCode && (e.left = 1), 38 === i.keyCode && (e.forward = 1), 39 === i.keyCode && (e.right = 1), 40 === i.keyCode && (e.back = 1), 16 === i.keyCode && (e.changeDir = 1), 27 === i.keyCode && t.leaveGame(), 32 === i.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
-    }, this.keyupHandler = function(t) {
+    };
+    this.keyupHandler = function(t)
+    {
         37 === t.keyCode && (e.left = 0), 38 === t.keyCode && (e.forward = 0), 39 === t.keyCode && (e.right = 0), 40 === t.keyCode && (e.back = 0)
-    }, i = this.ds3, s = this.scene, o = this.physicsWorld, a = this.ground, this.registerBeforeRender = function() {
+    };
+
+    i = this.ds3;
+    s = this.scene;
+    o = this.physicsWorld;
+    a = this.ground;
+
+    this.registerBeforeRender = function()
+    {
         s.isReady() && (i.moves(e.forward, e.back, e.left, e.right, e.changeDir), 1 === e.changeDir && (t.displayDirection(i.getDirection()), e.changeDir = 0), o.world.step(o.timeStep), i.getAltitude() < 47 && t.resetCarPosition(), a.updateShaders(s.activeCamera.position), i.update(), t.updateTdB(), t.checkpoints.isEnabled() && t.updateTimer())
-    }, this.createPostProcessPipeline(), n = new FPSMeter({
-        graph: 1,
-        decimals: 0,
-        position: "absolute",
-        zIndex: 10,
-        right: "5px",
-        top: "auto",
-        left: "auto",
-        bottom: "5px",
-        margin: "0 0 0 0"
-    }), r = this.engine, window.addEventListener("resize", function() {
-        r.resize()
-    }), d = function() {
-        n.tickStart(), r.beginFrame(), s.render(), r.endFrame(), n.tick(), BABYLON.Tools.QueueNewFrame(d)
-    }, BABYLON.Tools.QueueNewFrame(d), this.arcCamera = this.createArcCamera(), this.followCamera = this.ds3.createFollowCamera(), this.activateCamera(this.arcCamera), this.toggleLoadingMessage(), $("#menus").toggle()
+    };
+
+    this.createPostProcessPipeline();
+
+    this.enablePostProcessPipeline();
+
+
+
+    n = new FPSMeter(
+        {
+            graph: 1,
+            decimals: 0,
+            position: "absolute",
+            zIndex: 10,
+            right: "5px",
+            top: "auto",
+            left: "auto",
+            bottom: "5px",
+            margin: "0 0 0 0"
+        }
+    );
+
+    r = this.engine;
+
+    window.addEventListener(
+        "resize",
+        function()
+        {
+            r.resize()
+        }
+    );
+
+
+
+    d = function()
+    {
+        n.tickStart();
+        r.beginFrame();
+        s.render();
+        r.endFrame();
+        n.tick();
+
+        BABYLON.Tools.QueueNewFrame( d )
+    };
+
+    BABYLON.Tools.QueueNewFrame(d);
+
+    this.arcCamera = this.createArcCamera();
+    this.followCamera = this.ds3.createFollowCamera();
+
+    this.activateCamera(this.arcCamera);
+    this.toggleLoadingMessage();
+
+    $("#menus").toggle()
 };
