@@ -34,8 +34,13 @@
             document.title = MfgSettings.TITLE;
 
 
+
+
+
+
 // so long for now
 if ( true ) return;
+
 
 
             //reference canvas element and fps counter div

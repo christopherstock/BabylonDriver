@@ -9,6 +9,8 @@
 /// <reference path="src_lib/de/mayflower/lib/util/LibVersion.ts" />
 
 /// <reference path="src/de/mayflower/mfg/Mfg.ts" />
+/// <reference path="src/de/mayflower/mfg/MfgWorld.ts" />
+
 /// <reference path="src/de/mayflower/mfg/base/MfgDebug.ts" />
 /// <reference path="src/de/mayflower/mfg/base/MfgSettings.ts" />
 /// <reference path="src/de/mayflower/mfg/base/MfgSettingsDebug.ts" />

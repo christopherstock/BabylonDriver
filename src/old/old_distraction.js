@@ -2,11 +2,21 @@
 function PhysicsWorld()
 {
     "use strict";
-    this.world = new CANNON.World, this.world.solver.iterations = 10, this.world.gravity.set(0, 0, -9.82), this.world.broadphase = new CANNON.NaiveBroadphase, this.worldstep = 2, this.timeStep = 1 / 60, this.GROUP1 = 1, this.GROUP2 = 2, this.groundMaterial = new CANNON.Material("groundMaterial"), this.carBodyMaterial = new CANNON.Material("carBodyMaterial"), this.bodyGroundContactMaterial = new CANNON.ContactMaterial(this.groundMaterial, this.carBodyMaterial, {
+    this.world = new CANNON.World;
+    this.world.solver.iterations = 10;
+    this.world.gravity.set( 0, 0, -9.82 );
+    this.world.broadphase = new CANNON.NaiveBroadphase;
+    this.worldstep = 2;
+    this.timeStep = 1 / 60;
+    this.GROUP1 = 1;
+    this.GROUP2 = 2;
+    this.groundMaterial  = new CANNON.Material("groundMaterial");
+    this.carBodyMaterial = new CANNON.Material("carBodyMaterial");
+    this.bodyGroundContactMaterial = new CANNON.ContactMaterial( this.groundMaterial, this.carBodyMaterial, {
         friction: .01,
         restitution: 0
     });
-    this.world.addContactMaterial(this.bodyGroundContactMaterial);
+    this.world.addContactMaterial( this.bodyGroundContactMaterial );
 }
 
 function Demo()
@@ -120,8 +130,8 @@ Demo.prototype.updateTimer = function()
 
 Demo.prototype.createScene = function()
 {
-    "use strict";
-    this.physicsWorld = new PhysicsWorld;
+    MfgWorld.physicsWorld = new PhysicsWorld();
+
     this.scene = new BABYLON.Scene(this.engine);
     this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
     this.createLights();
@@ -136,10 +146,10 @@ Demo.prototype.loadGround = function()
 {
     "use strict";
     var e = 50;
-    this.ground = new Ground(this.scene, this.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, this.physicsWorld.groundMaterial, {
+    this.ground = new Ground(this.scene, MfgWorld.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.physicsWorld.groundMaterial, {
         groundTexture: "./res/paris/plan.png",
-        groundCollisionFilterGroup: this.physicsWorld.GROUP1,
-        groundCollisionFilterMask: this.physicsWorld.GROUP2,
+        groundCollisionFilterGroup: MfgWorld.physicsWorld.GROUP1,
+        groundCollisionFilterMask:  MfgWorld.physicsWorld.GROUP2,
         scaleFactor: e,
         buildingBaseHeight: e,
         solidBuildingsPath: "./res/paris/",
@@ -162,12 +172,12 @@ Demo.prototype.loadGround = function()
 Demo.prototype.loadCar = function()
 {
     "use strict";
-    this.ds3 = new Car(this.scene, this.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", this.physicsWorld.carBodyMaterial, this.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
+    this.ds3 = new Car(this.scene, MfgWorld.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.physicsWorld.carBodyMaterial, MfgWorld.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
         scaleFactor: .001,
         invertX: !0,
         bodyMass: 2e3,
-        bodyCollisionFilterGroup: this.physicsWorld.GROUP2,
-        bodyCollisionFilterMask: this.physicsWorld.GROUP1,
+        bodyCollisionFilterGroup: MfgWorld.physicsWorld.GROUP2,
+        bodyCollisionFilterMask:  MfgWorld.physicsWorld.GROUP1,
         shadowGenerator: this.shadowGenerator,
         msgCallback: this.loadingMessage.bind(this),
         onLoadSuccess: this.loadCheckpoints.bind(this)
@@ -326,7 +336,7 @@ Demo.prototype.start = function()
 
     i = this.ds3;
     s = this.scene;
-    o = this.physicsWorld;
+    o = MfgWorld.physicsWorld;
     a = this.ground;
 
     this.registerBeforeRender = function()
