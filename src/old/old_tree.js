@@ -4,26 +4,16 @@ function Tree( e, t, i, s, o )
     "use strict";
     BABYLON.Mesh.call( this, "tree", s );
     this._init( e );
-    var n = randomColor(
-        {
-            hue:        "green",
-            luminosity: "bright",
-            format:     "rgbArray"
-        }
-    );
 
-    var r = randomColor(
-        {
-            hue:        "orange",
-            luminosity: "dark",
-            format:     "rgbArray"
-        }
-    );
+    // colors that don't appear?
+    var n = [ 0.0, 0.0, 0.0 ];
+    var r = [ 0.0, 0.0, 0.0 ];
 
     this.material = new BABYLON.StandardMaterial(
         "mat",
         s
     );
+
     this.material.diffuseColor = BABYLON.Color3.FromInts(
         n[ 0 ],
         n[ 1 ],
@@ -36,7 +26,13 @@ function Tree( e, t, i, s, o )
     a.parent     = this;
     a.position.y = -e / 2 + 2 - t / 2;
     a.material   = new BABYLON.StandardMaterial( "trunk", s );
-    a.material.diffuseColor  = BABYLON.Color3.FromInts(r[0], r[1], r[2]);
+
+    a.material.diffuseColor  = BABYLON.Color3.FromInts(
+        r[0],
+        r[1],
+        r[2]
+    );
+
     a.material.specularColor = BABYLON.Color3.Black();
     a.convertToFlatShadedMesh();
 
