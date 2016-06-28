@@ -47,9 +47,28 @@ Demo.prototype.initUI = function()
 {
     "use strict";
     var e = this;
-    $("#start_btn").click(function() {
-        $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed()), e.activateCamera(e.followCamera), e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60)), e.ds3.update(), e.registerMoves()
-    });
+    $("#start_btn").click(
+        function()
+        {
+            e.startDriving();
+        }
+    );
+};
+
+Demo.prototype.startDriving = function()
+{
+    var e = this;
+
+    $("#title_bar").toggle();
+    $("#tdb_back").toggle();
+    $("#tdb").toggle();
+
+    e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed());
+    e.activateCamera(e.followCamera);
+    e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60));
+
+    e.ds3.update();
+    e.registerMoves();
 };
 
 Demo.prototype.displayDirection = function(e)
@@ -332,8 +351,6 @@ Demo.prototype.start = function()
             r.resize()
         }
     );
-
-console.log( "Starting game .." );
 
     d = function()
     {
