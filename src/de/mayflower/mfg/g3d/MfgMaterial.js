@@ -49,5 +49,5 @@ var MfgMaterial = (function () {
     MfgMaterial.materialGrass = null;
     MfgMaterial.materialGlass = null;
     return MfgMaterial;
-})();
+}());
 //# sourceMappingURL=MfgMaterial.js.map

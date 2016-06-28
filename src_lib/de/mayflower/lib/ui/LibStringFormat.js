@@ -33,5 +33,5 @@ var LibStringFormat = (function () {
         return (day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second);
     };
     return LibStringFormat;
-})();
+}());
 //# sourceMappingURL=LibStringFormat.js.map

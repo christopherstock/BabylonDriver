@@ -31,5 +31,5 @@ var MfgScene = (function () {
     };
     MfgScene.scene = null;
     return MfgScene;
-})();
+}());
 //# sourceMappingURL=MfgScene.js.map

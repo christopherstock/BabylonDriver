@@ -8,5 +8,5 @@ var MfgKey = (function () {
     function MfgKey() {
     }
     return MfgKey;
-})();
+}());
 //# sourceMappingURL=MfgKey.js.map

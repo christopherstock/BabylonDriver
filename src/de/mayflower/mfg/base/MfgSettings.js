@@ -38,5 +38,5 @@ var MfgSettings = (function () {
     /** The player's speed for centering the up/down view aim in degrees per tick. */
     MfgSettings.PLAYER_SPEED_CENTER_VIEW_AIM = 5.0;
     return MfgSettings;
-})();
+}());
 //# sourceMappingURL=MfgSettings.js.map

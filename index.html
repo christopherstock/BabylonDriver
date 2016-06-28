@@ -3,23 +3,6 @@
 <!-- Welcome to the Babylon.js driving game -->
 <html>
 
-    <!--
-
-        TODO ASAP   Refactor JS sources to TypeScript.
-        TODO ASAP   Import own TypeScript (BabylonJS) library.
-        TODO HIGH   Remove unused startup / intro / hud control.
-        TODO HIGH   Cleanup index.html html code.
-        TODO INIT   Checkout .babylon 3d format?
-        TODO INIT   Own car(s)?
-        TODO INIT   Own driving physics?
-        TODO INIT   Own level data?
-        TODO WEAK   Remove unused libs?
-
-        DONE        Refactored and tidied all files and resources in file system.
-        DONE        Removed all unused components.
-
-    -->
-
     <!-- head section contains all meta information -->
     <head lang="en">
 
@@ -50,16 +33,40 @@
         <script type="text/javascript" src="lib/js/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="lib/js/icheck-1.0.2.min.js"></script>
 
+        <!-- specify TypeScript generated lib classes -->
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/math/LibMath.js"></script>
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/ui/LibStringFormat.js"></script>
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/ui/LibUI.js"></script>
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/ui/LibString.js"></script>
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/util/LibDebug.js"></script>
+        <script type="text/javascript" src="src_lib/de/mayflower/lib/util/LibVersion.js"></script>
+
+        <!-- specify TypeScript generated project classes -->
+        <script type="text/javascript" src="src/de/mayflower/mfg/base/MfgVersion.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/base/MfgSettingsDebug.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/base/MfgSettings.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/base/MfgDebug.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/base/MfgInit.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/game/MfgGame.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/game/MfgCamera.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/game/level/MfgLevel.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/game/level/MfgLevelBunny.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/game/level/MfgLevelFirstPerson.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/hid/MfgKey.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/hid/MfgPointer.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/g3d/MfgSceneFactory.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/g3d/MfgMaterial.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/g3d/MfgSprite.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/g3d/MfgScene.js"></script>
+        <script type="text/javascript" src="src/de/mayflower/mfg/Mfg.js"></script>
+
         <!-- specify custom (OLD) js -->
-        <script type="text/javascript" src="src/old/randomColor.js"></script>
-        <script type="text/javascript" src="src/old/tree.js"></script>
-        <script type="text/javascript" src="src/old/car.js"></script>
-        <script type="text/javascript" src="src/old/ground.js"></script>
-        <script type="text/javascript" src="src/old/chekpoints.js"></script>
-        <script type="text/javascript" src="src/old/distraction.js"></script>
-
-        <!-- specify TypeScript generated js -->
-
+        <script type="text/javascript" src="src/old/old_randomColor.js"></script>
+        <script type="text/javascript" src="src/old/old_tree.js"></script>
+        <script type="text/javascript" src="src/old/old_car.js"></script>
+        <script type="text/javascript" src="src/old/old_ground.js"></script>
+        <script type="text/javascript" src="src/old/old_chekpoints.js"></script>
+        <script type="text/javascript" src="src/old/old_distraction.js"></script>
 
     </head>
 

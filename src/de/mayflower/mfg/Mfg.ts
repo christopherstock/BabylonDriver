@@ -2,8 +2,19 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO ASAP   Create simple test level.
-    *   TODO ASAP   Create abstract level system.
+    *   TODO ASAP   Remove/Refactor JS function randomColor?
+    *   TODO ASAP   Refactor JS sources to TypeScript.
+    *   TODO ASAP   Import own TypeScript (BabylonJS) library.
+    *   TODO HIGH   Remove unused startup / intro / hud control.
+    *   TODO HIGH   Cleanup index.html html code.
+    *   TODO INIT   Checkout .babylon 3d format?
+    *   TODO INIT   Own car(s)?
+    *   TODO INIT   Own driving physics?
+    *   TODO INIT   Own level data?
+    *   TODO WEAK   Remove unused libs?
+    *
+    *   DONE        Refactored and tidied all files and resources in file system.
+    *   DONE        Removed all unused components.
     *
     *   @author     Christopher Stock
     *   @version    0.0.1
@@ -15,8 +26,10 @@
         *****************************************************************************/
         public static main():void
         {
+            MfgDebug.acclaim.log( "Mfg.main() being invoked!" );
+
             //init game engine
-            MfgInit.init();
+            //MfgInit.init();
         }
     }
 

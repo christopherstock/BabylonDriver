@@ -12,5 +12,5 @@ var LibUI = (function () {
     /** The RGB statement representing the color 'mayflower orange'. */
     LibUI.COLOR_ORANGE_MAYFLOWER = new BABYLON.Color3(0.92, 0.45, 0.01);
     return LibUI;
-})();
+}());
 //# sourceMappingURL=LibUI.js.map

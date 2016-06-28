@@ -14,5 +14,5 @@ var MfgDebugSettings = (function () {
     /** Disables all sounds. */
     MfgDebugSettings.DEBUG_DISABLE_SOUNDS = true;
     return MfgDebugSettings;
-})();
+}());
 //# sourceMappingURL=MfgSettingsDebug.js.map

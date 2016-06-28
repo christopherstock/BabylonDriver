@@ -28,5 +28,5 @@ var MfgGame = (function () {
     };
     MfgGame.currentLevel = null;
     return MfgGame;
-})();
+}());
 //# sourceMappingURL=MfgGame.js.map

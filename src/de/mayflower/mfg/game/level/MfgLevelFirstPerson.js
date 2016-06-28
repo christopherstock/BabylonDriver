@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*****************************************************************************
 *   Specifies the 'first person' level.
@@ -38,5 +37,5 @@ var MfgLevelFirstPerson = (function (_super) {
         MfgSceneFactory.createBox("Ground1", new BABYLON.Vector3(0.0, 0.0, 0.0), 10.0, 0.5, 10.0, new BABYLON.Vector3(0.0, 0.0, 0.0), 0.0, MfgMaterial.materialTest1, MfgScene.scene);
     };
     return MfgLevelFirstPerson;
-})(MfgLevel);
+}(MfgLevel));
 //# sourceMappingURL=MfgLevelFirstPerson.js.map

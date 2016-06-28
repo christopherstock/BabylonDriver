@@ -18,5 +18,5 @@ var LibMath = (function () {
         return Math.floor((Math.random() * (to - from)) + from);
     };
     return LibMath;
-})();
+}());
 //# sourceMappingURL=LibMath.js.map

@@ -11,5 +11,5 @@ var MfgLevel = (function () {
         MfgScene.scene.gravity = new BABYLON.Vector3(0, MfgSettings.GRAVITY, 0);
     }
     return MfgLevel;
-})();
+}());
 //# sourceMappingURL=MfgLevel.js.map

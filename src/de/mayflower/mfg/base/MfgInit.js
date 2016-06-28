@@ -45,8 +45,7 @@ var MfgInit = (function () {
         MfgScene.scene.enablePhysics(null, new BABYLON.OimoJSPlugin());
         //setup the level
         MfgDebug.init.log("Setup the level");
-        //MfgGame.currentLevel = new MfgLevelFirstPerson();
-        MfgGame.currentLevel = new MfgLevelBunny();
+        MfgGame.currentLevel = new MfgLevelFirstPerson();
     };
     /*****************************************************************************
     *   Being invoked when all items are initialized and loaded.
@@ -68,5 +67,5 @@ var MfgInit = (function () {
     *****************************************************************************/
     MfgInit.engine = null;
     return MfgInit;
-})();
+}());
 //# sourceMappingURL=MfgInit.js.map

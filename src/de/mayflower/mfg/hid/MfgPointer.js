@@ -15,5 +15,5 @@ var MfgPointer = (function () {
         }
     };
     return MfgPointer;
-})();
+}());
 //# sourceMappingURL=MfgPointer.js.map

@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*****************************************************************************
 *   Specifies the 'bunny' level.
@@ -123,9 +122,7 @@ var MfgLevelBunny = (function (_super) {
             { mesh: part0, impostor: BABYLON.PhysicsEngine.BoxImpostor },
             { mesh: part1, impostor: BABYLON.PhysicsEngine.BoxImpostor },
         ], {
-            mass: 2,
-            friction: 0.4,
-            restitution: 0.3
+            mass: 2, friction: 0.4, restitution: 0.3
         });
     };
     /*****************************************************************************
@@ -206,12 +203,12 @@ var MfgLevelBunny = (function (_super) {
             //transform the rabbit
             rabbit.position.y -= 4.0;
             rabbit.position.z += 60.0;
-            rabbit.rotate(new BABYLON.Vector3(0.0, 1.0, 0.0), 135.0, 0 /* LOCAL */);
+            rabbit.rotate(new BABYLON.Vector3(0.0, 1.0, 0.0), 135.0, BABYLON.Space.LOCAL);
             //rabbit.checkCollisions = true;
             MfgInit.onInitCompleted();
         });
     };
     MfgLevelBunny.SPHERES_TO_SPAWN = 250;
     return MfgLevelBunny;
-})(MfgLevel);
+}(MfgLevel));
 //# sourceMappingURL=MfgLevelBunny.js.map

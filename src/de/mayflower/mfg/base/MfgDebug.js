@@ -27,5 +27,5 @@ var MfgDebug = (function () {
     /** The debug group for the 3ds max .ase file parser. */
     MfgDebug.res3ds = new LibDebug(false && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG);
     return MfgDebug;
-})();
+}());
 //# sourceMappingURL=MfgDebug.js.map

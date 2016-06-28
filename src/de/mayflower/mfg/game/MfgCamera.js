@@ -23,5 +23,5 @@ var MfgCamera = (function () {
     };
     MfgCamera.camera = null;
     return MfgCamera;
-})();
+}());
 //# sourceMappingURL=MfgCamera.js.map

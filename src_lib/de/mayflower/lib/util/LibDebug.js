@@ -27,5 +27,5 @@ var LibDebug = (function () {
         }
     };
     return LibDebug;
-})();
+}());
 //# sourceMappingURL=LibDebug.js.map

@@ -26,5 +26,5 @@ var LibString = (function () {
         return ret;
     };
     return LibString;
-})();
+}());
 //# sourceMappingURL=LibString.js.map

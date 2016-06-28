@@ -36,5 +36,5 @@ var LibVersion = (function () {
         return ("v. " + this.version + ", " + this.date);
     };
     return LibVersion;
-})();
+}());
 //# sourceMappingURL=LibVersion.js.map

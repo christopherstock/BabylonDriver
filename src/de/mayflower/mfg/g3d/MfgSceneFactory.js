@@ -47,7 +47,7 @@ var MfgSceneFactory = (function () {
         ground.checkCollisions = true;
         ground.material = material;
         ground.receiveShadows = true;
-        ground.rotate(rotationAxis, rotationAmount, 1 /* WORLD */);
+        ground.rotate(rotationAxis, rotationAmount, BABYLON.Space.WORLD);
         ground.setPhysicsState(BABYLON.PhysicsEngine.BoxImpostor, {
             mass: 0,
             friction: 0.5,
@@ -56,5 +56,5 @@ var MfgSceneFactory = (function () {
         return ground;
     };
     return MfgSceneFactory;
-})();
+}());
 //# sourceMappingURL=MfgSceneFactory.js.map

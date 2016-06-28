@@ -15,5 +15,5 @@ var MfgSprite = (function () {
     };
     MfgSprite.spriteManager = null;
     return MfgSprite;
-})();
+}());
 //# sourceMappingURL=MfgSprite.js.map
