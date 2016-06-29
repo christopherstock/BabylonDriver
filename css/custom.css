@@ -1,4 +1,5 @@
-#canvasZone, #renderCanvas, body, html {
+
+#canvasZone, #driverCanvas, body, html {
     width: 100%;
     height: 100%
 }
@@ -45,7 +46,7 @@ body, html {
     top: 00px
 }
 
-#renderCanvas {
+#driverCanvas {
     touch-action: none
 }
 

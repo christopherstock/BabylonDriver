@@ -44,7 +44,7 @@ if ( true ) return;
 
 
             //reference canvas element and fps counter div
-            MfgInit.canvas = <HTMLCanvasElement>document.getElementById( "renderCanvas" );
+            MfgInit.canvas = <HTMLCanvasElement>document.getElementById( "driverCanvas" );
             MfgInit.divFps = <HTMLDivElement>   document.getElementById( "fps"          );
 
             //setup canvas size

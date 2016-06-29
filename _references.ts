@@ -1,5 +1,6 @@
 
 /// <reference path="lib/ts/babylon.2.2.d.ts" />
+/// <reference path="lib/ts/cannon.0.6.2.d.ts" />
 
 /// <reference path="src_lib/de/mayflower/lib/math/LibMath.ts" />
 /// <reference path="src_lib/de/mayflower/lib/ui/LibStringFormat.ts" />
@@ -10,6 +11,7 @@
 
 /// <reference path="src/de/mayflower/mfg/Mfg.ts" />
 /// <reference path="src/de/mayflower/mfg/MfgWorld.ts" />
+/// <reference path="src/de/mayflower/mfg/MfgSkyBox.ts" />
 
 /// <reference path="src/de/mayflower/mfg/base/MfgDebug.ts" />
 /// <reference path="src/de/mayflower/mfg/base/MfgSettings.ts" />

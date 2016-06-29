@@ -1,46 +1,30 @@
 
-function PhysicsWorld()
-{
-    this.world = new CANNON.World;
-    this.world.solver.iterations = 10;
-    this.world.gravity.set( 0, 0, -9.82 );
-    this.world.broadphase = new CANNON.NaiveBroadphase;
-
-    this.worldstep = 2;
-    this.timeStep = 1 / 60;
-    this.GROUP1 = 1;
-    this.GROUP2 = 2;
-    this.groundMaterial  = new CANNON.Material("groundMaterial");
-    this.carBodyMaterial = new CANNON.Material("carBodyMaterial");
-    this.bodyGroundContactMaterial = new CANNON.ContactMaterial(
-        this.groundMaterial,
-        this.carBodyMaterial,
-        {
-            friction:    .01,
-            restitution: 0
-        }
-    );
-    this.world.addContactMaterial( this.bodyGroundContactMaterial );
-}
-
 function Demo()
 {
     "use strict";
     if ( BABYLON.Engine.isSupported() )
     {
-        this.canvas = document.getElementById("renderCanvas");
+        this.canvas = document.getElementById("driverCanvas");
         this.message = document.getElementById("message");
-        this.engine = new BABYLON.Engine(this.canvas, !0);
+        this.engine = new BABYLON.Engine( this.canvas, !0 );
+
         this.initUI();
         this.createScene();
     }
 }
 
-var skybox = function(e)
+var skybox = function( e )
 {
-    "use strict";
-    var t = BABYLON.Mesh.CreateBox("skyBox", 1e3, e), i = new BABYLON.StandardMaterial("skyBox", e);
-    i.backFaceCulling = !1, i.reflectionTexture = new BABYLON.CubeTexture("res/image/skybox/skybox", e), i.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE, i.diffuseColor = new BABYLON.Color3(0, 0, 0), i.specularColor = new BABYLON.Color3(0, 0, 0), t.material = i
+    var t = BABYLON.Mesh.CreateBox( "skyBox", 1e3, e);
+    var i = new BABYLON.StandardMaterial( "skyBox", e );
+
+    i.backFaceCulling                   = !1;
+    i.reflectionTexture                 = new BABYLON.CubeTexture( "res/image/skybox/skybox", e );
+    i.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    i.diffuseColor                      = new BABYLON.Color3( 0, 0, 0 );
+    i.specularColor                     = new BABYLON.Color3( 0, 0, 0 );
+
+    t.material = i;
 };
 
 Demo.prototype.loadingMessage = function(e)
@@ -134,14 +118,14 @@ Demo.prototype.updateTimer = function()
 
 Demo.prototype.createScene = function()
 {
-    MfgWorld.physicsWorld = new PhysicsWorld();
+    MfgWorld.physicsWorld = new MfgWorld();
 
     this.scene = new BABYLON.Scene(this.engine);
     this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
     this.createLights();
     this.createShadowGenerator(this.shadowLight);
 
-    skybox(this.scene);
+    MfgSkyBox.skyBox = skybox( this.scene );
 
     this.loadGround();
 };
