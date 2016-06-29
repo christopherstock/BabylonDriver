@@ -7,10 +7,55 @@
     ************************************************************************************/
     class MfgCar
     {
+        public              scene                           :BABYLON.Scene                  = null;
+
+        public              world                           :any                            = null;
+        public              bodyMeshPath                    :any                            = null;
+        public              bodyMeshName                    :any                            = null;
+        public              wheelMeshPath                   :any                            = null;
+        public              wheelMeshName                   :any                            = null;
+        public              bodyMaterial                    :any                            = null;
+        public              wheelMaterial                   :any                            = null;
+        public              wheel_rl_position               :any                            = null;
+        public              wheel_rr_position               :any                            = null;
+        public              wheel_fl_position               :any                            = null;
+        public              wheel_fr_position               :any                            = null;
+        public              wheelsOptions                   :any                            = null;
+        public              lenk                            :any                            = null;
+        public              dyn                             :any                            = null;
+        public              direction                       :any                            = null;
+        public              scaleFactor                     :any                            = null;
+        public              shadowGenerator                 :any                            = null;
+        public              bodyMass                        :any                            = null;
+        public              firstPos                        :any                            = null;
+        public              bodyCollisionFilterGroup        :any                            = null;
+        public              bodyCollisionFilterMask         :any                            = null;
+        public              msgCallback                     :any                            = null;
+        public              onLoadSuccess                   :any                            = null;
+        public              scale                           :any                            = null;
+        public              b_bodyRoot                      :any                            = null;
+        public              approxBox                       :any                            = null;
+        public              c_bodyRoot                      :any                            = null;
+        public              b_wheels                        :any                            = null;
+        public              vehicle                         :any                            = null;
+
         public constructor( e, t, i, s, o, n, h, a, r, l, c, d, p )
         {
-            "use strict";
-            p = p || {}, this.scene = e, this.world = t, this.bodyMeshPath = i, this.bodyMeshName = s, this.wheelMeshPath = o, this.wheelMeshName = n, this.bodyMaterial = h, this.wheelMaterial = a, this.wheel_rl_position = r, this.wheel_rr_position = l, this.wheel_fl_position = c, this.wheel_fr_position = d, this.wheelsOptions = {
+            p = p || {};
+
+            this.scene = e;
+            this.world = t;
+            this.bodyMeshPath = i;
+            this.bodyMeshName = s;
+            this.wheelMeshPath = o;
+            this.wheelMeshName = n;
+            this.bodyMaterial = h;
+            this.wheelMaterial = a;
+            this.wheel_rl_position = r;
+            this.wheel_rr_position = l;
+            this.wheel_fl_position = c;
+            this.wheel_fr_position = d;
+            this.wheelsOptions = {
                 directionLocal: new CANNON.Vec3(0, 0, -1),
                 suspensionStiffness: 30,
                 suspensionRestLength: .1,
@@ -24,10 +69,21 @@
                 maxSuspensionTravel: .3,
                 customSlidingRotationalSpeed: -30,
                 useCustomSlidingRotationalSpeed: !0
-            }, this.lenk = 0, this.dyn = 0, this.direction = 1, this.scaleFactor = "number" == typeof p.scaleFactor ? p.scaleFactor : 1;
+            };
+            this.lenk = 0;
+            this.dyn = 0;
+            this.direction = 1;
+            this.scaleFactor = "number" == typeof p.scaleFactor ? p.scaleFactor : 1;
 
             var u = "boolean" == typeof p.invertX ? p.invertX : !1;
-            u ? this.scale = new BABYLON.Vector3(-this.scaleFactor, this.scaleFactor, this.scaleFactor) : this.scale = new BABYLON.Vector3(this.scaleFactor, this.scaleFactor, this.scaleFactor), this.shadowGenerator = "object" == typeof p.shadowGenerator ? p.shadowGenerator : null, this.bodyMass = "number" == typeof p.bodyMass ? p.bodyMass : 0, this.firstPos = "CANNON.Vec3" == typeof p.firstPos ? p.firstPos : new CANNON.Vec3(0, 0, 0), this.bodyCollisionFilterGroup = "number" == typeof p.bodyCollisionFilterGroup ? p.bodyCollisionFilterGroup : 0, this.bodyCollisionFilterMask = "number" == typeof p.bodyCollisionFilterMask ? p.bodyCollisionFilterMask : 0, this.msgCallback = "function" == typeof p.msgCallback ? p.msgCallback : null, this.onLoadSuccess = "function" == typeof p.onLoadSuccess ? p.onLoadSuccess : null
+            u ? this.scale = new BABYLON.Vector3(-this.scaleFactor, this.scaleFactor, this.scaleFactor) : this.scale = new BABYLON.Vector3(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+            this.shadowGenerator = "object" == typeof p.shadowGenerator ? p.shadowGenerator : null;
+            this.bodyMass = "number" == typeof p.bodyMass ? p.bodyMass : 0;
+            this.firstPos = "CANNON.Vec3" == typeof p.firstPos ? p.firstPos : new CANNON.Vec3(0, 0, 0);
+            this.bodyCollisionFilterGroup = "number" == typeof p.bodyCollisionFilterGroup ? p.bodyCollisionFilterGroup : 0;
+            this.bodyCollisionFilterMask = "number" == typeof p.bodyCollisionFilterMask ? p.bodyCollisionFilterMask : 0;
+            this.msgCallback = "function" == typeof p.msgCallback ? p.msgCallback : null;
+            this.onLoadSuccess = "function" == typeof p.onLoadSuccess ? p.onLoadSuccess : null;
         }
 
         public _babylon_addBody(e)

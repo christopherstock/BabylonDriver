@@ -3,14 +3,14 @@
     *   The main class contains the application's points of entry and termination.
     *
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
-    *   TODO ASAP   Refactor ALL JS sources to TypeScript.
-    *   TODO HIGH   Cleanup index.html html code.
     *   TODO INIT   Checkout .babylon 3d format?
     *   TODO INIT   Own car(s)?
     *   TODO INIT   Own driving physics?
     *   TODO INIT   Own level data?
-    *   TODO WEAK   Remove unused libs?
     *
+    *   DONE        Removed all unused libs.
+    *   DONE        Cleaned up index.html html code.
+    *   DONE        Refactored ALL JS sources to TypeScript.
     *   DONE        Removed JS function randomColor.
     *   DONE        Imported own TypeScript (BabylonJS) library.
     *   DONE        Refactored and tidied all files and resources in file system.
