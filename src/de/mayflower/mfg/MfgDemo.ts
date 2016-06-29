@@ -13,7 +13,7 @@
         public                      checkpoints             :Chekpoints                     = null;
         public                      arcCamera               :any                            = null;
         public                      followCamera            :any                            = null;
-        public                      ds3                     :Car                            = null;
+        public                      ds3                     :MfgCar                         = null;
         public                      failed                  :number                         = null;
         public                      timer                   :number                         = null;
         public                      scene                   :BABYLON.Scene                  = null;
@@ -174,7 +174,7 @@
         public loadCar()
         {
             "use strict";
-            this.ds3 = new Car(this.scene, MfgWorld.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.physicsWorld.carBodyMaterial, MfgWorld.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
+            this.ds3 = new MfgCar(this.scene, MfgWorld.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.physicsWorld.carBodyMaterial, MfgWorld.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
                 scaleFactor: .001,
                 invertX: !0,
                 bodyMass: 2e3,
