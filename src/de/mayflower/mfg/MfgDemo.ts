@@ -19,7 +19,7 @@
         public                      scene                   :BABYLON.Scene                  = null;
         public                      shadowLight             :BABYLON.Light                  = null;
         public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
-        public                      ground                  :Ground                         = null;
+        public                      ground                  :MfgGround                         = null;
         public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
         public                      keyupHandler            :any                            = null;
         public                      keydownHandler          :any                            = null;
@@ -148,7 +148,7 @@
         {
             "use strict";
             var e = 50;
-            this.ground = new Ground(this.scene, MfgWorld.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.physicsWorld.groundMaterial, {
+            this.ground = new MfgGround(this.scene, MfgWorld.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.physicsWorld.groundMaterial, {
                 groundTexture: "./res/paris/plan.png",
                 groundCollisionFilterGroup: MfgWorld.physicsWorld.GROUP1,
                 groundCollisionFilterMask:  MfgWorld.physicsWorld.GROUP2,
