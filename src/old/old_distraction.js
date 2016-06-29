@@ -13,20 +13,6 @@ function Demo()
     }
 }
 
-var skybox = function( e )
-{
-    var t = BABYLON.Mesh.CreateBox( "skyBox", 1e3, e);
-    var i = new BABYLON.StandardMaterial( "skyBox", e );
-
-    i.backFaceCulling                   = !1;
-    i.reflectionTexture                 = new BABYLON.CubeTexture( "res/image/skybox/skybox", e );
-    i.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-    i.diffuseColor                      = new BABYLON.Color3( 0, 0, 0 );
-    i.specularColor                     = new BABYLON.Color3( 0, 0, 0 );
-
-    t.material = i;
-};
-
 Demo.prototype.loadingMessage = function(e)
 {
     "use strict";
@@ -125,7 +111,7 @@ Demo.prototype.createScene = function()
     this.createLights();
     this.createShadowGenerator(this.shadowLight);
 
-    MfgSkyBox.skyBox = skybox( this.scene );
+    MfgSkyBox.skyBox = new MfgSkyBox( this.scene );
 
     this.loadGround();
 };
