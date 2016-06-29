@@ -1,6 +1,6 @@
 
     /*****************************************************************************
-    *   Key controls.
+    *   Handles all key controls.
     *
     *   @author     Christopher Stock
     *   @version    0.0.1
