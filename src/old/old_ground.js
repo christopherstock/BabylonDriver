@@ -213,7 +213,7 @@ function Ground(e, t, i, s, o, a, n, r)
                     var r = e(t.minSizeBranch, t.maxSizeBranch);
                     var d = e(t.minSizeTrunk, t.maxSizeTrunk);
                     var h = e(t.minRadius, t.maxRadius);
-                    var l = new Tree(r, d, h, t.scene);
+                    var l = new MfgTree(r, d, h, t.scene);
 
                     l.scaling = new BABYLON.Vector3(.3, .3, .3), l.scaling.scaleInPlace(t.scaleFactor / 50), l.position.x = n.position.x, l.position.y *= .3, l.position.y += n.position.y, l.position.z = n.position.z, t._createCannonTrunk(l.trunk, n.position), n.dispose(), t.buildingCelShading && (t._addDeltaHeight(l), t._addOutlineMesh(l, !0)), l.computeWorldMatrix(!0), l.trunk.computeWorldMatrix(!0), s.push(l), o.push(l.trunk)
                 } else t._testEmptyMesh(n);
