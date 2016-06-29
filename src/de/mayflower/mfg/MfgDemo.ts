@@ -326,17 +326,31 @@
 
             var e, t, i, s, o, a, n, r, d;
 
+
+
             e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0};
+
+
             t = this;
 
-            this.keydownHandler = function(i)
+            this.keydownHandler = function( keyEvent )
             {
-                37 === i.keyCode && (e.left = 1), 38 === i.keyCode && (e.forward = 1), 39 === i.keyCode && (e.right = 1), 40 === i.keyCode && (e.back = 1), 16 === i.keyCode && (e.changeDir = 1), 27 === i.keyCode && t.leaveGame(), 32 === i.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
+                37 === keyEvent.keyCode && ( e.left    = 1 );
+                38 === keyEvent.keyCode && ( e.forward = 1 );
+                39 === keyEvent.keyCode && ( e.right   = 1 );
+                40 === keyEvent.keyCode && ( e.back    = 1 );
+
+                16 === keyEvent.keyCode && ( e.changeDir = 1);
+                27 === keyEvent.keyCode && t.leaveGame();
+                32 === keyEvent.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
             };
 
-            this.keyupHandler = function(t)
+            this.keyupHandler = function( keyEvent )
             {
-                37 === t.keyCode && (e.left = 0), 38 === t.keyCode && (e.forward = 0), 39 === t.keyCode && (e.right = 0), 40 === t.keyCode && (e.back = 0)
+                37 === keyEvent.keyCode && ( e.left    = 0 );
+                38 === keyEvent.keyCode && ( e.forward = 0 );
+                39 === keyEvent.keyCode && ( e.right   = 0 );
+                40 === keyEvent.keyCode && ( e.back    = 0 );
             };
 
             i = this.ds3;
