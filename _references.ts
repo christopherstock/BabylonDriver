@@ -1,6 +1,7 @@
 
 /// <reference path="lib/ts/babylon.2.2.d.ts" />
 /// <reference path="lib/ts/cannon.0.6.2.d.ts" />
+/// <reference path="lib/ts/jquery.1.10.d.ts" />
 
 /// <reference path="src_lib/de/mayflower/lib/math/LibMath.ts" />
 /// <reference path="src_lib/de/mayflower/lib/ui/LibStringFormat.ts" />
