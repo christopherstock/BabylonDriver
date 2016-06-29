@@ -58,96 +58,96 @@ function Car( e, t, i, s, o, n, h, a, r, l, c, d, p )
         var t = Math.abs(e[0].y - e[1].y) / 2 * this.scaleFactor;
         this.wheelsOptions.radius = t, this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_fr_position.x, this.wheel_fr_position.y, this.wheel_fr_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_fl_position.x, this.wheel_fl_position.y, this.wheel_fl_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_rr_position.x, this.wheel_rr_position.y, this.wheel_rr_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_rl_position.x, this.wheel_rl_position.y, this.wheel_rl_position.z), this.vehicle.addWheel(this.wheelsOptions), this.vehicle.addToWorld(this.world), null !== this.onLoadSuccess && this.onLoadSuccess()
     };
+
+    Car.prototype.load = function ()
+    {
+        "use strict";
+        this.msgCallback && this.msgCallback("make DS3...");
+        var e = this;
+        BABYLON.SceneLoader.ImportMesh("", this.bodyMeshPath, this.bodyMeshName, this.scene, function (t) {
+            e._babylon_addBody(t);
+            var i = LibMath.getMinMaxBox(t);
+            e._cannon_addBody(i), e._loadWheels()
+        })
+    };
+
+    Car.prototype.update = function ()
+    {
+        "use strict";
+        var e, t, i, s;
+        e = function (e, t, i) {
+            return new BABYLON.Quaternion(-e.w * t * i.x + e.x * -i.w + e.z * i.y - e.y * i.z, -e.w * t * i.z + e.z * -i.w + e.y * i.x - e.x * i.y, -e.w * t * i.y + e.y * -i.w + e.x * i.z - e.z * i.x, -e.w * t * -i.w - e.x * i.x - e.z * i.z - e.y * i.y)
+        }, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 0, 1), Math.PI), i = this.vehicle.chassisBody, this.b_bodyRoot.position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y - .02), this.b_bodyRoot.rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(0), i = this.vehicle.getWheelTransformWorld(0), this.b_wheels[0].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[0].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(1), i = this.vehicle.getWheelTransformWorld(1), this.b_wheels[1].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[1].rotationQuaternion = e(i.quaternion, 1, t), this.vehicle.updateWheelTransform(2), i = this.vehicle.getWheelTransformWorld(2), this.b_wheels[2].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[2].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(3), i = this.vehicle.getWheelTransformWorld(3), this.b_wheels[3].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[3].rotationQuaternion = e(i.quaternion, 1, t), s = LibMath.toEulerAngles(this.b_bodyRoot.rotationQuaternion), this.b_bodyRoot.rotation = new BABYLON.Vector3(s.x, s.y, s.z)
+    };
+
+    Car.prototype.setPosition = function (e)
+    {
+        "use strict";
+        this.vehicle.chassisBody.position.set(e.x, e.y, e.z), this.vehicle.chassisBody.quaternion.set(0, 0, 0, 1), this.vehicle.chassisBody.angularVelocity.set(0, 0, 0), this.vehicle.chassisBody.velocity.set(0, 0, 0)
+    };
+
+    Car.prototype.steering = function (e)
+    {
+        "use strict";
+        this.vehicle.setSteeringValue(e, 0), this.vehicle.setSteeringValue(e, 1)
+    };
+
+    Car.prototype.brake = function (e)
+    {
+        "use strict";
+        this.vehicle.applyEngineForce(0, 0), this.vehicle.applyEngineForce(0, 1), this.vehicle.setBrake(e, 0), this.vehicle.setBrake(e, 1), this.vehicle.setBrake(e, 2), this.vehicle.setBrake(e, 3)
+    };
+
+    Car.prototype.accelerate = function (e)
+    {
+        "use strict";
+        this.vehicle.setBrake(0, 0), this.vehicle.setBrake(0, 1), this.vehicle.setBrake(0, 2), this.vehicle.setBrake(0, 3), this.vehicle.applyEngineForce(e, 0), this.vehicle.applyEngineForce(e, 1)
+    };
+
+    Car.prototype.moves = function (e, t, i, s, o)
+    {
+        "use strict";
+        if (1 === s && this.lenk >= -.5 && (this.lenk -= .01, this.steering(this.lenk)), 1 === i && this.lenk <= .5 && (this.lenk += .01, this.steering(this.lenk)), 0 === i && 0 === s && (this.lenk < 0 ? (this.lenk += .01, this.steering(this.lenk)) : this.lenk > 0 && (this.lenk -= .01, this.steering(this.lenk)), Math.abs(this.lenk) < .01 && (this.lenk = 0, this.steering(this.lenk))), 1 === e && 1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = 8e3 : this.getSpeed() < 100 ? this.dyn = 7e3 : this.getSpeed() < 150 ? this.dyn = 6e3 : this.getSpeed() < 230 ? this.dyn = 4e3 : this.dyn = 0, this.accelerate(this.dyn)) : 1 === e && -1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = -2e3 : this.dyn = 0, this.accelerate(this.dyn)) : this.accelerate(0), 1 === o && this.getSpeed() < 5 && (this.direction *= -1), 1 === t) {
+            this.dyn = 0;
+            var n = 50;
+            this.brake(n)
+        }
+    };
+
+    Car.prototype.createFollowCamera = function ()
+    {
+        "use strict";
+        var e = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), this.scene);
+        return e.target = this.b_bodyRoot, e.radius = 8, e.heightOffset = 2, e.rotationOffset = 90, e.cameraAcceleration = .05, e.maxCameraSpeed = 20, e
+    };
+
+    Car.prototype.getSpeed = function ()
+    {
+        "use strict";
+        return 3.6 * this.c_bodyRoot.velocity.norm()
+    };
+
+    Car.prototype.getLenk = function ()
+    {
+        "use strict";
+        return this.lenk
+    };
+
+    Car.prototype.getDirection = function ()
+    {
+        "use strict";
+        return this.direction
+    };
+
+    Car.prototype.getAltitude = function ()
+    {
+        "use strict";
+        return this.c_bodyRoot.position.z
+    };
+
+    Car.prototype.getCarMainMesh = function ()
+    {
+        "use strict";
+        return this.approxBox
+    };
 }
-
-Car.prototype.load = function ()
-{
-    "use strict";
-    this.msgCallback && this.msgCallback("make DS3...");
-    var e = this;
-    BABYLON.SceneLoader.ImportMesh("", this.bodyMeshPath, this.bodyMeshName, this.scene, function (t) {
-        e._babylon_addBody(t);
-        var i = LibMath.getMinMaxBox(t);
-        e._cannon_addBody(i), e._loadWheels()
-    })
-};
-
-Car.prototype.update = function ()
-{
-    "use strict";
-    var e, t, i, s;
-    e = function (e, t, i) {
-        return new BABYLON.Quaternion(-e.w * t * i.x + e.x * -i.w + e.z * i.y - e.y * i.z, -e.w * t * i.z + e.z * -i.w + e.y * i.x - e.x * i.y, -e.w * t * i.y + e.y * -i.w + e.x * i.z - e.z * i.x, -e.w * t * -i.w - e.x * i.x - e.z * i.z - e.y * i.y)
-    }, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 0, 1), Math.PI), i = this.vehicle.chassisBody, this.b_bodyRoot.position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y - .02), this.b_bodyRoot.rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(0), i = this.vehicle.getWheelTransformWorld(0), this.b_wheels[0].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[0].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(1), i = this.vehicle.getWheelTransformWorld(1), this.b_wheels[1].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[1].rotationQuaternion = e(i.quaternion, 1, t), this.vehicle.updateWheelTransform(2), i = this.vehicle.getWheelTransformWorld(2), this.b_wheels[2].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[2].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(3), i = this.vehicle.getWheelTransformWorld(3), this.b_wheels[3].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[3].rotationQuaternion = e(i.quaternion, 1, t), s = LibMath.toEulerAngles(this.b_bodyRoot.rotationQuaternion), this.b_bodyRoot.rotation = new BABYLON.Vector3(s.x, s.y, s.z)
-};
-
-Car.prototype.setPosition = function (e)
-{
-    "use strict";
-    this.vehicle.chassisBody.position.set(e.x, e.y, e.z), this.vehicle.chassisBody.quaternion.set(0, 0, 0, 1), this.vehicle.chassisBody.angularVelocity.set(0, 0, 0), this.vehicle.chassisBody.velocity.set(0, 0, 0)
-};
-
-Car.prototype.steering = function (e)
-{
-    "use strict";
-    this.vehicle.setSteeringValue(e, 0), this.vehicle.setSteeringValue(e, 1)
-};
-
-Car.prototype.brake = function (e)
-{
-    "use strict";
-    this.vehicle.applyEngineForce(0, 0), this.vehicle.applyEngineForce(0, 1), this.vehicle.setBrake(e, 0), this.vehicle.setBrake(e, 1), this.vehicle.setBrake(e, 2), this.vehicle.setBrake(e, 3)
-};
-
-Car.prototype.accelerate = function (e)
-{
-    "use strict";
-    this.vehicle.setBrake(0, 0), this.vehicle.setBrake(0, 1), this.vehicle.setBrake(0, 2), this.vehicle.setBrake(0, 3), this.vehicle.applyEngineForce(e, 0), this.vehicle.applyEngineForce(e, 1)
-};
-
-Car.prototype.moves = function (e, t, i, s, o)
-{
-    "use strict";
-    if (1 === s && this.lenk >= -.5 && (this.lenk -= .01, this.steering(this.lenk)), 1 === i && this.lenk <= .5 && (this.lenk += .01, this.steering(this.lenk)), 0 === i && 0 === s && (this.lenk < 0 ? (this.lenk += .01, this.steering(this.lenk)) : this.lenk > 0 && (this.lenk -= .01, this.steering(this.lenk)), Math.abs(this.lenk) < .01 && (this.lenk = 0, this.steering(this.lenk))), 1 === e && 1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = 8e3 : this.getSpeed() < 100 ? this.dyn = 7e3 : this.getSpeed() < 150 ? this.dyn = 6e3 : this.getSpeed() < 230 ? this.dyn = 4e3 : this.dyn = 0, this.accelerate(this.dyn)) : 1 === e && -1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = -2e3 : this.dyn = 0, this.accelerate(this.dyn)) : this.accelerate(0), 1 === o && this.getSpeed() < 5 && (this.direction *= -1), 1 === t) {
-        this.dyn = 0;
-        var n = 50;
-        this.brake(n)
-    }
-};
-
-Car.prototype.createFollowCamera = function ()
-{
-    "use strict";
-    var e = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), this.scene);
-    return e.target = this.b_bodyRoot, e.radius = 8, e.heightOffset = 2, e.rotationOffset = 90, e.cameraAcceleration = .05, e.maxCameraSpeed = 20, e
-};
-
-Car.prototype.getSpeed = function ()
-{
-    "use strict";
-    return 3.6 * this.c_bodyRoot.velocity.norm()
-};
-
-Car.prototype.getLenk = function ()
-{
-    "use strict";
-    return this.lenk
-};
-
-Car.prototype.getDirection = function ()
-{
-    "use strict";
-    return this.direction
-};
-
-Car.prototype.getAltitude = function ()
-{
-    "use strict";
-    return this.c_bodyRoot.position.z
-};
-
-Car.prototype.getCarMainMesh = function ()
-{
-    "use strict";
-    return this.approxBox
-};
