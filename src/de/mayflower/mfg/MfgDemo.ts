@@ -10,7 +10,7 @@
         public                      canvas                  :HTMLCanvasElement              = null;
         public                      message                 :HTMLDivElement                 = null;
         public                      engine                  :BABYLON.Engine                 = null;
-        public                      checkpoints             :Chekpoints                     = null;
+        public                      checkpoints             :MfgCheckpoint                  = null;
         public                      arcCamera               :any                            = null;
         public                      followCamera            :any                            = null;
         public                      ds3                     :MfgCar                         = null;
@@ -190,11 +190,21 @@
         public loadCheckpoints()
         {
             "use strict";
-            this.checkpoints = new Chekpoints(this.scene, this.ds3.getCarMainMesh(), this.ground, "./res/paris/", "paris_poi.babylon", "./res/image/misc/poi.png", 9, 512, {
-                msgCallback: this.loadingMessage.bind(this),
-                chekpointsCallback: this.checkpointsStatusUpdate.bind(this),
-                onLoadFinished: this.start.bind(this)
-            });
+            this.checkpoints = new MfgCheckpoint(
+                this.scene,
+                this.ds3.getCarMainMesh(),
+                this.ground,
+                "./res/paris/",
+                "paris_poi.babylon",
+                "./res/image/misc/poi.png",
+                9,
+                512,
+                {
+                    msgCallback: this.loadingMessage.bind(this),
+                    chekpointsCallback: this.checkpointsStatusUpdate.bind(this),
+                    onLoadFinished: this.start.bind(this)
+                }
+            );
             this.checkpoints.load()
         };
 
