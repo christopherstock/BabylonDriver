@@ -1,21 +1,25 @@
 
 function PhysicsWorld()
 {
-    "use strict";
     this.world = new CANNON.World;
     this.world.solver.iterations = 10;
     this.world.gravity.set( 0, 0, -9.82 );
     this.world.broadphase = new CANNON.NaiveBroadphase;
+
     this.worldstep = 2;
     this.timeStep = 1 / 60;
     this.GROUP1 = 1;
     this.GROUP2 = 2;
     this.groundMaterial  = new CANNON.Material("groundMaterial");
     this.carBodyMaterial = new CANNON.Material("carBodyMaterial");
-    this.bodyGroundContactMaterial = new CANNON.ContactMaterial( this.groundMaterial, this.carBodyMaterial, {
-        friction: .01,
-        restitution: 0
-    });
+    this.bodyGroundContactMaterial = new CANNON.ContactMaterial(
+        this.groundMaterial,
+        this.carBodyMaterial,
+        {
+            friction:    .01,
+            restitution: 0
+        }
+    );
     this.world.addContactMaterial( this.bodyGroundContactMaterial );
 }
 
@@ -336,12 +340,11 @@ Demo.prototype.start = function()
 
     i = this.ds3;
     s = this.scene;
-    o = MfgWorld.physicsWorld;
     a = this.ground;
 
     this.registerBeforeRender = function()
     {
-        s.isReady() && (i.moves(e.forward, e.back, e.left, e.right, e.changeDir), 1 === e.changeDir && (t.displayDirection(i.getDirection()), e.changeDir = 0), o.world.step(o.timeStep), i.getAltitude() < 47 && t.resetCarPosition(), a.updateShaders(s.activeCamera.position), i.update(), t.updateTdB(), t.checkpoints.isEnabled() && t.updateTimer())
+        s.isReady() && (i.moves(e.forward, e.back, e.left, e.right, e.changeDir), 1 === e.changeDir && (t.displayDirection(i.getDirection()), e.changeDir = 0), MfgWorld.physicsWorld.world.step(MfgWorld.physicsWorld.timeStep), i.getAltitude() < 47 && t.resetCarPosition(), a.updateShaders(s.activeCamera.position), i.update(), t.updateTdB(), t.checkpoints.isEnabled() && t.updateTimer())
     };
 
     this.createPostProcessPipeline();
