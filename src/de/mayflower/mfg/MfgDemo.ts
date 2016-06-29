@@ -10,6 +10,17 @@
         public                      canvas                  :HTMLCanvasElement              = null;
         public                      message                 :HTMLDivElement                 = null;
         public                      engine                  :BABYLON.Engine                 = null;
+        public                      checkpoints             :Chekpoints                     = null;
+        public                      arcCamera               :any                            = null;
+        public                      followCamera            :any                            = null;
+        public                      ds3                     :Car                            = null;
+        public                      failed                  :number                         = null;
+        public                      timer                   :number                         = null;
+        public                      scene                   :BABYLON.Scene                  = null;
+        public                      shadowLight             :BABYLON.Light                  = null;
+        public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
+
+
 
         /************************************************************************************
         *   Creates a new instance of the demo application.
@@ -28,10 +39,10 @@
             }
         }
 
-        public loadingMessage(e)
+        public loadingMessage( e:string )
         {
             "use strict";
-            $("#loading #message").text(e)
+            $("#loadingMessage").text( e ) ;
         };
 
         public toggleLoadingMessage()
@@ -56,18 +67,17 @@
 
         public startDriving()
         {
-            var e = this;
-
             $("#title_bar").toggle();
             $("#tdb_back").toggle();
             $("#tdb").toggle();
 
-            e.checkpoints.isEnabled() && (e.checkpointsStatusUpdate(), e.initTimer(), e.initFailed());
-            e.activateCamera(e.followCamera);
-            e.ds3.setPosition(new CANNON.Vec3(-19, -14, 60));
+            this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
+            this.activateCamera( this.followCamera );
 
-            e.ds3.update();
-            e.registerMoves();
+            this.ds3.setPosition( new CANNON.Vec3( -19, -14, 60 ) );
+            this.ds3.update();
+
+            this.registerMoves();
         };
 
         public displayDirection(e)
@@ -79,7 +89,7 @@
         public updateTdB()
         {
             "use strict";
-            $("#speed span").text(Math.round(this.ds3.getSpeed()))
+            $("#speed span").text( Math.round( this.ds3.getSpeed() ).toString() )
         };
 
         public checkpointsStatusUpdate()
@@ -92,7 +102,7 @@
         {
             "use strict";
             this.failed += 1;
-            $("#tdb #tdb_checkpoints #failed span").text(this.failed);
+            $("#tdb #tdb_checkpoints #failed span").text( this.failed.toString() );
         };
 
         public initFailed()
@@ -124,7 +134,7 @@
             this.scene = new BABYLON.Scene(this.engine);
             this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
             this.createLights();
-            this.createShadowGenerator(this.shadowLight);
+            this.createShadowGenerator( this.shadowLight );
 
             MfgSkyBox.skyBox = new MfgSkyBox( this.scene );
 
@@ -297,16 +307,9 @@
 
         public start()
         {
-
             // set feature 'checkpoints' on!
             this.checkpoints.enableSprites();
             $("#tdb #tdb_checkpoints").toggle();
-
-
-
-
-
-            "use strict";
 
             var e, t, i, s, o, a, n, r, d;
 
@@ -335,9 +338,6 @@
             this.createPostProcessPipeline();
 
             this.enablePostProcessPipeline();
-
-
-
 
             n = new FPSMeter(
                 {
