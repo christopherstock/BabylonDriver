@@ -2,7 +2,9 @@
 function Tree( e, t, i, s )
 {
     "use strict";
+
     BABYLON.Mesh.call( this, "tree", s );
+
     this._init( e );
 
     // colors that don't appear?
