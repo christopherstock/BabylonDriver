@@ -1,10 +1,4 @@
 
-function toEulerAngles(e) {
-    "use strict";
-    var t, i, s, o, n, h, a, r, l, c, d, p;
-    return t = BABYLON.Vector3.Zero(), i = e.x, s = e.y, o = e.z, n = e.w, h = i * i, a = s * s, r = o * o, l = Math.atan2(2 * (s * n - i * o), 1 - 2 * (a + r)), c = Math.asin(2 * (i * s + o * n)), d = Math.atan2(2 * (i * n - s * o), 1 - 2 * (h + r)), p = i * s + o * n, p > .499 ? (l = 2 * Math.atan2(i, n), d = 0) : -.499 > p && (l = -2 * Math.atan2(i, n), d = 0), t.x = c, t.y = l, t.z = d, t
-}
-
 function Car( e, t, i, s, o, n, h, a, r, l, c, d, p )
 {
     "use strict";
@@ -27,7 +21,7 @@ function Car( e, t, i, s, o, n, h, a, r, l, c, d, p )
     var u = "boolean" == typeof p.invertX ? p.invertX : !1;
     u ? this.scale = new BABYLON.Vector3(-this.scaleFactor, this.scaleFactor, this.scaleFactor) : this.scale = new BABYLON.Vector3(this.scaleFactor, this.scaleFactor, this.scaleFactor), this.shadowGenerator = "object" == typeof p.shadowGenerator ? p.shadowGenerator : null, this.bodyMass = "number" == typeof p.bodyMass ? p.bodyMass : 0, this.firstPos = "CANNON.Vec3" == typeof p.firstPos ? p.firstPos : new CANNON.Vec3(0, 0, 0), this.bodyCollisionFilterGroup = "number" == typeof p.bodyCollisionFilterGroup ? p.bodyCollisionFilterGroup : 0, this.bodyCollisionFilterMask = "number" == typeof p.bodyCollisionFilterMask ? p.bodyCollisionFilterMask : 0, this.msgCallback = "function" == typeof p.msgCallback ? p.msgCallback : null, this.onLoadSuccess = "function" == typeof p.onLoadSuccess ? p.onLoadSuccess : null, Car.prototype._babylon_addBody = function (e) {
         var t, i, s;
-        for (this.b_bodyRoot = e[0], this.b_bodyRoot.name = this.bodyMeshName, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 2), i = toEulerAngles(t), s = 1; s < e.length; s += 1)e[s].rotationQuaternion = t, e[s].rotation = new BABYLON.Vector3(i.x, i.y, i.z);
+        for (this.b_bodyRoot = e[0], this.b_bodyRoot.name = this.bodyMeshName, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 2), i = LibMath.toEulerAngles(t), s = 1; s < e.length; s += 1)e[s].rotationQuaternion = t, e[s].rotation = new BABYLON.Vector3(i.x, i.y, i.z);
         if (this.b_bodyRoot.scaling = this.scale, null !== this.shadowGenerator)for (s = 1; s < e.length; s += 1)this.shadowGenerator.getShadowMap().renderList.push(e[s]);
         this.approxBox = e[1]
     },
@@ -44,7 +38,7 @@ function Car( e, t, i, s, o, n, h, a, r, l, c, d, p )
     {
         var e = this;
         BABYLON.SceneLoader.ImportMesh("", this.wheelMeshPath, this.wheelMeshName, this.scene, function (t) {
-            e._babylon_addWheels(t), e._cannon_addWheels(minmaxBox(t))
+            e._babylon_addWheels(t), e._cannon_addWheels( LibMath.getMinMaxBox(t) )
         })
     };
 
@@ -66,14 +60,6 @@ function Car( e, t, i, s, o, n, h, a, r, l, c, d, p )
     };
 }
 
-var minmaxBox = function (e)
-{
-    "use strict";
-    var s, o, n, h, a, r, t = null, i = null;
-    for (s = 1; s < e.length; s += 1)o = e[s], n = o.getBoundingInfo().boundingBox, h = BABYLON.Matrix.RotationYawPitchRoll(o.rotation.y, o.rotation.x, o.rotation.z), a = BABYLON.Vector3.TransformCoordinates(n.minimumWorld, h), r = BABYLON.Vector3.TransformCoordinates(n.maximumWorld, h), t ? (t.MinimizeInPlace(a), i.MaximizeInPlace(r)) : (t = a, i = r);
-    return [t, i]
-};
-
 Car.prototype.load = function ()
 {
     "use strict";
@@ -81,7 +67,7 @@ Car.prototype.load = function ()
     var e = this;
     BABYLON.SceneLoader.ImportMesh("", this.bodyMeshPath, this.bodyMeshName, this.scene, function (t) {
         e._babylon_addBody(t);
-        var i = minmaxBox(t);
+        var i = LibMath.getMinMaxBox(t);
         e._cannon_addBody(i), e._loadWheels()
     })
 };
@@ -92,7 +78,7 @@ Car.prototype.update = function ()
     var e, t, i, s;
     e = function (e, t, i) {
         return new BABYLON.Quaternion(-e.w * t * i.x + e.x * -i.w + e.z * i.y - e.y * i.z, -e.w * t * i.z + e.z * -i.w + e.y * i.x - e.x * i.y, -e.w * t * i.y + e.y * -i.w + e.x * i.z - e.z * i.x, -e.w * t * -i.w - e.x * i.x - e.z * i.z - e.y * i.y)
-    }, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 0, 1), Math.PI), i = this.vehicle.chassisBody, this.b_bodyRoot.position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y - .02), this.b_bodyRoot.rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(0), i = this.vehicle.getWheelTransformWorld(0), this.b_wheels[0].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[0].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(1), i = this.vehicle.getWheelTransformWorld(1), this.b_wheels[1].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[1].rotationQuaternion = e(i.quaternion, 1, t), this.vehicle.updateWheelTransform(2), i = this.vehicle.getWheelTransformWorld(2), this.b_wheels[2].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[2].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(3), i = this.vehicle.getWheelTransformWorld(3), this.b_wheels[3].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[3].rotationQuaternion = e(i.quaternion, 1, t), s = toEulerAngles(this.b_bodyRoot.rotationQuaternion), this.b_bodyRoot.rotation = new BABYLON.Vector3(s.x, s.y, s.z)
+    }, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 0, 1), Math.PI), i = this.vehicle.chassisBody, this.b_bodyRoot.position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y - .02), this.b_bodyRoot.rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(0), i = this.vehicle.getWheelTransformWorld(0), this.b_wheels[0].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[0].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(1), i = this.vehicle.getWheelTransformWorld(1), this.b_wheels[1].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[1].rotationQuaternion = e(i.quaternion, 1, t), this.vehicle.updateWheelTransform(2), i = this.vehicle.getWheelTransformWorld(2), this.b_wheels[2].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[2].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(3), i = this.vehicle.getWheelTransformWorld(3), this.b_wheels[3].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[3].rotationQuaternion = e(i.quaternion, 1, t), s = LibMath.toEulerAngles(this.b_bodyRoot.rotationQuaternion), this.b_bodyRoot.rotation = new BABYLON.Vector3(s.x, s.y, s.z)
 };
 
 Car.prototype.setPosition = function (e)
