@@ -16,6 +16,8 @@
 /// <reference path="src/de/mayflower/mfg/MfgDemo.ts" />
 /// <reference path="src/de/mayflower/mfg/MfgCar.ts" />
 /// <reference path="src/de/mayflower/mfg/MfgTree.ts" />
+/// <reference path="src/de/mayflower/mfg/MfgGround.ts" />
+/// <reference path="src/de/mayflower/mfg/MfgCheckpoint.ts" />
 
 /// <reference path="src/de/mayflower/mfg/base/MfgDebug.ts" />
 /// <reference path="src/de/mayflower/mfg/base/MfgSettings.ts" />
