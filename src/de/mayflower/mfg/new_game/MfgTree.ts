@@ -10,6 +10,9 @@
         public                      material                    :BABYLON.StandardMaterial           = null;
         public                      trunk                       :BABYLON.Mesh                       = null;
 
+        /************************************************************************************
+        *   Creates a new tree mesh.
+        ************************************************************************************/
         public constructor( e, t, i, s )
         {
             //this will be replaced by extending BABYLON.Mesh
@@ -51,6 +54,9 @@
             //void 0 !== o && (o.getShadowMap().renderList.push( this ), o.getShadowMap().renderList.push(this.trunk))
         }
 
+        /************************************************************************************
+        *   Seems to initialize all trees..?
+        ************************************************************************************/
         public _init( e ) : void
         {
             "use strict";

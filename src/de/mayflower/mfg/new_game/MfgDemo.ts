@@ -19,7 +19,7 @@
         public                      scene                   :BABYLON.Scene                  = null;
         public                      shadowLight             :BABYLON.Light                  = null;
         public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
-        public                      ground                  :MfgGround                         = null;
+        public                      ground                  :MfgGround                      = null;
         public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
         public                      keyupHandler            :any                            = null;
         public                      keydownHandler          :any                            = null;
