@@ -2,6 +2,8 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
+    *   TODO ASAP   Remove '"use strict"' at all locations.
+    *   TODO ASAP   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
     *   TODO INIT   Own car(s)?
