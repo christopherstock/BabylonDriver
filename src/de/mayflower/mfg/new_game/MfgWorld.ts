@@ -16,6 +16,7 @@
         public                  GROUP2                      :number                     = 0;
         public                  groundMaterial              :CANNON.Material            = null;
         public                  carBodyMaterial             :CANNON.Material            = null;
+        public                  wheelMaterial               :CANNON.Material            = null;
         public                  bodyGroundContactMaterial   :CANNON.ContactMaterial     = null;
 
         /************************************************************************************
