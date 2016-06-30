@@ -1,6 +1,6 @@
 
     /************************************************************************************
-    *   Represents the 3D world.
+    *   Specifies the global physical ambience.
     *
     *   @author     Christopher Stock
     *   @version    0.0.1
@@ -19,7 +19,7 @@
         public                  bodyGroundContactMaterial   :CANNON.ContactMaterial     = null;
 
         /************************************************************************************
-        *   Creates a constant instance of the 3D world.
+        *   Creates a constant instance of the physical ambience.
         ************************************************************************************/
         public constructor()
         {
@@ -33,8 +33,8 @@
             this.timeStep                   = 1 / 60;
             this.GROUP1                     = 1;
             this.GROUP2                     = 2;
-            this.groundMaterial             = new CANNON.Material("groundMaterial");
-            this.carBodyMaterial            = new CANNON.Material("carBodyMaterial");
+            this.groundMaterial             = new CANNON.Material( "groundMaterial"  );
+            this.carBodyMaterial            = new CANNON.Material( "carBodyMaterial" );
             this.bodyGroundContactMaterial  = new CANNON.ContactMaterial(
                 this.groundMaterial,
                 this.carBodyMaterial,

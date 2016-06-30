@@ -7,6 +7,9 @@
     ************************************************************************************/
     class MfgTree extends BABYLON.Mesh
     {
+        public                      material                    :BABYLON.StandardMaterial           = null;
+        public                      trunk                       :BABYLON.Mesh                       = null;
+
         public constructor( e, t, i, s )
         {
             //this will be replaced by extending BABYLON.Mesh
@@ -32,23 +35,23 @@
             this.material.specularColor = BABYLON.Color3.Black();
 
             this.position.y = t + e / 2 - 2;
-            var a = BABYLON.Mesh.CreateCylinder( "trunk", t, 1 > i - 2 ? 1 : i - 2, i, 7, 2, s );
-            a.parent     = this;
-            a.position.y = -e / 2 + 2 - t / 2;
-            a.material   = new BABYLON.StandardMaterial( "trunk", s );
 
-            a.material.diffuseColor  = BABYLON.Color3.FromInts( 0, 0, 0 );
+            this.trunk = BABYLON.Mesh.CreateCylinder( "trunk", t, 1 > i - 2 ? 1 : i - 2, i, 7, 2, s );
+            this.trunk.parent     = this;
+            this.trunk.position.y = -e / 2 + 2 - t / 2;
 
-            a.material.specularColor = BABYLON.Color3.Black();
+            var standardMaterial:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "trunk", s );
+            standardMaterial.diffuseColor  = BABYLON.Color3.FromInts( 0, 0, 0 );
+            standardMaterial.specularColor = BABYLON.Color3.Black();
 
-            a.convertToFlatShadedMesh();
+            this.trunk.material = standardMaterial;
 
-            this.trunk = a;
+            this.trunk.convertToFlatShadedMesh();
 
             //void 0 !== o && (o.getShadowMap().renderList.push( this ), o.getShadowMap().renderList.push(this.trunk))
         }
 
-        public _init( e )
+        public _init( e ) : void
         {
             "use strict";
             var t = BABYLON.VertexData.CreateSphere( 2, e );
