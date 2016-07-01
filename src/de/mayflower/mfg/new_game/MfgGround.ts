@@ -221,19 +221,13 @@
             BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
                 var i, s;
                 for (i = 0; i < t.length; i++) {
+
                     var o:BABYLON.Mesh = t[i];
 
+                    (-1 !== o.name.indexOf( "Water"   ) && ( o.receiveShadows = !0 ) );
+                    (-1 !== o.name.indexOf( "Support" ) && ( o.receiveShadows = !0 ) );
 
-                    if
-                    (
-                            -1 !== o.name.indexOf("Water")
-                        &&  (o.receiveShadows = !0),
-
-                            -1 !== o.name.indexOf("Support")
-                        &&  (o.receiveShadows = !0),
-
-                        null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind)
-                    )
+                    if (null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
                     {
                         if (o.name === e.groundMeshName)
                         {
@@ -254,7 +248,12 @@
                                 r[3 * B + 1] = p * e.scaleFactor + e.buildingBaseHeight
                             }
                             var C = a.normals, y = a.indices;
-                            BABYLON.VertexData.ComputeNormals(r, y, C), a.applyToMesh(e.ground, !1), e.ground._setReady(!0), o.dispose(), e.ground.receiveShadows = !0, e._createCannonHeightfield()
+                            BABYLON.VertexData.ComputeNormals(r, y, C);
+                            a.applyToMesh(e.ground, !1);
+                            e.ground._setReady(!0);
+                            o.dispose();
+                            e.ground.receiveShadows = !0;
+                            e._createCannonHeightfield();
                         }
                         else
                         {
