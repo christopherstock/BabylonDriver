@@ -180,10 +180,10 @@
         {
             this.msgCallback && this.msgCallback("create ground...");
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t) {
+            BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
                 var i, s;
                 for (i = 0; i < t.length; i++) {
-                    var o = t[i];
+                    var o:BABYLON.Mesh = t[i];
                     if (-1 !== o.name.indexOf("Water") && (o.receiveShadows = !0), -1 !== o.name.indexOf("Support") && (o.receiveShadows = !0), null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))if (o.name === e.groundMeshName) {
                         e.ground = new BABYLON.GroundMesh("", e.scene), e.ground._setReady(!1), e.ground._subdivisions = e.subdivision;
                         var a = BABYLON.VertexData.CreateGround(e.width, e.depth, e.subdivision);
@@ -233,12 +233,12 @@
         public _loadSolidBuildings()
         {
             this.msgCallback("construct buildings...");
-            var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function (t) {
+            var e = MfgGround.singleton;
+            BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, i = [], s = [];
                 for (o = 0; o < t.length; o++) {
-                    var a = t[o];
-                    null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), e.buildingCelShading && e._addDeltaHeight(a), e._createCannonBuilding(a), a.isVisible !== !1 ? (e.buildingCelShading && e._addOutlineMesh(a), a.convertToFlatShadedMesh(), a.parent && (-1 !== a.parent.name.indexOf("Building") && i.push(a), -1 !== a.parent.name.indexOf("Bridges") && s.push(a))) : a.dispose()) : e._testEmptyMesh(a)
+                    var a:BABYLON.Mesh = t[o];
+                    null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), e.buildingCelShading && e._addDeltaHeight(a), e._createCannonBuilding(a), a.isVisible !== !1 ? (e.buildingCelShading && e._addOutlineMesh(a, null, null), a.convertToFlatShadedMesh(), a.parent && (-1 !== a.parent.name.indexOf("Building") && i.push(a), -1 !== a.parent.name.indexOf("Bridges") && s.push(a))) : a.dispose()) : e._testEmptyMesh(a)
                 }
                 if (i.length > 0) {
                     null !== e.shadowGenerator && e._setShadowImpostor(i);
@@ -283,9 +283,9 @@
         {
             this.msgCallback && this.msgCallback("make special buildings and monuments...");
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function (t) {
+            BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, a, n, i = [], s = [];
-                for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
+                for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
                 if (i.length > 0) {
                     null !== e.shadowGenerator && e._setShadowImpostor(i);
                     var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
@@ -298,11 +298,15 @@
         public _loadTrees()
         {
             this.msgCallback && this.msgCallback("plant trees...");
+
             var e = function (e, t) {
                 if (e === t)return e;
                 var i = Math.random();
                 return i * (t - e) + e
-            }, t = this;
+            };
+
+            var t = MfgGround.singleton;
+
             BABYLON.SceneLoader.ImportMesh("", this.treesPath, this.treesName, this.scene, function (i) {
                 var a, n, s = [], o = [];
                 for (a = 0; a < i.length; a++)if (n = i[a], null !== n.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
@@ -313,7 +317,7 @@
                     var h = e(t.minRadius, t.maxRadius);
                     var l = new MfgTree(r, d, h, t.scene);
 
-                    l.scaling = new BABYLON.Vector3(.3, .3, .3), l.scaling.scaleInPlace(t.scaleFactor / 50), l.position.x = n.position.x, l.position.y *= .3, l.position.y += n.position.y, l.position.z = n.position.z, t._createCannonTrunk(l.trunk, n.position), n.dispose(), t.buildingCelShading && (t._addDeltaHeight(l), t._addOutlineMesh(l, !0)), l.computeWorldMatrix(!0), l.trunk.computeWorldMatrix(!0), s.push(l), o.push(l.trunk)
+                    l.scaling = new BABYLON.Vector3(.3, .3, .3), l.scaling.scaleInPlace(t.scaleFactor / 50), l.position.x = n.position.x, l.position.y *= .3, l.position.y += n.position.y, l.position.z = n.position.z, t._createCannonTrunk(l.trunk, n.position), n.dispose(), t.buildingCelShading && (t._addDeltaHeight(l), t._addOutlineMesh(l, !0, null)), l.computeWorldMatrix(!0), l.trunk.computeWorldMatrix(!0), s.push(l), o.push(l.trunk)
                 } else t._testEmptyMesh(n);
                 if (o.length > 0) {
                     var c = BABYLON.Mesh.MergeMeshes(o, !0, !1);

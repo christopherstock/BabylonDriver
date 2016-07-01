@@ -97,10 +97,26 @@
         public _cannon_addBody(e)
         {
             var t, i;
-            t = e[0].negate().add(e[1]), t.scaleInPlace(.5), t.x = Math.abs(t.x), t.y = Math.abs(t.y), t.z = Math.abs(t.z), t.scaleInPlace(this.scaleFactor), i = new CANNON.Box(new CANNON.Vec3(t.x, t.z, t.y)), this.c_bodyRoot = new CANNON.Body({
-                mass: this.bodyMass,
-                material: this.bodyMaterial
-            }), this.c_bodyRoot.addShape(i), 0 !== this.bodyCollisionFilterGroup && (this.c_bodyRoot.collisionFilterGroup = this.bodyCollisionFilterGroup, this.c_bodyRoot.collisionFilterMask = this.bodyCollisionFilterMask), this.c_bodyRoot.position.set(this.firstPos.x, this.firstPos.y, this.firstPos.z), this.world.add(this.c_bodyRoot), this.vehicle = new CANNON.RaycastVehicle({chassisBody: this.c_bodyRoot})
+            t = e[0].negate().add(e[1]);
+            t.scaleInPlace(.5);
+            t.x = Math.abs(t.x);
+            t.y = Math.abs(t.y);
+            t.z = Math.abs(t.z);
+            t.scaleInPlace(this.scaleFactor);
+            i = new CANNON.Box(new CANNON.Vec3(t.x, t.z, t.y));
+            this.c_bodyRoot = new CANNON.Body(
+                {
+                    mass: this.bodyMass,
+                    material: this.bodyMaterial
+                }
+            );
+            this.c_bodyRoot.addShape(i);
+            0 !== this.bodyCollisionFilterGroup && (this.c_bodyRoot.collisionFilterGroup = this.bodyCollisionFilterGroup, this.c_bodyRoot.collisionFilterMask = this.bodyCollisionFilterMask);
+            this.c_bodyRoot.position.set(this.firstPos.x, this.firstPos.y, this.firstPos.z);
+
+            this.world.addBody(this.c_bodyRoot);
+
+            this.vehicle = new CANNON.RaycastVehicle({chassisBody: this.c_bodyRoot});
         }
 
         public _loadWheels()

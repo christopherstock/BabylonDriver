@@ -2,14 +2,15 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO ASAP   Replace all 'any' types with the correct Type!
+    *   TODO HIGH   Remove all compiler warnings.
+    *   TODO HIGH   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
     *   TODO INIT   Own car(s)?
     *   TODO INIT   Own driving physics?
     *   TODO INIT   Own level data?
-    *   TODO WEAK   Remove all compiler errors and warnings?
     *
+    *   DONE        Removed all compiler errors.
     *   DONE        Added MF-carsign and altered car texture.
     *   DONE        Refactored and extracted key system.
     *   DONE        Removed '"use strict"' at all locations.
