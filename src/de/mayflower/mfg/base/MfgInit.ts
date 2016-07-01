@@ -20,7 +20,10 @@
             //set document title
             document.title = MfgSettings.TITLE;
 
-            //instanciate the demo
+            //create preloader
+            MfgPreloader.singleton = new MfgPreloader();
+
+            //create app
             MfgApp.singleton = new MfgApp();
             MfgApp.singleton.initUI();
             MfgApp.singleton.createScene();

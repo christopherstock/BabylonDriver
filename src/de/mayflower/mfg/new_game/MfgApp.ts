@@ -52,14 +52,14 @@
         public                      registerBeforeRender    :any                            = null;
 
         /************************************************************************************
-        *   Creates a new instance of the demo application.
+        *   Instanciates the demo application.
         ************************************************************************************/
         public constructor()
         {
             this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
             this.divLoadingMessage = <HTMLDivElement>document.getElementById("loadingMessage");
 
-            this.engine  = new BABYLON.Engine( this.canvas, !0 );
+            this.engine            = new BABYLON.Engine( this.canvas, !0 );
         }
 
         /************************************************************************************

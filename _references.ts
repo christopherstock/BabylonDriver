@@ -18,6 +18,7 @@
 /// <reference path="src/de/mayflower/mfg/new_game/MfgCar.ts" />
 /// <reference path="src/de/mayflower/mfg/new_game/MfgTree.ts" />
 /// <reference path="src/de/mayflower/mfg/new_game/MfgGround.ts" />
+/// <reference path="src/de/mayflower/mfg/new_game/MfgPreloader.ts" />
 
 /// <reference path="src/de/mayflower/mfg/base/MfgDebug.ts" />
 /// <reference path="src/de/mayflower/mfg/base/MfgSettings.ts" />
