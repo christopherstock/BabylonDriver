@@ -274,16 +274,24 @@
             var t, a, n, s = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind), o = [];
             for (a = 0; a <= this.subdivision; a++)for (o.push([]), n = 0; n <= this.subdivision; n++) {
                 var r = a + (this.subdivision + 1) * (this.subdivision - n);
-                t = s[3 * r + 1], o[a].push(t)
+                t = s[3 * r + 1];
+                o[a].push(t);
             }
             var d = new CANNON.Heightfield(o, {elementSize: this.width / this.subdivision});
             this.groundBody = new CANNON.Body({
                 mass: 0,
                 material: this.groundMaterial
-            }), this.groundBody.addShape(d), this.groundBody.position.set(-this.width / 2, -this.depth / 2, 0), this.groundBody.collisionFilterGroup = this.groundCollisionFilterGroup, this.groundBody.collisionFilterMask = this.groundCollisionFilterMask, this.world.add(this.groundBody), null !== this.waterLevel && this.addWater(), null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this._load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished()
+            });
+            this.groundBody.addShape(d);
+            this.groundBody.position.set(-this.width / 2, -this.depth / 2, 0);
+            this.groundBody.collisionFilterGroup = this.groundCollisionFilterGroup;
+            this.groundBody.collisionFilterMask = this.groundCollisionFilterMask;
+            this.world.add(this.groundBody);
+            null !== this.waterLevel && this.addWater();
+            null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this._load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished();
         }
 
-        public _testEmptyMesh(e)
+        public _testEmptyMesh( e )
         {
             var t, i = !1;
             for (t = 0; t < this.scene.meshes.length; t++) {
@@ -313,9 +321,15 @@
                 }
                 if (s.length > 0) {
                     var r = BABYLON.Mesh.MergeMeshes(s, !0, !1);
-                    e.buildingCelShading && e._setCellShading(r, !0), null !== e.shadowGenerator && e.shadowGenerator.getShadowMap().renderList.push(r)
+                    e.buildingCelShading && e._setCellShading(r, !0);
+                    null !== e.shadowGenerator && e.shadowGenerator.getShadowMap().renderList.push(r);
                 }
-                null !== e.buildingsName ? e._load3dBuildings() : null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
+
+                    null !== e.buildingsName
+                ?   e._load3dBuildings()
+                :   null !== e.treesName
+                    ?   e._loadTrees()
+                    :   null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
             })
         }
 
@@ -387,11 +401,13 @@
                 } else t._testEmptyMesh(n);
                 if (o.length > 0) {
                     var c = BABYLON.Mesh.MergeMeshes(o, !0, !1);
-                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(c), c.material = t.trunksMaterial
+                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(c);
+                    c.material = t.trunksMaterial
                 }
                 if (s.length > 0) {
                     var p = BABYLON.Mesh.MergeMeshes(s, !0, !1);
-                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(p), p.material = t.treesMaterial
+                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(p);
+                    p.material = t.treesMaterial
                 }
                 t._mergeOutlineMeshes(), null !== t.particlesName ? t._loadParticles() : null !== t.onLoadFinished && t.onLoadFinished()
             })
@@ -425,14 +441,20 @@
         public _setShadowImpostor(e)
         {
             var t, i, s = [];
-            for (t = 0; t < e.length; t++)i = this._copyMesh(e[t], "copy", new BABYLON.Vector3(.98, .98, .98)), i.computeWorldMatrix(!0), s.push(i);
+            for (t = 0; t < e.length; t++)
+            {
+                i = this._copyMesh(e[t], "copy", new BABYLON.Vector3(.98, .98, .98));
+                i.computeWorldMatrix(!0);
+                s.push(i);
+            }
             var o = BABYLON.Mesh.MergeMeshes(s, !0, !0);
-            this.shadowGenerator.getShadowMap().renderList.push(o), o.visibility = 0
+            this.shadowGenerator.getShadowMap().renderList.push(o);
+            o.visibility = 0;
         }
 
         public _setCellShading(e, t)
         {
-            t = "undefined" != typeof t ? t : !1;
+            var t = "undefined" != typeof t ? t : !1;
             var i = null !== e.material ? e.material.diffuseColor : null;
             if (i) {
                 var s = new BABYLON.ShaderMaterial("", this.scene, "./res/shader/cellShading", {
@@ -449,9 +471,13 @@
                 attributes: ["position", "uv"],
                 uniforms: ["worldViewProjection"]
             }), i = new BABYLON.Texture("./res/image/misc/flag.png", this.scene);
-            t.setFloat("pole_x", -.053), t.setTexture("textureSampler", i), t.setFloat("time", 0), t.backFaceCulling = !1, e.material = t, this.flagShaderMaterials.push(t)
+            t.setFloat("pole_x", -.053);
+            t.setTexture("textureSampler", i);
+            t.setFloat("time", 0);
+            t.backFaceCulling = !1;
+            e.material = t;
+            this.flagShaderMaterials.push(t);
         }
-
 
         public load()
         {
@@ -460,15 +486,27 @@
 
         public addWater()
         {
-            this.water = BABYLON.Mesh.CreateGround("", this.width, this.width, 1, this.scene), this.water.position = new BABYLON.Vector3(0, this.waterLevel, 0);
+            this.water = BABYLON.Mesh.CreateGround("", this.width, this.width, 1, this.scene);
+            this.water.position = new BABYLON.Vector3(0, this.waterLevel, 0);
             var e = new BABYLON.StandardMaterial("", this.scene);
-            e.diffuseColor = new BABYLON.Color3(.2, .3, 1), this.water.material = e, this.water.receiveShadows = !0
+            e.diffuseColor = new BABYLON.Color3( .2, .3, 1 );
+            this.water.material = e;
+            this.water.receiveShadows = !0;
         }
 
         public updateShaders( e )
         {
             var t;
-            for (t = 0; t < this.buildingsShaderMaterials.length; t++)this.buildingsShaderMaterials[t].setMatrix("lightMatrix", this.shadowGenerator.getTransformMatrix()), this.buildingsShaderMaterials[t].setVector3("light0Pos", this.shadowGenerator.getLight().position);
-            for (t = 0; t < this.flagShaderMaterials.length; t++)this.flagShaderMaterials[t].setFloat("time", this.time), this.time += .02
+            for (t = 0; t < this.buildingsShaderMaterials.length; t++)
+            {
+                this.buildingsShaderMaterials[t].setMatrix("lightMatrix", this.shadowGenerator.getTransformMatrix());
+                this.buildingsShaderMaterials[t].setVector3("light0Pos", this.shadowGenerator.getLight().position);
+            }
+
+            for (t = 0; t < this.flagShaderMaterials.length; t++)
+            {
+                this.flagShaderMaterials[t].setFloat("time", this.time);
+                this.time += .02;
+            }
         }
     }
