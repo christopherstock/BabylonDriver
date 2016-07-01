@@ -117,27 +117,43 @@
                 this.outlineMeshes = [];
         }
 
+        // TODO to lib!
         public _copyMesh( e, t, i )
         {
             var s = new BABYLON.Mesh(t, this.scene, e.parent);
-            s.position = new BABYLON.Vector3(e.position.x, e.position.y, e.position.z), s.rotation = new BABYLON.Vector3(e.rotation.x, e.rotation.y, e.rotation.z), s.scaling = new BABYLON.Vector3(e.scaling.x * i.x, e.scaling.y * i.y, e.scaling.z * i.z), s.computeWorldMatrix(!0);
+            s.position = new BABYLON.Vector3(e.position.x, e.position.y, e.position.z);
+            s.rotation = new BABYLON.Vector3(e.rotation.x, e.rotation.y, e.rotation.z);
+            s.scaling = new BABYLON.Vector3(e.scaling.x * i.x, e.scaling.y * i.y, e.scaling.z * i.z);
+            s.computeWorldMatrix(!0);
             var o = new BABYLON.VertexData;
-            o.positions = [], o.indices = [], o.normals = [], o.uvs = [];
+            o.positions = [];
+            o.indices = [];
+            o.normals = [];
+            o.uvs = [];
             var a, n = e.getVerticesData(BABYLON.VertexBuffer.PositionKind);
             for (a = 0; a < n.length; a++)o.positions.push(n[a]);
             var r = e.getIndices();
             for (a = 0; a < r.length; a++)o.indices.push(r[a]);
             var d = e.getVerticesData(BABYLON.VertexBuffer.NormalKind);
             for (a = 0; a < d.length; a++)o.normals.push(d[a]);
-            return o.applyToMesh(s), s
-        };
+            o.applyToMesh(s);
+            return s;
+        }
 
-        public _addOutlineMesh( t, i, s )
+        // TODO to lib!
+        public _addOutlineMesh( t, addOutlineMesh:boolean, s )
         {
             var o = new BABYLON.Mesh("Outline", this.scene, s);
-            o.material = this.outlineMaterial, o.position = t.position, o.rotation = t.rotation, o.scaling = t.scaling, o.computeWorldMatrix(!0);
+            o.material = this.outlineMaterial;
+            o.position = t.position;
+            o.rotation = t.rotation;
+            o.scaling = t.scaling;
+            o.computeWorldMatrix( !0 );
             var a = new BABYLON.VertexData;
-            a.positions = [], a.indices = [], a.normals = [], a.uvs = [];
+            a.positions = [];
+            a.indices = [];
+            a.normals = [];
+            a.uvs = [];
             var n = o.getWorldMatrix().clone();
             n.setTranslation(BABYLON.Vector3.Zero());
             var r = o.getWorldMatrix().clone();
@@ -146,35 +162,57 @@
             for ( h = 0; h < d.length; h += 3 ) {
                 BABYLON.Vector3.FromArrayToRef(d, h, l);
                 var c = BABYLON.Vector3.TransformCoordinates(l, n), p = BABYLON.Vector3.TransformCoordinates(l, o.getWorldMatrix());
-                c.x >= 0 ? p.x += .06 * this.scaleFactor / 50 : p.x -= .06 * this.scaleFactor / 50, c.y >= 0 ? p.y += .06 * this.scaleFactor / 50 : p.y -= .06 * this.scaleFactor / 50, c.z >= 0 ? p.z += .06 * this.scaleFactor / 50 : p.z -= .06 * this.scaleFactor / 50;
+                c.x >= 0 ? p.x += .06 * this.scaleFactor / 50 : p.x -= .06 * this.scaleFactor / 50;
+                c.y >= 0 ? p.y += .06 * this.scaleFactor / 50 : p.y -= .06 * this.scaleFactor / 50;
+                c.z >= 0 ? p.z += .06 * this.scaleFactor / 50 : p.z -= .06 * this.scaleFactor / 50;
                 var u = BABYLON.Vector3.TransformCoordinates(p, r);
-                a.positions.push(u.x), a.positions.push(u.y), a.positions.push(u.z)
+                a.positions.push(u.x);
+                a.positions.push(u.y);
+                a.positions.push(u.z);
             }
             var g = t.getVerticesData(BABYLON.VertexBuffer.NormalKind);
             for (h = 0; h < g.length; h++)a.normals.push(g[h]);
             var f = t.getIndices();
-            for (h = 0; h < f.length / 3; h++)a.indices.push(f[3 * h + 1]), a.indices.push(f[3 * h]), a.indices.push(f[3 * h + 2]);
-            if (a.applyToMesh(o), i)for (h = 0; h < this.scene.meshes.length; h++) {
-                var m = this.scene.meshes[h];
-                m.parent === t && this._addOutlineMesh(m, !1, o)
+            for (h = 0; h < f.length / 3; h++)
+            {
+                a.indices.push(f[3 * h + 1]);
+                a.indices.push(f[3 * h]);
+                a.indices.push(f[3 * h + 2]);
+            }
+            a.applyToMesh(o);
+
+            if (addOutlineMesh)
+            {
+                for ( h = 0; h < this.scene.meshes.length; h++ )
+                {
+                    var m = this.scene.meshes[h];
+                    m.parent === t && this._addOutlineMesh(m, !1, o)
+                }
             }
             this.outlineMeshes.push(o)
-        };
+        }
 
+        // TODO to lib!
         public _mergeOutlineMeshes()
         {
             this.outlineMeshes.length > 0 && BABYLON.Mesh.MergeMeshes(this.outlineMeshes, !0, !0)
-        };
+        }
 
+        // TODO to lib!
         public _moveAndScaleMesh(e)
         {
-            e.position.scaleInPlace(this.scaleFactor), e.position.y += this.buildingBaseHeight, e.scaling.scaleInPlace(this.scaleFactor), e.computeWorldMatrix(!0)
-        };
+            e.position.scaleInPlace(this.scaleFactor);
+            e.position.y += this.buildingBaseHeight;
+            e.scaling.scaleInPlace(this.scaleFactor);
+            e.computeWorldMatrix(!0);
+        }
 
+        // TODO to lib!
         public _addDeltaHeight(e)
         {
-            e.position.y += this.outlineShaderDeltaHeight, e.computeWorldMatrix(!0)
-        };
+            e.position.y += this.outlineShaderDeltaHeight;
+            e.computeWorldMatrix( !0 );
+        }
 
         public _createGround()
         {
@@ -201,7 +239,7 @@
                     } else e._moveAndScaleMesh(o), o.convertToFlatShadedMesh(); else e._testEmptyMesh(o)
                 }
             })
-        };
+        }
 
         public _createCannonHeightfield()
         {
@@ -215,7 +253,7 @@
                 mass: 0,
                 material: this.groundMaterial
             }), this.groundBody.addShape(d), this.groundBody.position.set(-this.width / 2, -this.depth / 2, 0), this.groundBody.collisionFilterGroup = this.groundCollisionFilterGroup, this.groundBody.collisionFilterMask = this.groundCollisionFilterMask, this.world.add(this.groundBody), null !== this.waterLevel && this.addWater(), null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this._load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished()
-        };
+        }
 
         public _testEmptyMesh(e)
         {
@@ -228,7 +266,7 @@
                 }
             }
             i ? e.setEnabled(!0) : e.dispose()
-        };
+        }
 
         public _loadSolidBuildings()
         {
@@ -251,7 +289,7 @@
                 }
                 null !== e.buildingsName ? e._load3dBuildings() : null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
             })
-        };
+        }
 
         public _createCannonBuilding(e)
         {
@@ -277,7 +315,7 @@
             O.addShape(L), O.position.set(e.position.x, e.position.z, e.position.y);
             var A = BABYLON.Quaternion.RotationYawPitchRoll(e.rotation.y, e.rotation.x, e.rotation.z);
             O.quaternion = t(A, 1, new CANNON.Quaternion(0, 0, 0, -1)), O.collisionFilterGroup = this.groundCollisionFilterGroup, O.collisionFilterMask = this.groundCollisionFilterMask, this.world.add(O)
-        };
+        }
 
         public _load3dBuildings()
         {
@@ -293,7 +331,7 @@
                 }
                 s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1), null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
             })
-        };
+        }
 
         public _loadTrees()
         {
@@ -329,7 +367,7 @@
                 }
                 t._mergeOutlineMeshes(), null !== t.particlesName ? t._loadParticles() : null !== t.onLoadFinished && t.onLoadFinished()
             })
-        };
+        }
 
         public _createCannonTrunk(e, t)
         {
@@ -340,7 +378,7 @@
                 material: this.groundMaterial
             });
             r.addShape(n), r.collisionFilterGroup = this.groundCollisionFilterGroup, r.collisionFilterMask = this.groundCollisionFilterMask, r.position.set(t.x, t.z + a.z / 2, t.y), this.world.add(r)
-        };
+        }
 
         public _loadParticles()
         {
@@ -354,7 +392,7 @@
                 } else i._testEmptyMesh(e);
                 null !== i.onLoadFinished && i.onLoadFinished()
             })
-        };
+        }
 
         public _setShadowImpostor(e)
         {
@@ -362,7 +400,7 @@
             for (t = 0; t < e.length; t++)i = this._copyMesh(e[t], "copy", new BABYLON.Vector3(.98, .98, .98)), i.computeWorldMatrix(!0), s.push(i);
             var o = BABYLON.Mesh.MergeMeshes(s, !0, !0);
             this.shadowGenerator.getShadowMap().renderList.push(o), o.visibility = 0
-        };
+        }
 
         public _setCellShading(e, t)
         {
@@ -375,7 +413,7 @@
                 });
                 s.setTexture("shadowSampler", this.shadowGenerator.getShadowMapForRendering()), s.setVector3("diffuseColor", new BABYLON.Vector3(i.r, i.g, i.b)), s.backFaceCulling = !0, e.material = s, this.buildingsShaderMaterials.push(s)
             }
-        };
+        }
 
         public _setFlagShader(e)
         {
@@ -384,25 +422,25 @@
                 uniforms: ["worldViewProjection"]
             }), i = new BABYLON.Texture("./res/image/misc/flag.png", this.scene);
             t.setFloat("pole_x", -.053), t.setTexture("textureSampler", i), t.setFloat("time", 0), t.backFaceCulling = !1, e.material = t, this.flagShaderMaterials.push(t)
-        };
+        }
 
 
         public load()
         {
             this._createGround()
-        };
+        }
 
         public addWater()
         {
             this.water = BABYLON.Mesh.CreateGround("", this.width, this.width, 1, this.scene), this.water.position = new BABYLON.Vector3(0, this.waterLevel, 0);
             var e = new BABYLON.StandardMaterial("", this.scene);
             e.diffuseColor = new BABYLON.Color3(.2, .3, 1), this.water.material = e, this.water.receiveShadows = !0
-        };
+        }
 
         public updateShaders( e )
         {
             var t;
             for (t = 0; t < this.buildingsShaderMaterials.length; t++)this.buildingsShaderMaterials[t].setMatrix("lightMatrix", this.shadowGenerator.getTransformMatrix()), this.buildingsShaderMaterials[t].setVector3("light0Pos", this.shadowGenerator.getLight().position);
             for (t = 0; t < this.flagShaderMaterials.length; t++)this.flagShaderMaterials[t].setFloat("time", this.time), this.time += .02
-        };
+        }
     }
