@@ -14,7 +14,7 @@
         public      static      TITLE                                       :string             = "Babylon.js Driver, (c) 2016 Mayflower GmbH, v. [" + MfgVersion.CURRENT_VERSION.getVersionDescriptor() + "]";
 
         /** The size of the skypox. */
-        public      static      SIZE_SKYBOX                                 :string             = 750;
+        public      static      SIZE_SKYBOX                                 :number             = 2000;
 
         /** The relative path from index.html where all images the app makes use of reside. */
         public      static      PATH_IMAGE_SKYBOX                           :string             = "res/image/skybox/";
