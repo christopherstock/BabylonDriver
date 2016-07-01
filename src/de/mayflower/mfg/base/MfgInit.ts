@@ -7,9 +7,6 @@
     *****************************************************************************/
     class MfgInit
     {
-        /** The WebGL canvas context. */
-        public          static      canvas          :HTMLCanvasElement          = null;
-
         /*****************************************************************************
         *   Inits this app from scratch.
         *****************************************************************************/
@@ -24,9 +21,9 @@
             document.title = MfgSettings.TITLE;
 
             //instanciate the demo
-            MfgDemo.singleton = new MfgDemo();
-            MfgDemo.singleton.initUI();
-            MfgDemo.singleton.createScene();
+            MfgApp.singleton = new MfgApp();
+            MfgApp.singleton.initUI();
+            MfgApp.singleton.createScene();
 
 
 

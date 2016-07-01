@@ -11,7 +11,4 @@
         public      static      MODE_RELEASE                                :number             = 0;
         /** The debug constant that represents the 'DEBUG'-mode. */
         public      static      MODE_DEBUG                                  :number             = 1;
-
-        /** Disables all sounds. */
-        public      static      DEBUG_DISABLE_SOUNDS                        :boolean            = true;
     }

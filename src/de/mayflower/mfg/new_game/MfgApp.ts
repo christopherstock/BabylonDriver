@@ -5,10 +5,11 @@
     *   @author     Christopher Stock
     *   @version    0.0.1
     ************************************************************************************/
-    class MfgDemo
+    class MfgApp
     {
         /** The singleton instance of this demo app. */
-        public      static          singleton               :MfgDemo                        = null;
+        public      static          singleton               :MfgApp                        = null;
+
         /** The skybox that surrounds the scene. */
         public                      skyBox                  :MfgSkyBox                      = null;
         /** The checkpoint system. */
@@ -83,7 +84,7 @@
             $("#start_btn").click(
                 function()
                 {
-                    MfgDemo.singleton.startDriving();
+                    MfgApp.singleton.startDriving();
                 }
             );
         }
@@ -365,20 +366,20 @@
 
             this.registerBeforeRender = function()
             {
-                if (MfgDemo.singleton.scene.isReady())
+                if (MfgApp.singleton.scene.isReady())
                 {
-                    MfgDemo.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                    MfgApp.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                     if ( 1 === MfgKey.changeDir )
                     {
-                        MfgDemo.singleton.displayDirection(MfgDemo.singleton.car.getDirection());
+                        MfgApp.singleton.displayDirection(MfgApp.singleton.car.getDirection());
                         MfgKey.changeDir = 0;
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
-                    MfgDemo.singleton.car.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition();
-                    MfgGround.singleton.updateShaders(MfgDemo.singleton.scene.activeCamera.position);
-                    MfgDemo.singleton.car.update();
-                    MfgDemo.singleton.updateTdB();
-                    MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer();
+                    MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
+                    MfgGround.singleton.updateShaders(MfgApp.singleton.scene.activeCamera.position);
+                    MfgApp.singleton.car.update();
+                    MfgApp.singleton.updateTdB();
+                    MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.updateTimer();
                 }
             };
 
@@ -405,17 +406,17 @@
                 "resize",
                 function()
                 {
-                    MfgDemo.singleton.engine.resize()
+                    MfgApp.singleton.engine.resize()
                 }
             );
 
             var newFrameTick = function()
             {
-                MfgDemo.singleton.fpsMeter.tickStart();
-                MfgDemo.singleton.engine.beginFrame();
-                MfgDemo.singleton.scene.render();
-                MfgDemo.singleton.engine.endFrame();
-                MfgDemo.singleton.fpsMeter.tick();
+                MfgApp.singleton.fpsMeter.tickStart();
+                MfgApp.singleton.engine.beginFrame();
+                MfgApp.singleton.scene.render();
+                MfgApp.singleton.engine.endFrame();
+                MfgApp.singleton.fpsMeter.tick();
 
                 BABYLON.Tools.QueueNewFrame( newFrameTick )
             };

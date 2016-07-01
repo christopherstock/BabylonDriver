@@ -2,7 +2,9 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO HIGH   Improve loading messages.
+    *   TODO HIGH   Extract preloader class.
+    *   TODO HIGH   Extract scene class.
+    *   TODO HIGH   Extract UI class.
     *   TODO HIGH   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
@@ -11,6 +13,7 @@
     *   TODO INIT   Own level data?
     *   TODO WEAK   Remove ALL compiler warnings.
     *
+    *   DONE        Improved loading messages.
     *   DONE        Removed all compiler errors.
     *   DONE        Added MF-carsign and altered car texture.
     *   DONE        Refactored and extracted key system.
