@@ -7,4 +7,14 @@
     *****************************************************************************/
     class MfgKey
     {
+        public          static          KEYCODE_BACKSPACE           :number             = 8;
+        public          static          KEYCODE_ESCAPE              :number             = 27;
+        public          static          KEYCODE_SPACE               :number             = 32;
+
+        public          static          KEYCODE_LEFT                :number             = 37;
+        public          static          KEYCODE_UP                  :number             = 38;
+        public          static          KEYCODE_RIGHT               :number             = 39;
+        public          static          KEYCODE_DOWN                :number             = 40;
+
+
     }

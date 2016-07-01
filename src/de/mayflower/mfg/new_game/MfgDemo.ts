@@ -305,25 +305,29 @@
 
             t = this;
 
+
+
             this.keydownHandler = function( keyEvent )
             {
-                37 === keyEvent.keyCode && ( e.left    = 1 );
-                38 === keyEvent.keyCode && ( e.forward = 1 );
-                39 === keyEvent.keyCode && ( e.right   = 1 );
-                40 === keyEvent.keyCode && ( e.back    = 1 );
+                MfgKey.KEYCODE_LEFT      === keyEvent.keyCode && ( e.left    = 1 );
+                MfgKey.KEYCODE_UP        === keyEvent.keyCode && ( e.forward = 1 );
+                MfgKey.KEYCODE_RIGHT     === keyEvent.keyCode && ( e.right   = 1 );
+                MfgKey.KEYCODE_DOWN      === keyEvent.keyCode && ( e.back    = 1 );
 
-                16 === keyEvent.keyCode && ( e.changeDir = 1);
-                27 === keyEvent.keyCode && t.leaveGame();
-                32 === keyEvent.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
+                MfgKey.KEYCODE_BACKSPACE === keyEvent.keyCode && ( e.changeDir = 1);
+                MfgKey.KEYCODE_ESCAPE    === keyEvent.keyCode && t.leaveGame();
+                MfgKey.KEYCODE_SPACE     === keyEvent.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
             };
 
             this.keyupHandler = function( keyEvent )
             {
-                37 === keyEvent.keyCode && ( e.left    = 0 );
-                38 === keyEvent.keyCode && ( e.forward = 0 );
-                39 === keyEvent.keyCode && ( e.right   = 0 );
-                40 === keyEvent.keyCode && ( e.back    = 0 );
+                MfgKey.KEYCODE_LEFT      === keyEvent.keyCode && ( e.left    = 0 );
+                MfgKey.KEYCODE_UP        === keyEvent.keyCode && ( e.forward = 0 );
+                MfgKey.KEYCODE_RIGHT     === keyEvent.keyCode && ( e.right   = 0 );
+                MfgKey.KEYCODE_DOWN      === keyEvent.keyCode && ( e.back    = 0 );
             };
+
+
 
             i = this.ds3;
             s = this.scene;
