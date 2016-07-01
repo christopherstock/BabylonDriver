@@ -222,21 +222,39 @@
                 var i, s;
                 for (i = 0; i < t.length; i++) {
                     var o:BABYLON.Mesh = t[i];
-                    if (-1 !== o.name.indexOf("Water") && (o.receiveShadows = !0), -1 !== o.name.indexOf("Support") && (o.receiveShadows = !0), null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))if (o.name === e.groundMeshName) {
-                        e.ground = new BABYLON.GroundMesh("", e.scene), e.ground._setReady(!1), e.ground._subdivisions = e.subdivision;
-                        var a = BABYLON.VertexData.CreateGround(e.width, e.depth, e.subdivision);
-                        if (null !== e.groundTexture) {
-                            var n = new BABYLON.StandardMaterial("", e.scene);
-                            n.diffuseTexture = new BABYLON.Texture(e.groundTexture, e.scene), n.backFaceCulling = !0, e.ground.material = n
+
+
+                    if (-1 !== o.name.indexOf("Water") && (o.receiveShadows = !0), -1 !== o.name.indexOf("Support") && (o.receiveShadows = !0), null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
+                    {
+                        if (o.name === e.groundMeshName)
+                        {
+                            e.ground = new BABYLON.GroundMesh("", e.scene);
+                            e.ground._setReady(!1);
+                            e.ground._subdivisions = e.subdivision;
+
+                            var a = BABYLON.VertexData.CreateGround(e.width, e.depth, e.subdivision);
+                            if (null !== e.groundTexture) {
+                                var n = new BABYLON.StandardMaterial("", e.scene);
+                                n.diffuseTexture = new BABYLON.Texture(e.groundTexture, e.scene);
+                                n.backFaceCulling = !0;
+                                e.ground.material = n;
+                            }
+                            var r = a.positions, d = o.getVerticesData(BABYLON.VertexBuffer.PositionKind), h = d.length / 3, l = e.width / e.scaleFactor;
+                            for (s = 0; h > s; s++) {
+                                var c = d[3 * s] * o.scaling.x, p = d[3 * s + 1] * o.scaling.y, u = d[3 * s + 2] * o.scaling.z, g = Math.round((c + l / 2) * e.subdivision / l), f = Math.round((u + l / 2) * e.subdivision / l), m = g, w = e.subdivision - f, B = m + (e.subdivision + 1) * w;
+                                r[3 * B + 1] = p * e.scaleFactor + e.buildingBaseHeight
+                            }
+                            var C = a.normals, y = a.indices;
+                            BABYLON.VertexData.ComputeNormals(r, y, C), a.applyToMesh(e.ground, !1), e.ground._setReady(!0), o.dispose(), e.ground.receiveShadows = !0, e._createCannonHeightfield()
                         }
-                        var r = a.positions, d = o.getVerticesData(BABYLON.VertexBuffer.PositionKind), h = d.length / 3, l = e.width / e.scaleFactor;
-                        for (s = 0; h > s; s++) {
-                            var c = d[3 * s] * o.scaling.x, p = d[3 * s + 1] * o.scaling.y, u = d[3 * s + 2] * o.scaling.z, g = Math.round((c + l / 2) * e.subdivision / l), f = Math.round((u + l / 2) * e.subdivision / l), m = g, w = e.subdivision - f, B = m + (e.subdivision + 1) * w;
-                            r[3 * B + 1] = p * e.scaleFactor + e.buildingBaseHeight
+                        else
+                        {
+                            e._moveAndScaleMesh(o);
+                            o.convertToFlatShadedMesh();
                         }
-                        var C = a.normals, y = a.indices;
-                        BABYLON.VertexData.ComputeNormals(r, y, C), a.applyToMesh(e.ground, !1), e.ground._setReady(!0), o.dispose(), e.ground.receiveShadows = !0, e._createCannonHeightfield()
-                    } else e._moveAndScaleMesh(o), o.convertToFlatShadedMesh(); else e._testEmptyMesh(o)
+                    } else {
+                        e._testEmptyMesh(o)
+                    }
                 }
             })
         }
