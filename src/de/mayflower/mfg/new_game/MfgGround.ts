@@ -51,7 +51,7 @@
         public                          maxSizeTrunk                :any                        = null;
         public                          minRadius                   :any                        = null;
         public                          maxRadius                   :any                        = null;
-        public                          ground                      :any                        = null;
+        public                          ground                      :BABYLON.GroundMesh         = null;
         public                          groundBody                  :any                        = null;
         public                          water                       :any                        = null;
 
