@@ -16,5 +16,15 @@
         public          static          KEYCODE_RIGHT               :number             = 39;
         public          static          KEYCODE_DOWN                :number             = 40;
 
+        public          static          left                        :number             = 0;
+        public          static          right                       :number             = 0;
+        public          static          forward                     :number             = 0;
+        public          static          back                        :number             = 0;
+        public          static          changeDir                   :number             = 0;
+
+
+
+
+
 
     }

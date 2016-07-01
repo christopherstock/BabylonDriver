@@ -297,11 +297,15 @@
             this.checkpoints.enableSprites();
             $("#tdb #tdb_checkpoints").toggle();
 
-            var e, i, s, o, a, n, r, d;
+            var i, s, o, a, n, r, d;
 
 
 
-            e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0};
+            MfgKey.left      = 0;
+            MfgKey.right     = 0;
+            MfgKey.forward   = 0;
+            MfgKey.back      = 0;
+            MfgKey.changeDir = 0;
 
 
 
@@ -309,22 +313,22 @@
 
             this.keydownHandler = function( keyEvent )
             {
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) e.left    = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) e.forward = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) e.right   = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) e.back    = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) MfgKey.forward = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) MfgKey.right   = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) MfgKey.back    = 1;
 
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) e.changeDir = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) MfgKey.changeDir = 1;
                 if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) MfgDemo.singleton.leaveGame();
                 if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.ds3.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
             };
 
             this.keyupHandler = function( keyEvent )
             {
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) e.left    = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) e.forward = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) e.right   = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) e.back    = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) MfgKey.forward = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) MfgKey.right   = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) MfgKey.back    = 0;
             };
 
 
@@ -336,8 +340,8 @@
             this.registerBeforeRender = function()
             {
                 s.isReady() && (
-                    i.moves(e.forward, e.back, e.left, e.right, e.changeDir),
-                    1 === e.changeDir && (MfgDemo.singleton.displayDirection(i.getDirection()), e.changeDir = 0),
+                    i.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir),
+                    1 === MfgKey.changeDir && (MfgDemo.singleton.displayDirection(i.getDirection()), MfgKey.changeDir = 0),
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep),
                     i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition(),
                     a.updateShaders(s.activeCamera.position), i.update(), MfgDemo.singleton.updateTdB(),
