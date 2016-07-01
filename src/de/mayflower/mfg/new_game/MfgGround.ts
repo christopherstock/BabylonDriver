@@ -57,7 +57,6 @@
 
         public constructor( e, t, i, s, o, a, n, r )
         {
-            "use strict";
             r = r || {};
             this.scene = e;
             this.world = t;
@@ -384,13 +383,11 @@
 
         public load()
         {
-            "use strict";
             this._createGround()
         };
 
         public addWater()
         {
-            "use strict";
             this.water = BABYLON.Mesh.CreateGround("", this.width, this.width, 1, this.scene), this.water.position = new BABYLON.Vector3(0, this.waterLevel, 0);
             var e = new BABYLON.StandardMaterial("", this.scene);
             e.diffuseColor = new BABYLON.Color3(.2, .3, 1), this.water.material = e, this.water.receiveShadows = !0
@@ -398,7 +395,6 @@
 
         public updateShaders( e )
         {
-            "use strict";
             var t;
             for (t = 0; t < this.buildingsShaderMaterials.length; t++)this.buildingsShaderMaterials[t].setMatrix("lightMatrix", this.shadowGenerator.getTransformMatrix()), this.buildingsShaderMaterials[t].setVector3("light0Pos", this.shadowGenerator.getLight().position);
             for (t = 0; t < this.flagShaderMaterials.length; t++)this.flagShaderMaterials[t].setFloat("time", this.time), this.time += .02

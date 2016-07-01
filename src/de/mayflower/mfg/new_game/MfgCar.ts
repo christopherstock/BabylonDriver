@@ -130,7 +130,6 @@
 
         public load()
         {
-            "use strict";
             this.msgCallback && this.msgCallback("make DS3...");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.bodyMeshPath, this.bodyMeshName, this.scene, function (t) {
@@ -142,7 +141,6 @@
 
         public update()
         {
-            "use strict";
             var e, t, i, s;
             e = function (e, t, i) {
                 return new BABYLON.Quaternion(-e.w * t * i.x + e.x * -i.w + e.z * i.y - e.y * i.z, -e.w * t * i.z + e.z * -i.w + e.y * i.x - e.x * i.y, -e.w * t * i.y + e.y * -i.w + e.x * i.z - e.z * i.x, -e.w * t * -i.w - e.x * i.x - e.z * i.z - e.y * i.y)
@@ -151,31 +149,26 @@
 
         public setPosition(e)
         {
-            "use strict";
             this.vehicle.chassisBody.position.set(e.x, e.y, e.z), this.vehicle.chassisBody.quaternion.set(0, 0, 0, 1), this.vehicle.chassisBody.angularVelocity.set(0, 0, 0), this.vehicle.chassisBody.velocity.set(0, 0, 0)
         }
 
         public steering(e)
         {
-            "use strict";
             this.vehicle.setSteeringValue(e, 0), this.vehicle.setSteeringValue(e, 1)
         }
 
         public brake(e)
         {
-            "use strict";
             this.vehicle.applyEngineForce(0, 0), this.vehicle.applyEngineForce(0, 1), this.vehicle.setBrake(e, 0), this.vehicle.setBrake(e, 1), this.vehicle.setBrake(e, 2), this.vehicle.setBrake(e, 3)
         }
 
         public accelerate(e)
         {
-            "use strict";
             this.vehicle.setBrake(0, 0), this.vehicle.setBrake(0, 1), this.vehicle.setBrake(0, 2), this.vehicle.setBrake(0, 3), this.vehicle.applyEngineForce(e, 0), this.vehicle.applyEngineForce(e, 1)
         }
 
         public moves(e, t, i, s, o)
         {
-            "use strict";
             if (1 === s && this.lenk >= -.5 && (this.lenk -= .01, this.steering(this.lenk)), 1 === i && this.lenk <= .5 && (this.lenk += .01, this.steering(this.lenk)), 0 === i && 0 === s && (this.lenk < 0 ? (this.lenk += .01, this.steering(this.lenk)) : this.lenk > 0 && (this.lenk -= .01, this.steering(this.lenk)), Math.abs(this.lenk) < .01 && (this.lenk = 0, this.steering(this.lenk))), 1 === e && 1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = 8e3 : this.getSpeed() < 100 ? this.dyn = 7e3 : this.getSpeed() < 150 ? this.dyn = 6e3 : this.getSpeed() < 230 ? this.dyn = 4e3 : this.dyn = 0, this.accelerate(this.dyn)) : 1 === e && -1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = -2e3 : this.dyn = 0, this.accelerate(this.dyn)) : this.accelerate(0), 1 === o && this.getSpeed() < 5 && (this.direction *= -1), 1 === t) {
                 this.dyn = 0;
                 var n = 50;
@@ -185,38 +178,32 @@
 
         public createFollowCamera()
         {
-            "use strict";
             var e = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), this.scene);
             return e.target = this.b_bodyRoot, e.radius = 8, e.heightOffset = 2, e.rotationOffset = 90, e.cameraAcceleration = .05, e.maxCameraSpeed = 20, e
         }
 
         public getSpeed()
         {
-            "use strict";
             return 3.6 * this.c_bodyRoot.velocity.norm()
         }
 
         public getLenk()
         {
-            "use strict";
             return this.lenk
         }
 
         public getDirection()
         {
-            "use strict";
             return this.direction
         }
 
         public getAltitude()
         {
-            "use strict";
             return this.c_bodyRoot.position.z
         }
 
         public getCarMainMesh()
         {
-            "use strict";
             return this.approxBox
         }
     }

@@ -21,8 +21,6 @@
 
             super( 'tree', s, null, null);
 
-            "use strict";
-
             BABYLON.Mesh.call( this, "tree", s );
 
             this._init( e );
@@ -59,7 +57,6 @@
         ************************************************************************************/
         public _init( e ) : void
         {
-            "use strict";
             var t = BABYLON.VertexData.CreateSphere( 2, e );
             t.applyToMesh( this, !1 );
             var a, i = this.getVerticesData(BABYLON.VertexBuffer.PositionKind), s = this.getIndices(), o = i.length / 3, n = [], r = [], h = [];

@@ -2,7 +2,6 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO ASAP   Remove '"use strict"' at all locations.
     *   TODO ASAP   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
@@ -10,6 +9,7 @@
     *   TODO INIT   Own driving physics?
     *   TODO INIT   Own level data?
     *
+    *   DONE        Removed '"use strict"' at all locations.
     *   DONE        Removed all unused libs.
     *   DONE        Cleaned up index.html html code.
     *   DONE        Refactored ALL JS sources to TypeScript.

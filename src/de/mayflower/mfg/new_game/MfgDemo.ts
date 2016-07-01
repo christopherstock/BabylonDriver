@@ -30,7 +30,6 @@
         ************************************************************************************/
         public constructor()
         {
-            "use strict";
             if ( BABYLON.Engine.isSupported() )
             {
                 this.canvas  = <HTMLCanvasElement>document.getElementById("driverCanvas");
@@ -44,13 +43,11 @@
 
         public loadingMessage( e:string )
         {
-            "use strict";
             $("#loadingMessage").text( e ) ;
         };
 
         public toggleLoadingMessage()
         {
-            "use strict";
             $("#loading").toggle();
             $("#title").css("color", "#000000");
             $("#subtitle").css("color", "#000000");
@@ -58,7 +55,6 @@
 
         public initUI()
         {
-            "use strict";
             var e = this;
             $("#start_btn").click(
                 function()
@@ -85,44 +81,37 @@
 
         public displayDirection(e)
         {
-            "use strict";
             1 === e ? $("#direction").text("") : $("#direction").text("R")
         };
 
         public updateTdB()
         {
-            "use strict";
             $("#speed span").text( Math.round( this.ds3.getSpeed() ).toString() )
         };
 
         public checkpointsStatusUpdate()
         {
-            "use strict";
             $("#tdb #tdb_checkpoints #remaining span").text(this.checkpoints.getNbCheckPoints())
         };
 
         public failedStatusUpdate()
         {
-            "use strict";
             this.failed += 1;
             $("#tdb #tdb_checkpoints #failed span").text( this.failed.toString() );
         };
 
         public initFailed()
         {
-            "use strict";
             this.failed = 0
         };
 
         public initTimer()
         {
-            "use strict";
             this.timer = Date.now()
         };
 
         public updateTimer()
         {
-            "use strict";
             if (this.checkpoints.getNbCheckPoints() > 0) {
                 var e = Date.now() - this.timer, t = Math.floor(e / 6e4), i = Math.floor((e - 6e4 * t) / 1e3), s = Math.floor((e - 6e4 * t - 1e3 * i) / 10), o = "", a = "", n = "";
                 10 > t && (o = "0"), 10 > i && (a = "0"), 10 > s && (n = "0");
@@ -146,7 +135,6 @@
 
         public loadGround()
         {
-            "use strict";
             var e = 50;
             this.ground = new MfgGround(this.scene, MfgWorld.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.physicsWorld.groundMaterial, {
                 groundTexture: "./res/paris/plan.png",
@@ -173,7 +161,6 @@
 
         public loadCar()
         {
-            "use strict";
             this.ds3 = new MfgCar(this.scene, MfgWorld.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.physicsWorld.carBodyMaterial, MfgWorld.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
                 scaleFactor: .001,
                 invertX: !0,
@@ -189,7 +176,6 @@
 
         public loadCheckpoints()
         {
-            "use strict";
             this.checkpoints = new MfgCheckpoint(
                 this.scene,
                 this.ds3.getCarMainMesh(),
@@ -210,7 +196,6 @@
 
         public createPostProcessPipeline()
         {
-            "use strict";
             var e = new BABYLON.PostProcessRenderPipeline(this.engine, "standardPipeline"), t = this.engine, i = new BABYLON.PostProcessRenderEffect(this.engine, "fxaa", function() {
                 return new BABYLON.FxaaPostProcess("antialias", 2, null, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, t, !0)
             });
@@ -220,44 +205,37 @@
 
         public disablePostProcessPipeline()
         {
-            "use strict";
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.followCamera)
         };
 
         public enablePostProcessPipeline()
         {
-            "use strict";
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.followCamera)
         };
 
         public createLights()
         {
-            "use strict";
             var e, t, i;
             e = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(.2, -1, -.6), this.scene), e.position = new BABYLON.Vector3(-200, 1e3, 600), e.diffuse = new BABYLON.Color3(1, 1, 1), e.specular = new BABYLON.Color3(1, 1, 1), e.intensity = .7, t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.scene), t.position = e.position, t.position.scaleInPlace(.5), t.material = new BABYLON.StandardMaterial("light", this.scene), t.material.emissiveColor = new BABYLON.Color3(1, 1, 0), i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.scene), i.diffuse = new BABYLON.Color3(1, 1, 1), i.specular = new BABYLON.Color3(.5, .5, .4), i.groundColor = new BABYLON.Color3(1, 1, 1), i.intensity = .8, this.shadowLight = e
         };
 
         public createShadowGenerator(e)
         {
-            "use strict";
             this.shadowGenerator = new BABYLON.ShadowGenerator(4096, e), this.shadowGenerator.useVarianceShadowMap = !0, this.shadowGenerator.usePoissonSampling = !0, this.shadowGenerator.setTransparencyShadow(!0), this.shadowGenerator.bias = 1e-5
         };
 
         public disableShadows()
         {
-            "use strict";
             null !== this.shadowGenerator && (this.shadowRenderList = this.shadowGenerator.getShadowMap().renderList, this.shadowGenerator.getShadowMap().renderList = [])
         };
 
         public enableShadows()
         {
-            "use strict";
             null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.scene.shadowsEnabled = !0)
         };
 
         public createTestCamera()
         {
-            "use strict";
             var e, t, i;
             return e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene), e.setTarget(BABYLON.Vector3.Zero()), t = this.scene, i = this.ground, this.scene.registerBeforeRender(function() {
                 t.isReady() && i.updateShaders(t.activeCamera.position)
@@ -266,7 +244,6 @@
 
         public createArcCamera()
         {
-            "use strict";
             var e, t, i;
             return e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene), e.setPosition(new BABYLON.Vector3(200, 150, 200)), e.lowerAlphaLimit = e.upperAlphaLimit = 0, e.lowerBetaLimit = 2, e.upperBetaLimit = 1, e.lowerRadiusLimit = e.upperRadiusLimit = e.radius, t = this.scene, i = this.ground, this.scene.registerBeforeRender(function() {
                 t.isReady() && (i.updateShaders(t.activeCamera.position), t.activeCamera.alpha += .002)
@@ -275,14 +252,12 @@
 
         public activateCamera( e )
         {
-            "use strict";
             this.scene.activeCamera = e;
             e.attachControl(this.canvas, !1);
         };
 
         public registerMoves()
         {
-            "use strict";
             window.addEventListener(
                 "keydown",
                 this.keydownHandler
@@ -300,21 +275,18 @@
 
         public resetCarPosition()
         {
-            "use strict";
             this.ds3.setPosition(new CANNON.Vec3(-19, -14, 60));
             this.checkpoints.isEnabled() && this.failedStatusUpdate();
         };
 
         public hideCar()
         {
-            "use strict";
             this.ds3.setPosition(new CANNON.Vec3(0, 0, 0));
             this.ds3.update();
         };
 
         public leaveGame()
         {
-            "use strict";
             this.scene.unregisterBeforeRender(this.registerBeforeRender), window.removeEventListener("keydown", this.keydownHandler), window.removeEventListener("keyup", this.keyupHandler), $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), this.activateCamera(this.arcCamera), this.hideCar(), this.checkpoints.isEnabled() && (this.checkpoints.resetSprites(), this.checkpoints.enableSprites())
         };
 
