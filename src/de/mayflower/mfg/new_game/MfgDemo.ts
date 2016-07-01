@@ -7,6 +7,8 @@
     ************************************************************************************/
     class MfgDemo
     {
+        public      static          singleton               :MfgDemo                        = null;
+
         public                      canvas                  :HTMLCanvasElement              = null;
         public                      message                 :HTMLDivElement                 = null;
         public                      engine                  :BABYLON.Engine                 = null;
@@ -55,11 +57,10 @@
 
         public initUI()
         {
-            var e = this;
             $("#start_btn").click(
                 function()
                 {
-                    e.startDriving();
+                    MfgDemo.singleton.startDriving();
                 }
             );
         };
@@ -121,7 +122,7 @@
 
         public createScene()
         {
-            MfgWorld.physicsWorld = new MfgWorld();
+            MfgWorld.singleton = new MfgWorld();
 
             this.scene = new BABYLON.Scene(this.engine);
             this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
@@ -136,10 +137,10 @@
         public loadGround()
         {
             var e = 50;
-            this.ground = new MfgGround(this.scene, MfgWorld.physicsWorld.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.physicsWorld.groundMaterial, {
+            this.ground = new MfgGround(this.scene, MfgWorld.singleton.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.singleton.groundMaterial, {
                 groundTexture: "./res/paris/plan.png",
-                groundCollisionFilterGroup: MfgWorld.physicsWorld.GROUP1,
-                groundCollisionFilterMask:  MfgWorld.physicsWorld.GROUP2,
+                groundCollisionFilterGroup: MfgWorld.singleton.GROUP1,
+                groundCollisionFilterMask:  MfgWorld.singleton.GROUP2,
                 scaleFactor: e,
                 buildingBaseHeight: e,
                 solidBuildingsPath: "./res/paris/",
@@ -161,12 +162,12 @@
 
         public loadCar()
         {
-            this.ds3 = new MfgCar(this.scene, MfgWorld.physicsWorld.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.physicsWorld.carBodyMaterial, MfgWorld.physicsWorld.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
+            this.ds3 = new MfgCar(this.scene, MfgWorld.singleton.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.singleton.carBodyMaterial, MfgWorld.singleton.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
                 scaleFactor: .001,
                 invertX: !0,
                 bodyMass: 2e3,
-                bodyCollisionFilterGroup: MfgWorld.physicsWorld.GROUP2,
-                bodyCollisionFilterMask:  MfgWorld.physicsWorld.GROUP1,
+                bodyCollisionFilterGroup: MfgWorld.singleton.GROUP2,
+                bodyCollisionFilterMask:  MfgWorld.singleton.GROUP1,
                 shadowGenerator: this.shadowGenerator,
                 msgCallback: this.loadingMessage.bind(this),
                 onLoadSuccess: this.loadCheckpoints.bind(this)
@@ -296,14 +297,13 @@
             this.checkpoints.enableSprites();
             $("#tdb #tdb_checkpoints").toggle();
 
-            var e, t, i, s, o, a, n, r, d;
+            var e, i, s, o, a, n, r, d;
 
 
 
             e = {left: 0, right: 0, forward: 0, back: 0, changeDir: 0};
 
 
-            t = this;
 
 
 
@@ -315,8 +315,8 @@
                 if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) e.back    = 1;
 
                 if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) e.changeDir = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) t.leaveGame();
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) t.ds3.getSpeed() < 2 && t.resetCarPosition()
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) MfgDemo.singleton.leaveGame();
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.ds3.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
             };
 
             this.keyupHandler = function( keyEvent )
@@ -335,7 +335,14 @@
 
             this.registerBeforeRender = function()
             {
-                s.isReady() && (i.moves(e.forward, e.back, e.left, e.right, e.changeDir), 1 === e.changeDir && (t.displayDirection(i.getDirection()), e.changeDir = 0), MfgWorld.physicsWorld.world.step(MfgWorld.physicsWorld.timeStep), i.getAltitude() < 47 && t.resetCarPosition(), a.updateShaders(s.activeCamera.position), i.update(), t.updateTdB(), t.checkpoints.isEnabled() && t.updateTimer())
+                s.isReady() && (
+                    i.moves(e.forward, e.back, e.left, e.right, e.changeDir),
+                    1 === e.changeDir && (MfgDemo.singleton.displayDirection(i.getDirection()), e.changeDir = 0),
+                    MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep),
+                    i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition(),
+                    a.updateShaders(s.activeCamera.position), i.update(), MfgDemo.singleton.updateTdB(),
+                    MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer()
+                )
             };
 
             this.createPostProcessPipeline();

@@ -7,7 +7,7 @@
     ************************************************************************************/
     class MfgWorld
     {
-        public      static      physicsWorld                :MfgWorld                   = null;
+        public      static      singleton                   :MfgWorld                   = null;
 
         public                  world                       :CANNON.World               = null;
         public                  worldstep                   :number                     = 0;
