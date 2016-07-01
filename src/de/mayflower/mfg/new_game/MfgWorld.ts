@@ -27,7 +27,9 @@
             this.world                      = new CANNON.World;
             this.world.broadphase           = new CANNON.NaiveBroadphase;
 
-            this.world.solver.iterations    = 10;
+            // solver is of type Solver and NOT of Type GSSolver !
+            //this.world.solver.iterations    = 10;
+
             this.world.gravity.set( 0, 0, -9.82 );
 
             this.worldstep                  = 2;

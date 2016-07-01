@@ -38,11 +38,7 @@
 
 
 
-// so long for now
-if ( true ) return;
-
-
-
+/*
             //reference canvas element and fps counter div
             MfgInit.canvas = <HTMLCanvasElement>document.getElementById( "driverCanvas" );
             MfgInit.divFps = <HTMLDivElement>   document.getElementById( "fps"          );
@@ -85,6 +81,7 @@ if ( true ) return;
             //setup the level
             MfgDebug.init.log( "Setup the level" );
             MfgGame.currentLevel = new MfgLevelFirstPerson();
+*/
         }
 
         /*****************************************************************************
@@ -93,10 +90,11 @@ if ( true ) return;
         public static onInitCompleted()
         {
             MfgDebug.init.log( "> onInitCompleted" );
-
+/*
             MfgScene.scene.executeWhenReady
             (
                 MfgScene.initSceneCompleted
             );
+*/
         }
     }

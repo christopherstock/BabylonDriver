@@ -328,6 +328,7 @@
             this.enablePostProcessPipeline();
 
             n = new FPSMeter(
+                null,
                 {
                     graph: 1,
                     decimals: 0,
