@@ -7,6 +7,8 @@
     ************************************************************************************/
     class MfgGround
     {
+        public          static          singleton                   :MfgGround                  = null;
+
         public                          scene                       :any                        = null;
         public                          world                       :any                        = null;
         public                          groundPath                  :any                        = null;

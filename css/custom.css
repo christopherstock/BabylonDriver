@@ -98,8 +98,8 @@ body, html {
 
 #start_btn {
     position: absolute;
-    left: 680px;
-    top: 28px;
+    left: 50%;
+    top: 25px;
     width: 100px;
     height: 46px;
     line-height: 46px

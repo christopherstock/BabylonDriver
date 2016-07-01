@@ -21,7 +21,6 @@
         public                      scene                   :BABYLON.Scene                  = null;
         public                      shadowLight             :BABYLON.Light                  = null;
         public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
-        public                      ground                  :MfgGround                      = null;
         public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
         public                      keyupHandler            :any                            = null;
         public                      keydownHandler          :any                            = null;
@@ -137,7 +136,7 @@
         public loadGround()
         {
             var e = 50;
-            this.ground = new MfgGround(this.scene, MfgWorld.singleton.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.singleton.groundMaterial, {
+            MfgGround.singleton = new MfgGround(this.scene, MfgWorld.singleton.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.singleton.groundMaterial, {
                 groundTexture: "./res/paris/plan.png",
                 groundCollisionFilterGroup: MfgWorld.singleton.GROUP1,
                 groundCollisionFilterMask:  MfgWorld.singleton.GROUP2,
@@ -157,7 +156,7 @@
                 msgCallback: this.loadingMessage.bind(this),
                 onLoadFinished: this.loadCar.bind(this)
             });
-            this.ground.load()
+            MfgGround.singleton.load()
         };
 
         public loadCar()
@@ -180,7 +179,7 @@
             this.checkpoints = new MfgCheckpoint(
                 this.scene,
                 this.ds3.getCarMainMesh(),
-                this.ground,
+                MfgGround.singleton,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
@@ -238,7 +237,7 @@
         public createTestCamera()
         {
             var e, t, i;
-            return e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene), e.setTarget(BABYLON.Vector3.Zero()), t = this.scene, i = this.ground, this.scene.registerBeforeRender(function() {
+            return e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene), e.setTarget(BABYLON.Vector3.Zero()), t = this.scene, i = MfgGround.singleton, this.scene.registerBeforeRender(function() {
                 t.isReady() && i.updateShaders(t.activeCamera.position)
             }), e
         };
@@ -246,7 +245,7 @@
         public createArcCamera()
         {
             var e, t, i;
-            return e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene), e.setPosition(new BABYLON.Vector3(200, 150, 200)), e.lowerAlphaLimit = e.upperAlphaLimit = 0, e.lowerBetaLimit = 2, e.upperBetaLimit = 1, e.lowerRadiusLimit = e.upperRadiusLimit = e.radius, t = this.scene, i = this.ground, this.scene.registerBeforeRender(function() {
+            return e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene), e.setPosition(new BABYLON.Vector3(200, 150, 200)), e.lowerAlphaLimit = e.upperAlphaLimit = 0, e.lowerBetaLimit = 2, e.upperBetaLimit = 1, e.lowerRadiusLimit = e.upperRadiusLimit = e.radius, t = this.scene, i = MfgGround.singleton, this.scene.registerBeforeRender(function() {
                 t.isReady() && (i.updateShaders(t.activeCamera.position), t.activeCamera.alpha += .002)
             }), e.viewport = new BABYLON.Viewport(0, 0, 1, 1), e
         };
@@ -306,7 +305,6 @@
 
             i = this.ds3;
             s = this.scene;
-            a = this.ground;
 
             this.registerBeforeRender = function()
             {
@@ -315,7 +313,7 @@
                     1 === MfgKey.changeDir && (MfgDemo.singleton.displayDirection(i.getDirection()), MfgKey.changeDir = 0),
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep),
                     i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition(),
-                    a.updateShaders(s.activeCamera.position), i.update(), MfgDemo.singleton.updateTdB(),
+                    MfgGround.singleton.updateShaders(s.activeCamera.position), i.update(), MfgDemo.singleton.updateTdB(),
                     MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer()
                 )
             };
