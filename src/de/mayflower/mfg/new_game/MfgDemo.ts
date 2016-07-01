@@ -50,14 +50,14 @@
         public loadingMessage( e:string )
         {
             $("#loadingMessage").text( e ) ;
-        };
+        }
 
         public toggleLoadingMessage()
         {
             $("#loading").toggle();
             $("#title").css("color", "#000000");
             $("#subtitle").css("color", "#000000");
-        };
+        }
 
         public initUI()
         {
@@ -67,7 +67,7 @@
                     MfgDemo.singleton.startDriving();
                 }
             );
-        };
+        }
 
         public startDriving()
         {
@@ -82,47 +82,48 @@
             this.ds3.update();
 
             this.registerMoves();
-        };
+        }
 
         public displayDirection(e)
         {
-            1 === e ? $("#direction").text("") : $("#direction").text("R")
-        };
+            var directionDiv = $("#direction");
+            1 === e ? directionDiv.text("") : directionDiv.text("R")
+        }
 
         public updateTdB()
         {
-            $("#speed span").text( Math.round( this.ds3.getSpeed() ).toString() )
-        };
+            $("#speed_span").text( Math.round( this.ds3.getSpeed() ).toString() )
+        }
 
         public checkpointsStatusUpdate()
         {
-            $("#tdb #tdb_checkpoints #remaining span").text(this.checkpoints.getNbCheckPoints())
-        };
+            $("#remaining span").text( this.checkpoints.getNbCheckPoints() )
+        }
 
         public failedStatusUpdate()
         {
             this.failed += 1;
-            $("#tdb #tdb_checkpoints #failed span").text( this.failed.toString() );
-        };
+            $("#failed span").text( this.failed.toString() );
+        }
 
         public initFailed()
         {
             this.failed = 0
-        };
+        }
 
         public initTimer()
         {
             this.timer = Date.now()
-        };
+        }
 
         public updateTimer()
         {
             if (this.checkpoints.getNbCheckPoints() > 0) {
                 var e = Date.now() - this.timer, t = Math.floor(e / 6e4), i = Math.floor((e - 6e4 * t) / 1e3), s = Math.floor((e - 6e4 * t - 1e3 * i) / 10), o = "", a = "", n = "";
                 10 > t && (o = "0"), 10 > i && (a = "0"), 10 > s && (n = "0");
-                $("#tdb #tdb_checkpoints #timer span").text(o + t + ":" + a + i + ":" + n + s)
+                $("#timer_span").text(o + t + ":" + a + i + ":" + n + s)
             }
-        };
+        }
 
         public createScene()
         {
@@ -136,7 +137,7 @@
             this.skyBox = new MfgSkyBox( this.scene );
 
             this.loadGround();
-        };
+        }
 
         public loadGround()
         {
@@ -162,7 +163,7 @@
                 onLoadFinished: this.loadCar.bind(this)
             });
             MfgGround.singleton.load()
-        };
+        }
 
         public loadCar()
         {
@@ -177,7 +178,7 @@
                 onLoadSuccess: this.loadCheckpoints.bind(this)
             });
             this.ds3.load()
-        };
+        }
 
         public loadCheckpoints()
         {
@@ -197,7 +198,7 @@
                 }
             );
             this.checkpoints.load()
-        };
+        }
 
         public createPostProcessPipeline()
         {
@@ -206,60 +207,85 @@
             });
             e.addEffect(i);
             this.scene.postProcessRenderPipelineManager.addPipeline(e)
-        };
+        }
 
         public disablePostProcessPipeline()
         {
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.followCamera)
-        };
+        }
 
         public enablePostProcessPipeline()
         {
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.followCamera)
-        };
+        }
 
         public createLights()
         {
             var e, t, i;
             e = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(.2, -1, -.6), this.scene), e.position = new BABYLON.Vector3(-200, 1e3, 600), e.diffuse = new BABYLON.Color3(1, 1, 1), e.specular = new BABYLON.Color3(1, 1, 1), e.intensity = .7, t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.scene), t.position = e.position, t.position.scaleInPlace(.5), t.material = new BABYLON.StandardMaterial("light", this.scene), t.material.emissiveColor = new BABYLON.Color3(1, 1, 0), i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.scene), i.diffuse = new BABYLON.Color3(1, 1, 1), i.specular = new BABYLON.Color3(.5, .5, .4), i.groundColor = new BABYLON.Color3(1, 1, 1), i.intensity = .8, this.shadowLight = e
-        };
+        }
 
         public createShadowGenerator(e)
         {
             this.shadowGenerator = new BABYLON.ShadowGenerator(4096, e), this.shadowGenerator.useVarianceShadowMap = !0, this.shadowGenerator.usePoissonSampling = !0, this.shadowGenerator.setTransparencyShadow(!0), this.shadowGenerator.bias = 1e-5
-        };
+        }
 
         public disableShadows()
         {
             null !== this.shadowGenerator && (this.shadowRenderList = this.shadowGenerator.getShadowMap().renderList, this.shadowGenerator.getShadowMap().renderList = [])
-        };
+        }
 
         public enableShadows()
         {
             null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.scene.shadowsEnabled = !0)
-        };
+        }
 
         public createTestCamera()
         {
             var e, t, i;
-            return e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene), e.setTarget(BABYLON.Vector3.Zero()), t = this.scene, i = MfgGround.singleton, this.scene.registerBeforeRender(function() {
-                t.isReady() && i.updateShaders(t.activeCamera.position)
-            }), e
-        };
+            e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene);
+            e.setTarget(BABYLON.Vector3.Zero());
+            t = this.scene;
+            i = MfgGround.singleton;
+            this.scene.registerBeforeRender(
+                function()
+                {
+                    t.isReady() && i.updateShaders(t.activeCamera.position)
+                }
+            );
+            return e;
+        }
 
         public createArcCamera()
         {
             var e, t, i;
-            return e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene), e.setPosition(new BABYLON.Vector3(200, 150, 200)), e.lowerAlphaLimit = e.upperAlphaLimit = 0, e.lowerBetaLimit = 2, e.upperBetaLimit = 1, e.lowerRadiusLimit = e.upperRadiusLimit = e.radius, t = this.scene, i = MfgGround.singleton, this.scene.registerBeforeRender(function() {
-                t.isReady() && (i.updateShaders(t.activeCamera.position), t.activeCamera.alpha += .002)
-            }), e.viewport = new BABYLON.Viewport(0, 0, 1, 1), e
-        };
+            e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene);
+            e.setPosition(new BABYLON.Vector3(200, 150, 200));
+            e.lowerAlphaLimit = e.upperAlphaLimit = 0;
+            e.lowerBetaLimit = 2;
+            e.upperBetaLimit = 1;
+            e.lowerRadiusLimit = e.upperRadiusLimit = e.radius;
+            t = this.scene;
+            i = MfgGround.singleton;
+            this.scene.registerBeforeRender(
+                function() {
+                    if (t.isReady())
+                    {
+                        i.updateShaders(t.activeCamera.position);
+                        t.activeCamera.alpha += .002;
+                    }
+                }
+            );
+            e.viewport = new BABYLON.Viewport(0, 0, 1, 1);
+
+            return e;
+        }
 
         public activateCamera( e )
         {
             this.scene.activeCamera = e;
             e.attachControl(this.canvas, !1);
-        };
+        }
 
         public registerMoves()
         {
@@ -276,32 +302,44 @@
             this.scene.registerBeforeRender(
                 this.registerBeforeRender
             );
-        };
+        }
 
         public resetCarPosition()
         {
             this.ds3.setPosition(new CANNON.Vec3(-19, -14, 60));
             this.checkpoints.isEnabled() && this.failedStatusUpdate();
-        };
+        }
 
         public hideCar()
         {
             this.ds3.setPosition(new CANNON.Vec3(0, 0, 0));
             this.ds3.update();
-        };
+        }
 
         public leaveGame()
         {
-            this.scene.unregisterBeforeRender(this.registerBeforeRender), window.removeEventListener("keydown", this.keydownHandler), window.removeEventListener("keyup", this.keyupHandler), $("#title_bar").toggle(), $("#tdb_back").toggle(), $("#tdb").toggle(), this.activateCamera(this.arcCamera), this.hideCar(), this.checkpoints.isEnabled() && (this.checkpoints.resetSprites(), this.checkpoints.enableSprites())
-        };
+            this.scene.unregisterBeforeRender(this.registerBeforeRender);
+            window.removeEventListener("keydown", this.keydownHandler);
+            window.removeEventListener("keyup", this.keyupHandler);
+            $("#title_bar").toggle();
+            $("#tdb_back").toggle();
+            $("#tdb").toggle();
+            this.activateCamera(this.arcCamera);
+            this.hideCar();
+            if (this.checkpoints.isEnabled())
+            {
+                this.checkpoints.resetSprites();
+                this.checkpoints.enableSprites();
+            }
+        }
 
         public start()
         {
             // set feature 'checkpoints' on!
             this.checkpoints.enableSprites();
-            $("#tdb #tdb_checkpoints").toggle();
+            $( "#tdb_checkpoints" ).toggle();
 
-            var i, s, o, a, n, r, d;
+            var i, s, n, r, d;
 
             MfgKey.resetKeys();
 
@@ -313,14 +351,21 @@
 
             this.registerBeforeRender = function()
             {
-                s.isReady() && (
-                    i.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir),
-                    1 === MfgKey.changeDir && (MfgDemo.singleton.displayDirection(i.getDirection()), MfgKey.changeDir = 0),
-                    MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep),
-                    i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition(),
-                    MfgGround.singleton.updateShaders(s.activeCamera.position), i.update(), MfgDemo.singleton.updateTdB(),
-                    MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer()
-                )
+                if (s.isReady())
+                {
+                    i.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                    if (1 === MfgKey.changeDir)
+                    {
+                        MfgDemo.singleton.displayDirection(i.getDirection());
+                        MfgKey.changeDir = 0;
+                    }
+                    MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
+                    i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition();
+                    MfgGround.singleton.updateShaders(s.activeCamera.position);
+                    i.update();
+                    MfgDemo.singleton.updateTdB();
+                    MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer();
+                }
             };
 
             this.createPostProcessPipeline();
@@ -374,5 +419,5 @@
             $("#menus").toggle();
 
             this.startDriving();
-        };
+        }
     }
