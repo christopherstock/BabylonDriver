@@ -1,6 +1,6 @@
 
     /************************************************************************************
-    *   Represents the whole demo.
+    *   Represents the whole application.
     *
     *   @author     Christopher Stock
     *   @version    0.0.1
@@ -9,26 +9,42 @@
     {
         /** The singleton instance of this demo app. */
         public      static          singleton               :MfgDemo                        = null;
-
         /** The skybox that surrounds the scene. */
         public                      skyBox                  :MfgSkyBox                      = null;
-
-
-        public                      canvas                  :HTMLCanvasElement              = null;
-        public                      message                 :HTMLDivElement                 = null;
-        public                      engine                  :BABYLON.Engine                 = null;
+        /** The checkpoint system. */
         public                      checkpoints             :MfgCheckpoint                  = null;
-        public                      arcCamera               :any                            = null;
-        public                      followCamera            :any                            = null;
-        public                      ds3                     :MfgCar                         = null;
-        public                      failed                  :number                         = null;
-        public                      timer                   :number                         = null;
+        /** The car to control. */
+        public                      car                     :MfgCar                         = null;
+
+        /** The canvas where all drawing operations appear. */
+        public                      canvas                  :HTMLCanvasElement              = null;
+        /** The loading message div container. */
+        public                      divLoadingMessage       :HTMLDivElement                 = null;
+
+        /** The singleton instance of the Babylon.js engine. */
+        public                      engine                  :BABYLON.Engine                 = null;
+        /** The singleton instance of the Babylon.js scene. */
         public                      scene                   :BABYLON.Scene                  = null;
+        /** The shadow light. */
         public                      shadowLight             :BABYLON.Light                  = null;
+        /** The shadow generator. */
         public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
+        /** All meshes to be rendered by the shadow generator. */
         public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
+        /** The arc rotating camera. */
+        public                      arcCamera               :BABYLON.ArcRotateCamera        = null;
+        /** The car follow camera. */
+        public                      followCamera            :BABYLON.FollowCamera           = null;
+        /** Number of failed checkpoints. */
+        public                      failed                  :number                         = null;
+        /** The current timer. */
+        public                      timer                   :number                         = null;
+
+        /** The handler for the keyUp event. */
         public                      keyupHandler            :any                            = null;
+        /** The handler for the keyDown event. */
         public                      keydownHandler          :any                            = null;
+        /** Unknown by now. */
         public                      registerBeforeRender    :any                            = null;
 
         /************************************************************************************
@@ -38,8 +54,9 @@
         {
             if ( BABYLON.Engine.isSupported() )
             {
-                this.canvas  = <HTMLCanvasElement>document.getElementById("driverCanvas");
-                this.message = <HTMLDivElement>document.getElementById("message");
+                this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
+                this.divLoadingMessage = <HTMLDivElement>document.getElementById("loadingMessage");
+
                 this.engine  = new BABYLON.Engine( this.canvas, !0 );
 
                 this.initUI();
@@ -47,9 +64,14 @@
             }
         }
 
-        public loadingMessage( e:string )
+        /************************************************************************************
+        *   Sets the specified text as the current loading message.
+        *
+        *   @param msg The text to set as the current loading message.
+        ************************************************************************************/
+        public loadingMessage( msg:string )
         {
-            $("#loadingMessage").text( e ) ;
+            this.divLoadingMessage.innerText = msg;
         }
 
         public toggleLoadingMessage()
@@ -78,8 +100,8 @@
             this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
             this.activateCamera( this.followCamera );
 
-            this.ds3.setPosition( new CANNON.Vec3( -19, -14, 60 ) );
-            this.ds3.update();
+            this.car.setPosition( new CANNON.Vec3( -19, -14, 60 ) );
+            this.car.update();
 
             this.registerMoves();
         }
@@ -92,7 +114,7 @@
 
         public updateTdB()
         {
-            $("#speed_span").text( Math.round( this.ds3.getSpeed() ).toString() )
+            $("#speed_span").text( Math.round( this.car.getSpeed() ).toString() )
         }
 
         public checkpointsStatusUpdate()
@@ -167,7 +189,7 @@
 
         public loadCar()
         {
-            this.ds3 = new MfgCar(this.scene, MfgWorld.singleton.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.singleton.carBodyMaterial, MfgWorld.singleton.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
+            this.car = new MfgCar(this.scene, MfgWorld.singleton.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.singleton.carBodyMaterial, MfgWorld.singleton.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
                 scaleFactor: .001,
                 invertX: !0,
                 bodyMass: 2e3,
@@ -177,14 +199,14 @@
                 msgCallback: this.loadingMessage.bind(this),
                 onLoadSuccess: this.loadCheckpoints.bind(this)
             });
-            this.ds3.load()
+            this.car.load()
         }
 
         public loadCheckpoints()
         {
             this.checkpoints = new MfgCheckpoint(
                 this.scene,
-                this.ds3.getCarMainMesh(),
+                this.car.getCarMainMesh(),
                 MfgGround.singleton,
                 "./res/paris/",
                 "paris_poi.babylon",
@@ -256,7 +278,7 @@
             return e;
         }
 
-        public createArcCamera()
+        public createArcCamera() : BABYLON.ArcRotateCamera
         {
             var e, t, i;
             e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene);
@@ -306,14 +328,14 @@
 
         public resetCarPosition()
         {
-            this.ds3.setPosition(new CANNON.Vec3(-19, -14, 60));
+            this.car.setPosition(new CANNON.Vec3(-19, -14, 60));
             this.checkpoints.isEnabled() && this.failedStatusUpdate();
         }
 
         public hideCar()
         {
-            this.ds3.setPosition(new CANNON.Vec3(0, 0, 0));
-            this.ds3.update();
+            this.car.setPosition(new CANNON.Vec3(0, 0, 0));
+            this.car.update();
         }
 
         public leaveGame()
@@ -346,7 +368,7 @@
             this.keydownHandler = MfgKey.onKeyDown;
             this.keyupHandler   = MfgKey.onKeyUp;
 
-            i = this.ds3;
+            i = this.car;
             s = this.scene;
 
             this.registerBeforeRender = function()
@@ -411,7 +433,7 @@
             BABYLON.Tools.QueueNewFrame(d);
 
             this.arcCamera = this.createArcCamera();
-            this.followCamera = this.ds3.createFollowCamera();
+            this.followCamera = this.car.createFollowCamera();
 
             this.activateCamera(this.arcCamera);
             this.toggleLoadingMessage();

@@ -23,6 +23,8 @@
             //set document title
             document.title = MfgSettings.TITLE;
 
+            //instanciate the demo
+            MfgDemo.singleton = new MfgDemo();
 
 
 

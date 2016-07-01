@@ -122,9 +122,16 @@
         public _loadWheels()
         {
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.wheelMeshPath, this.wheelMeshName, this.scene, function (t) {
-                e._babylon_addWheels(t), e._cannon_addWheels( LibMath.getMinMaxBox(t) )
-            })
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.wheelMeshPath,
+                this.wheelMeshName,
+                this.scene,
+                function (t) {
+                    e._babylon_addWheels(t);
+                    e._cannon_addWheels( LibMath.getMinMaxBox(t) );
+                }
+            )
         }
 
         public _babylon_addWheels(e)
@@ -146,13 +153,21 @@
 
         public load()
         {
-            this.msgCallback && this.msgCallback("make DS3...");
+            this.msgCallback && this.msgCallback( "importing MF vehicle" );
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.bodyMeshPath, this.bodyMeshName, this.scene, function (t) {
-                e._babylon_addBody(t);
-                var i = LibMath.getMinMaxBox(t);
-                e._cannon_addBody(i), e._loadWheels()
-            })
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.bodyMeshPath,
+                this.bodyMeshName,
+                this.scene,
+                function( t )
+                {
+                    e._babylon_addBody( t );
+                    var i = LibMath.getMinMaxBox( t );
+                    e._cannon_addBody(i);
+                    e._loadWheels();
+                }
+            )
         }
 
         public update()
@@ -163,27 +178,28 @@
             }, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 0, 1), Math.PI), i = this.vehicle.chassisBody, this.b_bodyRoot.position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y - .02), this.b_bodyRoot.rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(0), i = this.vehicle.getWheelTransformWorld(0), this.b_wheels[0].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[0].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(1), i = this.vehicle.getWheelTransformWorld(1), this.b_wheels[1].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[1].rotationQuaternion = e(i.quaternion, 1, t), this.vehicle.updateWheelTransform(2), i = this.vehicle.getWheelTransformWorld(2), this.b_wheels[2].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[2].rotationQuaternion = e(i.quaternion, 1, new BABYLON.Quaternion(0, 0, 0, -1)), this.vehicle.updateWheelTransform(3), i = this.vehicle.getWheelTransformWorld(3), this.b_wheels[3].position = new BABYLON.Vector3(i.position.x, i.position.z, i.position.y), this.b_wheels[3].rotationQuaternion = e(i.quaternion, 1, t), s = LibMath.toEulerAngles(this.b_bodyRoot.rotationQuaternion), this.b_bodyRoot.rotation = new BABYLON.Vector3(s.x, s.y, s.z)
         }
 
-        public setPosition(e)
+        public setPosition( e )
         {
             this.vehicle.chassisBody.position.set(e.x, e.y, e.z), this.vehicle.chassisBody.quaternion.set(0, 0, 0, 1), this.vehicle.chassisBody.angularVelocity.set(0, 0, 0), this.vehicle.chassisBody.velocity.set(0, 0, 0)
         }
 
-        public steering(e)
+        public steering( e )
         {
-            this.vehicle.setSteeringValue(e, 0), this.vehicle.setSteeringValue(e, 1)
+            this.vehicle.setSteeringValue( e, 0 );
+            this.vehicle.setSteeringValue( e, 1 );
         }
 
-        public brake(e)
+        public brake( e )
         {
             this.vehicle.applyEngineForce(0, 0), this.vehicle.applyEngineForce(0, 1), this.vehicle.setBrake(e, 0), this.vehicle.setBrake(e, 1), this.vehicle.setBrake(e, 2), this.vehicle.setBrake(e, 3)
         }
 
-        public accelerate(e)
+        public accelerate( e )
         {
             this.vehicle.setBrake(0, 0), this.vehicle.setBrake(0, 1), this.vehicle.setBrake(0, 2), this.vehicle.setBrake(0, 3), this.vehicle.applyEngineForce(e, 0), this.vehicle.applyEngineForce(e, 1)
         }
 
-        public moves(e, t, i, s, o)
+        public moves( e, t, i, s, o )
         {
             if (1 === s && this.lenk >= -.5 && (this.lenk -= .01, this.steering(this.lenk)), 1 === i && this.lenk <= .5 && (this.lenk += .01, this.steering(this.lenk)), 0 === i && 0 === s && (this.lenk < 0 ? (this.lenk += .01, this.steering(this.lenk)) : this.lenk > 0 && (this.lenk -= .01, this.steering(this.lenk)), Math.abs(this.lenk) < .01 && (this.lenk = 0, this.steering(this.lenk))), 1 === e && 1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = 8e3 : this.getSpeed() < 100 ? this.dyn = 7e3 : this.getSpeed() < 150 ? this.dyn = 6e3 : this.getSpeed() < 230 ? this.dyn = 4e3 : this.dyn = 0, this.accelerate(this.dyn)) : 1 === e && -1 === this.direction ? (this.getSpeed() < 50 ? this.dyn = -2e3 : this.dyn = 0, this.accelerate(this.dyn)) : this.accelerate(0), 1 === o && this.getSpeed() < 5 && (this.direction *= -1), 1 === t) {
                 this.dyn = 0;
@@ -192,10 +208,17 @@
             }
         }
 
-        public createFollowCamera()
+        public createFollowCamera() : BABYLON.FollowCamera
         {
             var e = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), this.scene);
-            return e.target = this.b_bodyRoot, e.radius = 8, e.heightOffset = 2, e.rotationOffset = 90, e.cameraAcceleration = .05, e.maxCameraSpeed = 20, e
+            e.target = this.b_bodyRoot;
+            e.radius = 8;
+            e.heightOffset = 2;
+            e.rotationOffset = 90;
+            e.cameraAcceleration = .05;
+            e.maxCameraSpeed = 20;
+
+            return e;
         }
 
         public getSpeed()

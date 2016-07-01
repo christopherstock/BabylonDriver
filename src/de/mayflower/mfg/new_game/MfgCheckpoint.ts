@@ -43,7 +43,7 @@
         public load()
         {
             var e, t, i, s, o;
-            this.msgCallback && this.msgCallback("place checkpoints..."), this.spriteArray = [], this.nbCheckPoints = 0, e = new BABYLON.SpriteManager("POImanager", this.spriteFile, this.nbSprites, this.spriteSize, this.scene), t = this, BABYLON.SceneLoader.ImportMesh("", this.poiPath, this.poiMesh, this.scene, function (n) {
+            this.msgCallback && this.msgCallback("placing checkpoints"), this.spriteArray = [], this.nbCheckPoints = 0, e = new BABYLON.SpriteManager("POImanager", this.spriteFile, this.nbSprites, this.spriteSize, this.scene), t = this, BABYLON.SceneLoader.ImportMesh("", this.poiPath, this.poiMesh, this.scene, function (n) {
                 for (i = 0; i < n.length; i += 1)s = n[i].getVerticesData(BABYLON.VertexBuffer.PositionKind), null !== s && (t.ground._moveAndScaleMesh(n[i]), o = new BABYLON.Sprite("poi", e), o.size = 0, o.position = n[i].position, t.spriteArray.push([n[i], o]), t.nbCheckPoints += 1);
                 t.onLoadFinished()
             })

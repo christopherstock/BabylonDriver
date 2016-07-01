@@ -216,7 +216,7 @@
 
         public _createGround()
         {
-            this.msgCallback && this.msgCallback("create ground...");
+            this.msgCallback && this.msgCallback("creating landscape");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
                 var i, s;
@@ -306,7 +306,7 @@
 
         public _loadSolidBuildings()
         {
-            this.msgCallback("construct buildings...");
+            this.msgCallback("constructing buildings");
             var e = MfgGround.singleton;
             BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, i = [], s = [];
@@ -354,14 +354,19 @@
                 }
             }
             var L = new CANNON.ConvexPolyhedron(w, N), O = new CANNON.Body({mass: 0, material: this.groundMaterial});
-            O.addShape(L), O.position.set(e.position.x, e.position.z, e.position.y);
+            O.addShape(L);
+            O.position.set(e.position.x, e.position.z, e.position.y);
+
             var A = BABYLON.Quaternion.RotationYawPitchRoll(e.rotation.y, e.rotation.x, e.rotation.z);
-            O.quaternion = t(A, 1, new CANNON.Quaternion(0, 0, 0, -1)), O.collisionFilterGroup = this.groundCollisionFilterGroup, O.collisionFilterMask = this.groundCollisionFilterMask, this.world.add(O)
+            O.quaternion = t(A, 1, new CANNON.Quaternion(0, 0, 0, -1));
+            O.collisionFilterGroup = this.groundCollisionFilterGroup;
+            O.collisionFilterMask = this.groundCollisionFilterMask;
+            this.world.add( O );
         }
 
         public _load3dBuildings()
         {
-            this.msgCallback && this.msgCallback("make special buildings and monuments...");
+            this.msgCallback && this.msgCallback("creating special buildings and monuments");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, a, n, i = [], s = [];
@@ -371,13 +376,14 @@
                     var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
                     e.buildingCelShading && e._setCellShading(r, !0)
                 }
-                s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1), null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
+                s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
+                null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
             })
         }
 
         public _loadTrees()
         {
-            this.msgCallback && this.msgCallback("plant trees...");
+            this.msgCallback && this.msgCallback("creating trees");
 
             var e = function (e, t) {
                 if (e === t)return e;
@@ -409,7 +415,8 @@
                     null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(p);
                     p.material = t.treesMaterial
                 }
-                t._mergeOutlineMeshes(), null !== t.particlesName ? t._loadParticles() : null !== t.onLoadFinished && t.onLoadFinished()
+                t._mergeOutlineMeshes();
+                null !== t.particlesName ? t._loadParticleSystems() : null !== t.onLoadFinished && t.onLoadFinished()
             })
         }
 
@@ -424,9 +431,9 @@
             r.addShape(n), r.collisionFilterGroup = this.groundCollisionFilterGroup, r.collisionFilterMask = this.groundCollisionFilterMask, r.position.set(t.x, t.z + a.z / 2, t.y), this.world.add(r)
         }
 
-        public _loadParticles()
+        public _loadParticleSystems()
         {
-            this.msgCallback && this.msgCallback("turn on fountains and smoke...");
+            this.msgCallback && this.msgCallback( "creating particle systems" );
             var e, t, i = this;
             BABYLON.SceneLoader.ImportMesh("", this.particlesPath, this.particlesName, this.scene, function (s) {
                 for (t = 0; t < s.length; t++)if (e = s[t], null !== e.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {

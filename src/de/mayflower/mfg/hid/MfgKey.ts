@@ -7,7 +7,6 @@
     *****************************************************************************/
     class MfgKey
     {
-        public          static          KEYCODE_BACKSPACE           :number             = 8;
         public          static          KEYCODE_ESCAPE              :number             = 27;
         public          static          KEYCODE_SPACE               :number             = 32;
 
@@ -15,6 +14,8 @@
         public          static          KEYCODE_UP                  :number             = 38;
         public          static          KEYCODE_RIGHT               :number             = 39;
         public          static          KEYCODE_DOWN                :number             = 40;
+
+        public          static          KEYCODE_R                   :number             = 82;
 
         public          static          left                        :number             = 0;
         public          static          right                       :number             = 0;
@@ -46,9 +47,9 @@
             if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) MfgKey.right   = 1;
             if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) MfgKey.back    = 1;
 
-            if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) MfgKey.changeDir = 1;
+            if ( keyEvent.keyCode == MfgKey.KEYCODE_R ) MfgKey.changeDir = 1;
             if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) MfgDemo.singleton.leaveGame();
-            if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.ds3.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
+            if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.car.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
         }
             
         /*****************************************************************************
