@@ -143,8 +143,8 @@
             var e = 50;
             MfgGround.singleton = new MfgGround(this.scene, MfgWorld.singleton.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.singleton.groundMaterial, {
                 groundTexture: "./res/paris/plan.png",
-                groundCollisionFilterGroup: MfgWorld.singleton.GROUP1,
-                groundCollisionFilterMask:  MfgWorld.singleton.GROUP2,
+                groundCollisionFilterGroup: MfgWorld.GROUP1,
+                groundCollisionFilterMask:  MfgWorld.GROUP2,
                 scaleFactor: e,
                 buildingBaseHeight: e,
                 solidBuildingsPath: "./res/paris/",
@@ -170,8 +170,8 @@
                 scaleFactor: .001,
                 invertX: !0,
                 bodyMass: 2e3,
-                bodyCollisionFilterGroup: MfgWorld.singleton.GROUP2,
-                bodyCollisionFilterMask:  MfgWorld.singleton.GROUP1,
+                bodyCollisionFilterGroup: MfgWorld.GROUP2,
+                bodyCollisionFilterMask:  MfgWorld.GROUP1,
                 shadowGenerator: this.shadowGenerator,
                 msgCallback: this.loadingMessage.bind(this),
                 onLoadSuccess: this.loadCheckpoints.bind(this)
