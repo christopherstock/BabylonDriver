@@ -15,6 +15,11 @@
 
         /************************************************************************************
         *   Creates a new tree mesh.
+        *
+        *   @param sizeBranch The size of the branch.
+        *   @param sizeTrunk  The size of the trunk.
+        *   @param sizeRadius The radius of the tree.
+        *   @param scene      The scene to apply.
         ************************************************************************************/
         public constructor( sizeBranch:number, sizeTrunk:number, sizeRadius:number, scene:BABYLON.Scene )
         {
@@ -31,6 +36,7 @@
             );
 
             this.material.diffuseColor = BABYLON.Color3.FromInts( 0, 0, 0 );
+
             this.material.specularColor = BABYLON.Color3.Black();
 
             this.position.y = sizeTrunk + sizeBranch / 2 - 2;
@@ -63,23 +69,13 @@
             for (a = 0; o > a; a++) {
                 var l = new BABYLON.Vector3(i[3 * a], i[3 * a + 1], i[3 * a + 2]);
                 l.y >= sizeBranch / 2 && r.push(l);
-
-                var d = false;
-                for (var c = 0; c < n.length && !d; c++) {
+                var c, d = !1;
+                for (c = 0; c < n.length && !d; c++) {
                     h = n[c];
                     var u = h[0];
-                    if (u.equals(l) || u.subtract(l).lengthSquared() < .01)
-                    {
-                        h.push(3 * a);
-                        d = true;
-                    }
+                    (u.equals(l) || u.subtract(l).lengthSquared() < .01) && (h.push(3 * a), d = !0)
                 }
-                if (d)
-                {
-                    h = [];
-                    h.push(l, 3 * a);
-                    n.push(h);
-                }
+                d || (h = [], h.push(l, 3 * a), n.push(h))
             }
 
             var p = function (e, t) {
