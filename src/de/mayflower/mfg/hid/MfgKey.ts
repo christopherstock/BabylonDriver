@@ -22,6 +22,9 @@
         public          static          back                        :number             = 0;
         public          static          changeDir                   :number             = 0;
 
+        /*****************************************************************************
+        *   Resets all key states to the 'unpushed' state.
+        *****************************************************************************/
         public static resetKeys()
         {
             MfgKey.left      = 0;
@@ -31,6 +34,11 @@
             MfgKey.changeDir = 0;
         }
 
+        /*****************************************************************************
+        *   Being invoked when a key is down.
+        *
+        *   @param keyEvent The key event being passed when a keyDown event is recognized.
+        *****************************************************************************/
         public static onKeyDown( keyEvent:KeyboardEvent )
         {
             if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 1;
@@ -43,6 +51,11 @@
             if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.ds3.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
         }
             
+        /*****************************************************************************
+        *   Being invoked when a key is up.
+        *
+        *   @param keyEvent The key event being passed when a keyUp event is recognized.
+        *****************************************************************************/
         public static onKeyUp( keyEvent:KeyboardEvent )
         {
             if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 0;

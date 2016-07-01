@@ -7,26 +7,16 @@
     *****************************************************************************/
     class MfgInit
     {
-        /*****************************************************************************
-        *   The WebGL canvas context.
-        *****************************************************************************/
+        /** The WebGL canvas context. */
         public          static      canvas          :HTMLCanvasElement          = null;
-
-        /*****************************************************************************
-        *   The DIV containing the FPS information.
-        *****************************************************************************/
-        public          static      divFps          :HTMLDivElement             = null;
-
-        /*****************************************************************************
-        *   The WebGL canvas context.
-        *****************************************************************************/
-        public          static      engine          :BABYLON.Engine             = null;
 
         /*****************************************************************************
         *   Inits this app from scratch.
         *****************************************************************************/
         public static init()
         {
+            MfgDebug.init.log( "init()" );
+
             //acclaim debug console
             MfgDebug.acclaim.log( MfgSettings.TITLE );
 
@@ -89,7 +79,7 @@
         *****************************************************************************/
         public static onInitCompleted()
         {
-            MfgDebug.init.log( "> onInitCompleted" );
+            MfgDebug.init.log( "onInitCompleted" );
 /*
             MfgScene.scene.executeWhenReady
             (

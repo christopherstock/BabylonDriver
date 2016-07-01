@@ -26,4 +26,3 @@
 /// <reference path="src/de/mayflower/mfg/base/MfgInit.ts" />
 /// <reference path="src/de/mayflower/mfg/g3d/MfgSkyBox.ts" />
 /// <reference path="src/de/mayflower/mfg/hid/MfgKey.ts" />
-/// <reference path="src/de/mayflower/mfg/hid/MfgPointer.ts" />
