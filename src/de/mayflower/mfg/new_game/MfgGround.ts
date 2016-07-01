@@ -40,7 +40,6 @@
         public                          particlesName               :any                        = null;
         public                          buildingCelShading          :any                        = null;
         public                          shadowGenerator             :any                        = null;
-        public                          msgCallback                 :any                        = null;
         public                          onLoadFinished              :any                        = null;
         public                          subdivision                 :any                        = null;
         public                          shadowRenderList            :any                        = null;
@@ -86,7 +85,6 @@
             this.particlesName = "string" == typeof r.particlesName ? r.particlesName : null;
             this.buildingCelShading = "boolean" == typeof r.buildingCelShading ? r.buildingCelShading : !1;
             this.shadowGenerator = "object" == typeof r.shadowGenerator ? r.shadowGenerator : null;
-            this.msgCallback = "function" == typeof r.msgCallback ? r.msgCallback : null;
             this.onLoadFinished = "function" == typeof r.onLoadFinished ? r.onLoadFinished : null;
             this.subdivision = 64;
             this.shadowRenderList = null;
@@ -216,7 +214,7 @@
 
         public _createGround()
         {
-            this.msgCallback && this.msgCallback("creating landscape");
+            MfgPreloader.singleton.setLoadingMessage("creating landscape");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
                 var i, s;
@@ -306,7 +304,7 @@
 
         public _loadSolidBuildings()
         {
-            this.msgCallback("constructing buildings");
+            MfgPreloader.singleton.setLoadingMessage("constructing buildings");
             var e = MfgGround.singleton;
             BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, i = [], s = [];
@@ -366,7 +364,7 @@
 
         public _load3dBuildings()
         {
-            this.msgCallback && this.msgCallback("creating special buildings and monuments");
+            MfgPreloader.singleton.setLoadingMessage("creating special buildings and monuments");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, a, n, i = [], s = [];
@@ -383,7 +381,7 @@
 
         public _loadTrees()
         {
-            this.msgCallback && this.msgCallback("creating trees");
+            MfgPreloader.singleton.setLoadingMessage("creating trees");
 
             var e = function (e, t) {
                 if (e === t)return e;
@@ -433,7 +431,7 @@
 
         public _loadParticleSystems()
         {
-            this.msgCallback && this.msgCallback( "creating particle systems" );
+            MfgPreloader.singleton.setLoadingMessage( "creating particle systems" );
             var e, t, i = this;
             BABYLON.SceneLoader.ImportMesh("", this.particlesPath, this.particlesName, this.scene, function (s) {
                 for (t = 0; t < s.length; t++)if (e = s[t], null !== e.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {

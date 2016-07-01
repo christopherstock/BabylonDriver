@@ -12,12 +12,8 @@
         *****************************************************************************/
         public static init()
         {
-            MfgDebug.init.log( "init()" );
-
-            //acclaim debug console
+            //acclaim debug console and set the document title
             MfgDebug.acclaim.log( MfgSettings.TITLE );
-
-            //set document title
             document.title = MfgSettings.TITLE;
 
             //create preloader

@@ -30,7 +30,6 @@
         public              firstPos                        :any                            = null;
         public              bodyCollisionFilterGroup        :any                            = null;
         public              bodyCollisionFilterMask         :any                            = null;
-        public              msgCallback                     :any                            = null;
         public              onLoadSuccess                   :any                            = null;
         public              scale                           :any                            = null;
         public              b_bodyRoot                      :any                            = null;
@@ -82,7 +81,6 @@
             this.firstPos = "CANNON.Vec3" == typeof p.firstPos ? p.firstPos : new CANNON.Vec3(0, 0, 0);
             this.bodyCollisionFilterGroup = "number" == typeof p.bodyCollisionFilterGroup ? p.bodyCollisionFilterGroup : 0;
             this.bodyCollisionFilterMask = "number" == typeof p.bodyCollisionFilterMask ? p.bodyCollisionFilterMask : 0;
-            this.msgCallback = "function" == typeof p.msgCallback ? p.msgCallback : null;
             this.onLoadSuccess = "function" == typeof p.onLoadSuccess ? p.onLoadSuccess : null;
         }
 
@@ -153,7 +151,7 @@
 
         public load()
         {
-            this.msgCallback && this.msgCallback( "importing MF vehicle" );
+            MfgPreloader.singleton.setLoadingMessage( "importing MF vehicle" );
             var e = this;
             BABYLON.SceneLoader.ImportMesh(
                 "",

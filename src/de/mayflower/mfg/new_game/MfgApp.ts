@@ -19,8 +19,6 @@
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
-        /** The loading message div container. */
-        public                      divLoadingMessage       :HTMLDivElement                 = null;
 
         /** The singleton instance of the Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
@@ -57,26 +55,9 @@
         public constructor()
         {
             this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
-            this.divLoadingMessage = <HTMLDivElement>document.getElementById("loadingMessage");
+            
 
             this.engine            = new BABYLON.Engine( this.canvas, !0 );
-        }
-
-        /************************************************************************************
-        *   Sets the specified text as the current loading message.
-        *
-        *   @param msg The text to set as the current loading message.
-        ************************************************************************************/
-        public loadingMessage( msg:string )
-        {
-            this.divLoadingMessage.innerText = msg;
-        }
-
-        public toggleLoadingMessage()
-        {
-            $("#loading").toggle();
-            $("#title").css("color", "#000000");
-            $("#subtitle").css("color", "#000000");
         }
 
         public initUI()
@@ -179,7 +160,6 @@
                 buildingCelShading: !0,
                 outlineShaderDeltaHeight: .15 * (e / 50),
                 shadowGenerator: this.shadowGenerator,
-                msgCallback: this.loadingMessage.bind(this),
                 onLoadFinished: this.loadCar.bind(this)
             });
             MfgGround.singleton.load()
@@ -194,7 +174,6 @@
                 bodyCollisionFilterGroup: MfgWorld.GROUP2,
                 bodyCollisionFilterMask:  MfgWorld.GROUP1,
                 shadowGenerator: this.shadowGenerator,
-                msgCallback: this.loadingMessage.bind(this),
                 onLoadSuccess: this.loadCheckpoints.bind(this)
             });
             this.car.load()
@@ -212,7 +191,6 @@
                 9,
                 512,
                 {
-                    msgCallback: this.loadingMessage.bind(this),
                     chekpointsCallback: this.checkpointsStatusUpdate.bind(this),
                     onLoadFinished: this.start.bind(this)
                 }
@@ -427,7 +405,7 @@
             this.followCamera = this.car.createFollowCamera();
 
             this.activateCamera(this.arcCamera);
-            this.toggleLoadingMessage();
+            MfgPreloader.singleton.hidePreloader();
 
             $("#menus").toggle();
 

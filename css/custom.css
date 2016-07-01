@@ -50,7 +50,7 @@ body, html {
     touch-action: none
 }
 
-#loading, #loading #loadingMessage {
+#preloader, #preloader #loadingMessage {
     font-family: Montserrat-Bold, sans-serif;
     position: absolute;
     text-align: center;
@@ -59,7 +59,7 @@ body, html {
     color: #fff
 }
 
-#loading {
+#preloader {
     top: 0;
     bottom: 0;
     left: 0;
@@ -68,7 +68,7 @@ body, html {
     font-size: 24px
 }
 
-#loading #loadingMessage {
+#preloader #loadingMessage {
     top: 40px;
     height: 20px;
     font-size: 12px

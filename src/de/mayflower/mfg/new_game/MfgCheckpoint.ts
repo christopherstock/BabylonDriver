@@ -15,7 +15,6 @@
         public                spriteFile                        :any                    = null;
         public                nbSprites                         :any                    = null;
         public                spriteSize                        :any                    = null;
-        public                msgCallback                       :any                    = null;
         public                chekpointsCallback                :any                    = null;
         public                onLoadFinished                    :any                    = null;
         public                enabled                           :any                    = null;
@@ -33,7 +32,6 @@
             this.spriteFile = n;
             this.nbSprites = r;
             this.spriteSize = a;
-            this.msgCallback = "function" == typeof h.msgCallback ? h.msgCallback : null;
             this.chekpointsCallback = "function" == typeof h.chekpointsCallback ? h.chekpointsCallback : null;
             this.onLoadFinished = "function" == typeof h.onLoadFinished ? h.onLoadFinished : null;
             this.enabled = !1;
@@ -43,10 +41,15 @@
         public load()
         {
             var e, t, i, s, o;
-            this.msgCallback && this.msgCallback("placing checkpoints"), this.spriteArray = [], this.nbCheckPoints = 0, e = new BABYLON.SpriteManager("POImanager", this.spriteFile, this.nbSprites, this.spriteSize, this.scene), t = this, BABYLON.SceneLoader.ImportMesh("", this.poiPath, this.poiMesh, this.scene, function (n) {
+            MfgPreloader.singleton.setLoadingMessage("placing checkpoints");
+            this.spriteArray = [];
+            this.nbCheckPoints = 0;
+            e = new BABYLON.SpriteManager("POImanager", this.spriteFile, this.nbSprites, this.spriteSize, this.scene);
+            t = this;
+            BABYLON.SceneLoader.ImportMesh("", this.poiPath, this.poiMesh, this.scene, function (n) {
                 for (i = 0; i < n.length; i += 1)s = n[i].getVerticesData(BABYLON.VertexBuffer.PositionKind), null !== s && (t.ground._moveAndScaleMesh(n[i]), o = new BABYLON.Sprite("poi", e), o.size = 0, o.position = n[i].position, t.spriteArray.push([n[i], o]), t.nbCheckPoints += 1);
                 t.onLoadFinished()
-            })
+            });
         }
 
         public isEnabled()
