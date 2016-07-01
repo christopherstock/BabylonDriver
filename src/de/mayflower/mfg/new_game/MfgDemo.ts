@@ -119,13 +119,13 @@
 
         public checkpointsStatusUpdate()
         {
-            $("#remaining span").text( this.checkpoints.getNbCheckPoints() )
+            $("#remaining_span").text( this.checkpoints.getNbCheckPoints() )
         }
 
         public failedStatusUpdate()
         {
             this.failed += 1;
-            $("#failed span").text( this.failed.toString() );
+            $("#failed_span").text( this.failed.toString() );
         }
 
         public initFailed()
@@ -357,7 +357,7 @@
 
         public start()
         {
-            // set feature 'checkpoints' on!
+            // enable feature 'checkpoints' on!
             this.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
 
