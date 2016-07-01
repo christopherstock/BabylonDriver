@@ -2,8 +2,6 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO ASAP   Extract key system.
-    *   TODO ASAP   Add MF-carsign.
     *   TODO ASAP   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
@@ -11,6 +9,8 @@
     *   TODO INIT   Own driving physics?
     *   TODO INIT   Own level data?
     *
+    *   DONE        Added MF-carsign and altered car texture.
+    *   DONE        Refactored and extracted key system.
     *   DONE        Removed '"use strict"' at all locations.
     *   DONE        Removed all unused libs.
     *   DONE        Cleaned up index.html html code.

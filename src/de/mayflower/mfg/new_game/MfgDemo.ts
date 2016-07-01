@@ -299,22 +299,10 @@
 
             var i, s, o, a, n, r, d;
 
-
-
-            MfgKey.left      = 0;
-            MfgKey.right     = 0;
-            MfgKey.forward   = 0;
-            MfgKey.back      = 0;
-            MfgKey.changeDir = 0;
-
-
-
-
+            MfgKey.resetKeys();
 
             this.keydownHandler = MfgKey.onKeyDown;
             this.keyupHandler   = MfgKey.onKeyUp;
-
-
 
             i = this.ds3;
             s = this.scene;

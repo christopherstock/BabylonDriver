@@ -22,6 +22,15 @@
         public          static          back                        :number             = 0;
         public          static          changeDir                   :number             = 0;
 
+        public static resetKeys()
+        {
+            MfgKey.left      = 0;
+            MfgKey.right     = 0;
+            MfgKey.forward   = 0;
+            MfgKey.back      = 0;
+            MfgKey.changeDir = 0;
+        }
+
         public static onKeyDown( keyEvent:KeyboardEvent )
         {
             if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 1;
