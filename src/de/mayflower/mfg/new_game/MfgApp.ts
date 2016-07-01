@@ -55,19 +55,8 @@
         public constructor()
         {
             this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
-            
 
             this.engine            = new BABYLON.Engine( this.canvas, !0 );
-        }
-
-        public initUI()
-        {
-            $("#start_btn").click(
-                function()
-                {
-                    MfgApp.singleton.startDriving();
-                }
-            );
         }
 
         public startDriving()
