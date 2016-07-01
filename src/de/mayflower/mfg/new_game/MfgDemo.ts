@@ -35,6 +35,9 @@
         public                      arcCamera               :BABYLON.ArcRotateCamera        = null;
         /** The car follow camera. */
         public                      followCamera            :BABYLON.FollowCamera           = null;
+        /** The FramesPerSecond meter. */
+        public                      fpsMeter                :FPSMeter                       = null;
+
         /** Number of failed checkpoints. */
         public                      failed                  :number                         = null;
         /** The current timer. */
@@ -52,16 +55,10 @@
         ************************************************************************************/
         public constructor()
         {
-            if ( BABYLON.Engine.isSupported() )
-            {
-                this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
-                this.divLoadingMessage = <HTMLDivElement>document.getElementById("loadingMessage");
+            this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
+            this.divLoadingMessage = <HTMLDivElement>document.getElementById("loadingMessage");
 
-                this.engine  = new BABYLON.Engine( this.canvas, !0 );
-
-                this.initUI();
-                this.createScene();
-            }
+            this.engine  = new BABYLON.Engine( this.canvas, !0 );
         }
 
         /************************************************************************************
@@ -361,30 +358,25 @@
             this.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
 
-            var i, s, n, r, d;
-
             MfgKey.resetKeys();
 
             this.keydownHandler = MfgKey.onKeyDown;
             this.keyupHandler   = MfgKey.onKeyUp;
 
-            i = this.car;
-            s = this.scene;
-
             this.registerBeforeRender = function()
             {
-                if (s.isReady())
+                if (MfgDemo.singleton.scene.isReady())
                 {
-                    i.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
-                    if (1 === MfgKey.changeDir)
+                    MfgDemo.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                    if ( 1 === MfgKey.changeDir )
                     {
-                        MfgDemo.singleton.displayDirection(i.getDirection());
+                        MfgDemo.singleton.displayDirection(MfgDemo.singleton.car.getDirection());
                         MfgKey.changeDir = 0;
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
-                    i.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition();
-                    MfgGround.singleton.updateShaders(s.activeCamera.position);
-                    i.update();
+                    MfgDemo.singleton.car.getAltitude() < 47 && MfgDemo.singleton.resetCarPosition();
+                    MfgGround.singleton.updateShaders(MfgDemo.singleton.scene.activeCamera.position);
+                    MfgDemo.singleton.car.update();
                     MfgDemo.singleton.updateTdB();
                     MfgDemo.singleton.checkpoints.isEnabled() && MfgDemo.singleton.updateTimer();
                 }
@@ -394,7 +386,7 @@
 
             this.enablePostProcessPipeline();
 
-            n = new FPSMeter(
+            this.fpsMeter = new FPSMeter(
                 null,
                 {
                     graph: 1,
@@ -409,28 +401,26 @@
                 }
             );
 
-            r = this.engine;
-
             window.addEventListener(
                 "resize",
                 function()
                 {
-                    r.resize()
+                    MfgDemo.singleton.engine.resize()
                 }
             );
 
-            d = function()
+            var newFrameTick = function()
             {
-                n.tickStart();
-                r.beginFrame();
-                s.render();
-                r.endFrame();
-                n.tick();
+                MfgDemo.singleton.fpsMeter.tickStart();
+                MfgDemo.singleton.engine.beginFrame();
+                MfgDemo.singleton.scene.render();
+                MfgDemo.singleton.engine.endFrame();
+                MfgDemo.singleton.fpsMeter.tick();
 
-                BABYLON.Tools.QueueNewFrame( d )
+                BABYLON.Tools.QueueNewFrame( newFrameTick )
             };
 
-            BABYLON.Tools.QueueNewFrame(d);
+            BABYLON.Tools.QueueNewFrame(newFrameTick);
 
             this.arcCamera = this.createArcCamera();
             this.followCamera = this.car.createFollowCamera();

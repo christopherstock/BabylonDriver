@@ -25,6 +25,9 @@
 
             //instanciate the demo
             MfgDemo.singleton = new MfgDemo();
+            MfgDemo.singleton.initUI();
+            MfgDemo.singleton.createScene();
+
 
 
 
