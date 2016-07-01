@@ -309,22 +309,22 @@
 
             this.keydownHandler = function( keyEvent )
             {
-                MfgKey.KEYCODE_LEFT      === keyEvent.keyCode && ( e.left    = 1 );
-                MfgKey.KEYCODE_UP        === keyEvent.keyCode && ( e.forward = 1 );
-                MfgKey.KEYCODE_RIGHT     === keyEvent.keyCode && ( e.right   = 1 );
-                MfgKey.KEYCODE_DOWN      === keyEvent.keyCode && ( e.back    = 1 );
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) e.left    = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) e.forward = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) e.right   = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) e.back    = 1;
 
-                MfgKey.KEYCODE_BACKSPACE === keyEvent.keyCode && ( e.changeDir = 1);
-                MfgKey.KEYCODE_ESCAPE    === keyEvent.keyCode && t.leaveGame();
-                MfgKey.KEYCODE_SPACE     === keyEvent.keyCode && t.ds3.getSpeed() < 2 && t.resetCarPosition()
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) e.changeDir = 1;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) t.leaveGame();
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) t.ds3.getSpeed() < 2 && t.resetCarPosition()
             };
 
             this.keyupHandler = function( keyEvent )
             {
-                MfgKey.KEYCODE_LEFT      === keyEvent.keyCode && ( e.left    = 0 );
-                MfgKey.KEYCODE_UP        === keyEvent.keyCode && ( e.forward = 0 );
-                MfgKey.KEYCODE_RIGHT     === keyEvent.keyCode && ( e.right   = 0 );
-                MfgKey.KEYCODE_DOWN      === keyEvent.keyCode && ( e.back    = 0 );
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) e.left    = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) e.forward = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) e.right   = 0;
+                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) e.back    = 0;
             };
 
 
