@@ -224,7 +224,16 @@
                     var o:BABYLON.Mesh = t[i];
 
 
-                    if (-1 !== o.name.indexOf("Water") && (o.receiveShadows = !0), -1 !== o.name.indexOf("Support") && (o.receiveShadows = !0), null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
+                    if
+                    (
+                            -1 !== o.name.indexOf("Water")
+                        &&  (o.receiveShadows = !0),
+
+                            -1 !== o.name.indexOf("Support")
+                        &&  (o.receiveShadows = !0),
+
+                        null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind)
+                    )
                     {
                         if (o.name === e.groundMeshName)
                         {
@@ -252,7 +261,9 @@
                             e._moveAndScaleMesh(o);
                             o.convertToFlatShadedMesh();
                         }
-                    } else {
+                    }
+                    else
+                    {
                         e._testEmptyMesh(o)
                     }
                 }
