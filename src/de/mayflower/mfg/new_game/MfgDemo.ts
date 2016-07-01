@@ -9,6 +9,9 @@
     {
         public      static          singleton               :MfgDemo                        = null;
 
+        public                      skyBox                  :MfgSkyBox                      = null;
+
+
         public                      canvas                  :HTMLCanvasElement              = null;
         public                      message                 :HTMLDivElement                 = null;
         public                      engine                  :BABYLON.Engine                 = null;
@@ -128,7 +131,7 @@
             this.createLights();
             this.createShadowGenerator( this.shadowLight );
 
-            MfgSkyBox.skyBox = new MfgSkyBox( this.scene );
+            this.skyBox = new MfgSkyBox( this.scene );
 
             this.loadGround();
         };

@@ -8,24 +8,39 @@
     class MfgSkyBox
     {
         /************************************************************************************
-        *   The singleton instance of the skybox.
+        *   The box mesh.
         ************************************************************************************/
-        public          static      skyBox              :MfgSkyBox                      = null;
+        public                      box                     :BABYLON.Mesh                   = null;
 
         /************************************************************************************
         *   Creates the skybox with a constant setting.
+        *
+        *   @param scene The scene to add the skybox to.
         ************************************************************************************/
         public constructor( scene:BABYLON.Scene )
         {
-            var box      = BABYLON.Mesh.CreateBox(       "skyBox", 1e3, scene );
-            var material = new BABYLON.StandardMaterial( "skyBox",      scene );
+            this.box = BABYLON.Mesh.CreateBox( "skyBox", 1e3, scene );
+            this.createBoxMaterial( scene );
+        }
 
-            material.backFaceCulling                   = !1;
-            material.reflectionTexture                 = new BABYLON.CubeTexture( "res/image/skybox/skybox", scene );
-            material.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-            material.diffuseColor                      = new BABYLON.Color3( 0, 0, 0 );
-            material.specularColor                     = new BABYLON.Color3( 0, 0, 0 );
+        /************************************************************************************
+        *   Creates and sets the material for the skybox.
+        *
+        *   @param scene The scene to add the skybox to.
+        ************************************************************************************/
+        private createBoxMaterial( scene:BABYLON.Scene )
+        {
+            var boxMaterial:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "skyBox",      scene );
 
-            box.material = material;
-        };
+            boxMaterial.backFaceCulling                   = false;
+            boxMaterial.reflectionTexture                 = new BABYLON.CubeTexture(
+                MfgSettings.PATH_IMAGE_SKYBOX + "skybox",
+                scene
+            );
+            boxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            boxMaterial.diffuseColor                      = new BABYLON.Color3( 0, 0, 0 );
+            boxMaterial.specularColor                     = new BABYLON.Color3( 0, 0, 0 );
+
+            this.box.material = boxMaterial;
+        }
     }

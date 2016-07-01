@@ -8,6 +8,7 @@
     *   TODO INIT   Own car(s)?
     *   TODO INIT   Own driving physics?
     *   TODO INIT   Own level data?
+    *   TODO WEAK   Remove all compiler errors and warnings?
     *
     *   DONE        Added MF-carsign and altered car texture.
     *   DONE        Refactored and extracted key system.
