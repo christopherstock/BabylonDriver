@@ -311,25 +311,8 @@
 
 
 
-            this.keydownHandler = function( keyEvent )
-            {
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) MfgKey.forward = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) MfgKey.right   = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) MfgKey.back    = 1;
-
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_BACKSPACE ) MfgKey.changeDir = 1;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE    ) MfgDemo.singleton.leaveGame();
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE     ) MfgDemo.singleton.ds3.getSpeed() < 2 && MfgDemo.singleton.resetCarPosition()
-            };
-
-            this.keyupHandler = function( keyEvent )
-            {
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_LEFT      ) MfgKey.left    = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_UP        ) MfgKey.forward = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_RIGHT     ) MfgKey.right   = 0;
-                if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN      ) MfgKey.back    = 0;
-            };
+            this.keydownHandler = MfgKey.onKeyDown;
+            this.keyupHandler   = MfgKey.onKeyUp;
 
 
 
