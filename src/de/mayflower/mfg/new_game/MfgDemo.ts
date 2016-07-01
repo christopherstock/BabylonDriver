@@ -7,8 +7,10 @@
     ************************************************************************************/
     class MfgDemo
     {
+        /** The singleton instance of this demo app. */
         public      static          singleton               :MfgDemo                        = null;
 
+        /** The skybox that surrounds the scene. */
         public                      skyBox                  :MfgSkyBox                      = null;
 
 
