@@ -7,41 +7,39 @@
     ************************************************************************************/
     class MfgTree extends BABYLON.Mesh
     {
+        /** The material. */
         public                      material                    :BABYLON.StandardMaterial           = null;
+
+        /** The mesh model. */
         public                      trunk                       :BABYLON.Mesh                       = null;
 
         /************************************************************************************
         *   Creates a new tree mesh.
         ************************************************************************************/
-        public constructor( e, t, i, s )
+        public constructor( sizeBranch:number, sizeTrunk:number, sizeRadius:number, scene:BABYLON.Scene )
         {
-            //this will be replaced by extending BABYLON.Mesh
-            //Tree.prototype = Object.create(BABYLON.Mesh.prototype);
+            super( 'tree', scene, null, null);
 
+            BABYLON.Mesh.call( this, "tree", scene );
 
-            super( 'tree', s, null, null);
-
-            BABYLON.Mesh.call( this, "tree", s );
-
-            this._init( e );
+            this._init( sizeBranch );
 
             // colors that don't appear?
             this.material = new BABYLON.StandardMaterial(
                 "mat",
-                s
+                scene
             );
 
             this.material.diffuseColor = BABYLON.Color3.FromInts( 0, 0, 0 );
-
             this.material.specularColor = BABYLON.Color3.Black();
 
-            this.position.y = t + e / 2 - 2;
+            this.position.y = sizeTrunk + sizeBranch / 2 - 2;
 
-            this.trunk = BABYLON.Mesh.CreateCylinder( "trunk", t, 1 > i - 2 ? 1 : i - 2, i, 7, 2, s );
+            this.trunk = BABYLON.Mesh.CreateCylinder( "trunk", sizeTrunk, 1 > sizeRadius - 2 ? 1 : sizeRadius - 2, sizeRadius, 7, 2, scene );
             this.trunk.parent     = this;
-            this.trunk.position.y = -e / 2 + 2 - t / 2;
+            this.trunk.position.y = -sizeBranch / 2 + 2 - sizeTrunk / 2;
 
-            var standardMaterial:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "trunk", s );
+            var standardMaterial:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "trunk", scene );
             standardMaterial.diffuseColor  = BABYLON.Color3.FromInts( 0, 0, 0 );
             standardMaterial.specularColor = BABYLON.Color3.Black();
 
@@ -53,23 +51,35 @@
         }
 
         /************************************************************************************
-        *   Seems to initialize all trees..?
+        *   Initialize all trees.
+        *
+        *   @param sizeBranch The size of the branch.
         ************************************************************************************/
-        public _init( e ) : void
+        private _init( sizeBranch:number ) : void
         {
-            var t = BABYLON.VertexData.CreateSphere( 2, e );
+            var t = BABYLON.VertexData.CreateSphere( 2, sizeBranch );
             t.applyToMesh( this, !1 );
             var a, i = this.getVerticesData(BABYLON.VertexBuffer.PositionKind), s = this.getIndices(), o = i.length / 3, n = [], r = [], h = [];
             for (a = 0; o > a; a++) {
                 var l = new BABYLON.Vector3(i[3 * a], i[3 * a + 1], i[3 * a + 2]);
-                l.y >= e / 2 && r.push(l);
-                var c, d = !1;
-                for (c = 0; c < n.length && !d; c++) {
+                l.y >= sizeBranch / 2 && r.push(l);
+
+                var d = false;
+                for (var c = 0; c < n.length && !d; c++) {
                     h = n[c];
                     var u = h[0];
-                    (u.equals(l) || u.subtract(l).lengthSquared() < .01) && (h.push(3 * a), d = !0)
+                    if (u.equals(l) || u.subtract(l).lengthSquared() < .01)
+                    {
+                        h.push(3 * a);
+                        d = true;
+                    }
                 }
-                d || (h = [], h.push(l, 3 * a), n.push(h))
+                if (d)
+                {
+                    h = [];
+                    h.push(l, 3 * a);
+                    n.push(h);
+                }
             }
 
             var p = function (e, t) {
@@ -81,7 +91,7 @@
             n.forEach(
                 function (t)
                 {
-                    var s, o = -e / 10, n = e / 10, r = p(o, n), a = p(o, n), h = p(o, n);
+                    var s, o = -sizeBranch / 10, n = sizeBranch / 10, r = p(o, n), a = p(o, n), h = p(o, n);
                     for (s = 1; s < t.length; s++) {
                         var l = t[s];
                         i[l] += r;
