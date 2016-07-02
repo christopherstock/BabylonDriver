@@ -125,12 +125,12 @@
 
             MfgWorld.singleton = new MfgWorld();
 
-            this.scene = new BABYLON.Scene(this.engine);
-            this.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
+            this.mfgScene.scene = new BABYLON.Scene(this.engine);
+            this.mfgScene.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
             this.createLights();
             this.createShadowGenerator( this.shadowLight );
 
-            this.skyBox = new MfgSkyBox( this.scene );
+            this.skyBox = new MfgSkyBox( this.mfgScene.scene );
 
             this.loadGround();
         }
@@ -138,46 +138,69 @@
         public loadGround()
         {
             var e = 50;
-            MfgGround.singleton = new MfgGround(this.scene, MfgWorld.singleton.world, "./res/paris/", "paris_heightmap.babylon", "Ground", 6 * e, MfgWorld.singleton.groundMaterial, {
-                groundTexture: "./res/paris/plan.png",
-                groundCollisionFilterGroup: MfgWorld.GROUP1,
-                groundCollisionFilterMask:  MfgWorld.GROUP2,
-                scaleFactor: e,
-                buildingBaseHeight: e,
-                solidBuildingsPath: "./res/paris/",
-                solidBuildingsName: "paris_solid_buildings.babylon",
-                buildingsPath: "./res/paris/",
-                buildingsName: "paris_3D_buildings.babylon",
-                treesPath: "./res/paris/",
-                treesName: "paris_trees.babylon",
-                particlesPath: "./res/paris/",
-                particlesName: "paris_particles.babylon",
-                buildingCelShading: !0,
-                outlineShaderDeltaHeight: .15 * (e / 50),
-                shadowGenerator: this.shadowGenerator,
-                onLoadFinished: this.loadCar.bind(this)
-            });
+            MfgGround.singleton = new MfgGround(
+                this.mfgScene.scene,
+                MfgWorld.singleton.world,
+                "./res/paris/",
+                "paris_heightmap.babylon",
+                "Ground",
+                6 * e,
+                MfgWorld.singleton.groundMaterial,
+                {
+                    groundTexture: "./res/paris/plan.png",
+                    groundCollisionFilterGroup: MfgWorld.GROUP1,
+                    groundCollisionFilterMask:  MfgWorld.GROUP2,
+                    scaleFactor: e,
+                    buildingBaseHeight: e,
+                    solidBuildingsPath: "./res/paris/",
+                    solidBuildingsName: "paris_solid_buildings.babylon",
+                    buildingsPath: "./res/paris/",
+                    buildingsName: "paris_3D_buildings.babylon",
+                    treesPath: "./res/paris/",
+                    treesName: "paris_trees.babylon",
+                    particlesPath: "./res/paris/",
+                    particlesName: "paris_particles.babylon",
+                    buildingCelShading: !0,
+                    outlineShaderDeltaHeight: .15 * (e / 50),
+                    shadowGenerator: this.shadowGenerator,
+                    onLoadFinished: this.loadCar.bind(this)
+                }
+            );
             MfgGround.singleton.load()
         }
 
         public loadCar()
         {
-            this.car = new MfgCar(this.scene, MfgWorld.singleton.world, "./res/ds3/caisse/", "DS3_caisse.babylon", "./res/ds3/roue/", "DS3_roue.babylon", MfgWorld.singleton.carBodyMaterial, MfgWorld.singleton.wheelMaterial, new CANNON.Vec3(1.31, .76, -.6), new CANNON.Vec3(1.31, -.7, -.6), new CANNON.Vec3(-1.13, .76, -.6), new CANNON.Vec3(-1.13, -.7, -.6), {
-                scaleFactor: .001,
-                invertX: !0,
-                bodyMass: 2e3,
-                bodyCollisionFilterGroup: MfgWorld.GROUP2,
-                bodyCollisionFilterMask:  MfgWorld.GROUP1,
-                shadowGenerator: this.shadowGenerator,
-                onLoadSuccess: this.loadCheckpoints.bind(this)
-            });
+            this.car = new MfgCar(
+                this.mfgScene.scene,
+                MfgWorld.singleton.world,
+                "./res/ds3/caisse/",
+                "DS3_caisse.babylon",
+                "./res/ds3/roue/",
+                "DS3_roue.babylon",
+                MfgWorld.singleton.carBodyMaterial,
+                MfgWorld.singleton.wheelMaterial,
+                new CANNON.Vec3(1.31, .76, -.6),
+                new CANNON.Vec3(1.31, -.7, -.6),
+                new CANNON.Vec3(-1.13, .76, -.6),
+                new CANNON.Vec3(-1.13, -.7, -.6),
+                {
+                    scaleFactor: .001,
+                    invertX: !0,
+                    bodyMass: 2e3,
+                    bodyCollisionFilterGroup: MfgWorld.GROUP2,
+                    bodyCollisionFilterMask:  MfgWorld.GROUP1,
+                    shadowGenerator: this.shadowGenerator,
+                    onLoadSuccess: this.loadCheckpoints.bind(this)
+                }
+            );
             this.car.load()
         }
 
         public loadCheckpoints()
         {
             this.checkpoints = new MfgCheckpoint(
-                this.scene,
+                this.mfgScene.scene,
                 this.car.getCarMainMesh(),
                 MfgGround.singleton,
                 "./res/paris/",
@@ -199,23 +222,23 @@
                 return new BABYLON.FxaaPostProcess("antialias", 2, null, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, t, !0)
             });
             e.addEffect(i);
-            this.scene.postProcessRenderPipelineManager.addPipeline(e)
+            this.mfgScene.scene.postProcessRenderPipelineManager.addPipeline(e)
         }
 
         public disablePostProcessPipeline()
         {
-            this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.followCamera)
+            this.mfgScene.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.arcCamera), this.mfgScene.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.followCamera)
         }
 
         public enablePostProcessPipeline()
         {
-            this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.arcCamera), this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.followCamera)
+            this.mfgScene.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.arcCamera), this.mfgScene.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.followCamera)
         }
 
         public createLights()
         {
             var e, t, i;
-            e = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(.2, -1, -.6), this.scene), e.position = new BABYLON.Vector3(-200, 1e3, 600), e.diffuse = new BABYLON.Color3(1, 1, 1), e.specular = new BABYLON.Color3(1, 1, 1), e.intensity = .7, t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.scene), t.position = e.position, t.position.scaleInPlace(.5), t.material = new BABYLON.StandardMaterial("light", this.scene), t.material.emissiveColor = new BABYLON.Color3(1, 1, 0), i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.scene), i.diffuse = new BABYLON.Color3(1, 1, 1), i.specular = new BABYLON.Color3(.5, .5, .4), i.groundColor = new BABYLON.Color3(1, 1, 1), i.intensity = .8, this.shadowLight = e
+            e = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(.2, -1, -.6), this.mfgScene.scene), e.position = new BABYLON.Vector3(-200, 1e3, 600), e.diffuse = new BABYLON.Color3(1, 1, 1), e.specular = new BABYLON.Color3(1, 1, 1), e.intensity = .7, t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.mfgScene.scene), t.position = e.position, t.position.scaleInPlace(.5), t.material = new BABYLON.StandardMaterial("light", this.mfgScene.scene), t.material.emissiveColor = new BABYLON.Color3(1, 1, 0), i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.mfgScene.scene), i.diffuse = new BABYLON.Color3(1, 1, 1), i.specular = new BABYLON.Color3(.5, .5, .4), i.groundColor = new BABYLON.Color3(1, 1, 1), i.intensity = .8, this.shadowLight = e
         }
 
         public createShadowGenerator(e)
@@ -230,17 +253,17 @@
 
         public enableShadows()
         {
-            null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.scene.shadowsEnabled = !0)
+            null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.mfgScene.scene.shadowsEnabled = !0)
         }
 
         public createTestCamera()
         {
             var e, t, i;
-            e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.scene);
+            e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.mfgScene.scene);
             e.setTarget(BABYLON.Vector3.Zero());
-            t = this.scene;
+            t = this.mfgScene.scene;
             i = MfgGround.singleton;
-            this.scene.registerBeforeRender(
+            this.mfgScene.scene.registerBeforeRender(
                 function()
                 {
                     t.isReady() && i.updateShaders(t.activeCamera.position)
@@ -252,15 +275,15 @@
         public createArcCamera() : BABYLON.ArcRotateCamera
         {
             var e, t, i;
-            e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.scene);
+            e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.mfgScene.scene);
             e.setPosition(new BABYLON.Vector3(200, 150, 200));
             e.lowerAlphaLimit = e.upperAlphaLimit = 0;
             e.lowerBetaLimit = 2;
             e.upperBetaLimit = 1;
             e.lowerRadiusLimit = e.upperRadiusLimit = e.radius;
-            t = this.scene;
+            t = this.mfgScene.scene;
             i = MfgGround.singleton;
-            this.scene.registerBeforeRender(
+            this.mfgScene.scene.registerBeforeRender(
                 function() {
                     if (t.isReady())
                     {
@@ -276,7 +299,7 @@
 
         public activateCamera( e )
         {
-            this.scene.activeCamera = e;
+            this.mfgScene.scene.activeCamera = e;
             e.attachControl(this.canvas, !1);
         }
 
@@ -292,7 +315,7 @@
                 this.keyupHandler
             );
 
-            this.scene.registerBeforeRender(
+            this.mfgScene.scene.registerBeforeRender(
                 this.registerBeforeRender
             );
         }
@@ -311,7 +334,7 @@
 
         public leaveGame()
         {
-            this.scene.unregisterBeforeRender(this.registerBeforeRender);
+            this.mfgScene.scene.unregisterBeforeRender(this.registerBeforeRender);
             window.removeEventListener("keydown", this.keydownHandler);
             window.removeEventListener("keyup", this.keyupHandler);
             $("#title_bar").toggle();
@@ -339,7 +362,7 @@
 
             this.registerBeforeRender = function()
             {
-                if (MfgApp.singleton.scene.isReady())
+                if (MfgApp.singleton.mfgScene.scene.isReady())
                 {
                     MfgApp.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                     if ( 1 === MfgKey.changeDir )
@@ -349,7 +372,9 @@
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
                     MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
-                    MfgGround.singleton.updateShaders(MfgApp.singleton.scene.activeCamera.position);
+                    MfgGround.singleton.updateShaders(
+                        MfgApp.singleton.mfgScene.scene.activeCamera.position
+                    );
                     MfgApp.singleton.car.update();
                     MfgApp.singleton.updateTdB();
                     MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.updateTimer();
@@ -387,7 +412,7 @@
             {
                 MfgApp.singleton.fpsMeter.tickStart();
                 MfgApp.singleton.engine.beginFrame();
-                MfgApp.singleton.scene.render();
+                MfgApp.singleton.mfgScene.scene.render();
                 MfgApp.singleton.engine.endFrame();
                 MfgApp.singleton.fpsMeter.tick();
 
