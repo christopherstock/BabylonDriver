@@ -16,6 +16,8 @@
         public                      car                     :MfgCar                         = null;
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
+        /** The ground to render. */
+        public                      ground                  :MfgGround                      = null;
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
@@ -129,7 +131,7 @@
         public loadGround()
         {
             var e = 50;
-            MfgGround.singleton = new MfgGround(
+            this.ground = new MfgGround(
                 this.mfgScene.scene,
                 MfgWorld.singleton.world,
                 "./res/paris/",
@@ -157,7 +159,7 @@
                     onLoadFinished: this.loadCar.bind(this)
                 }
             );
-            MfgGround.singleton.load()
+            this.ground.load()
         }
 
         public loadCar()
@@ -193,7 +195,7 @@
             this.checkpoints = new MfgCheckpoint(
                 this.mfgScene.scene,
                 this.car.getCarMainMesh(),
-                MfgGround.singleton,
+                this.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
@@ -272,7 +274,7 @@
             e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.mfgScene.scene);
             e.setTarget(BABYLON.Vector3.Zero());
             t = this.mfgScene.scene;
-            i = MfgGround.singleton;
+            i = MfgApp.singleton.ground;
             this.mfgScene.scene.registerBeforeRender(
                 function()
                 {
@@ -292,7 +294,7 @@
             e.upperBetaLimit = 1;
             e.lowerRadiusLimit = e.upperRadiusLimit = e.radius;
             t = this.mfgScene.scene;
-            i = MfgGround.singleton;
+            i = MfgApp.singleton.ground;
             this.mfgScene.scene.registerBeforeRender(
                 function() {
                     if (t.isReady())
@@ -382,7 +384,7 @@
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
                     MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
-                    MfgGround.singleton.updateShaders(
+                    MfgApp.singleton.ground.updateShaders(
                         MfgApp.singleton.mfgScene.scene.activeCamera.position
                     );
                     MfgApp.singleton.car.update();
