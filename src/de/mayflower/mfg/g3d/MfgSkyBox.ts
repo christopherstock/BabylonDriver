@@ -8,7 +8,7 @@
     class MfgSkyBox
     {
         /** The box mesh. */
-        public                      box                     :BABYLON.Mesh                   = null;
+        private                     box                     :BABYLON.Mesh                   = null;
 
         /************************************************************************************
         *   Creates the skybox with a constant setting.

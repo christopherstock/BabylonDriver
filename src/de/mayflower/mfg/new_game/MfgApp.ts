@@ -10,8 +10,6 @@
         /** The singleton instance of this demo app. */
         public      static          singleton               :MfgApp                        = null;
 
-        /** The skybox that surrounds the scene. */
-        public                      skyBox                  :MfgSkyBox                      = null;
         /** The checkpoint system. */
         public                      checkpoints             :MfgCheckpoint                  = null;
         /** The car to control. */
@@ -119,19 +117,12 @@
 
         public createScene()
         {
-            this.mfgScene = new MfgScene();
-
-
+            this.mfgScene = new MfgScene( this.engine );
 
             MfgWorld.singleton = new MfgWorld();
 
-            this.mfgScene.scene = new BABYLON.Scene(this.engine);
-            this.mfgScene.scene.clearColor = new BABYLON.Color3(.8, .8, .8);
             this.createLights();
             this.createShadowGenerator( this.shadowLight );
-
-            this.skyBox = new MfgSkyBox( this.mfgScene.scene );
-
             this.loadGround();
         }
 
@@ -238,7 +229,26 @@
         public createLights()
         {
             var e, t, i;
-            e = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(.2, -1, -.6), this.mfgScene.scene), e.position = new BABYLON.Vector3(-200, 1e3, 600), e.diffuse = new BABYLON.Color3(1, 1, 1), e.specular = new BABYLON.Color3(1, 1, 1), e.intensity = .7, t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.mfgScene.scene), t.position = e.position, t.position.scaleInPlace(.5), t.material = new BABYLON.StandardMaterial("light", this.mfgScene.scene), t.material.emissiveColor = new BABYLON.Color3(1, 1, 0), i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.mfgScene.scene), i.diffuse = new BABYLON.Color3(1, 1, 1), i.specular = new BABYLON.Color3(.5, .5, .4), i.groundColor = new BABYLON.Color3(1, 1, 1), i.intensity = .8, this.shadowLight = e
+            e = new BABYLON.DirectionalLight(
+                "dir01",
+                new BABYLON.Vector3( .2, -1, -.6 ),
+                this.mfgScene.scene
+            );
+            e.position = new BABYLON.Vector3(-200, 1e3, 600);
+            e.diffuse  = new BABYLON.Color3(1, 1, 1);
+            e.specular = new BABYLON.Color3(1, 1, 1);
+            e.intensity = .7;
+            t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.mfgScene.scene);
+            t.position = e.position;
+            t.position.scaleInPlace( .5 );
+            t.material = new BABYLON.StandardMaterial("light", this.mfgScene.scene);
+            t.material.emissiveColor = new BABYLON.Color3(1, 1, 0);
+            i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.mfgScene.scene);
+            i.diffuse = new BABYLON.Color3(1, 1, 1);
+            i.specular = new BABYLON.Color3(.5, .5, .4);
+            i.groundColor = new BABYLON.Color3(1, 1, 1);
+            i.intensity = .8;
+            this.shadowLight = e;
         }
 
         public createShadowGenerator(e)
