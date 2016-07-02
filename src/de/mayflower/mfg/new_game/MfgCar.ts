@@ -140,8 +140,8 @@
             for (i = new BABYLON.Mesh("", this.scene), a = 1; a < e.length; a += 1)h = e[a].createInstance(""), h.parent = i, null !== this.shadowGenerator && this.shadowGenerator.getShadowMap().renderList.push(h);
             for (i.scaling = this.scale, s = new BABYLON.Mesh("", this.scene), a = 1; a < e.length; a += 1)h = e[a].createInstance(""), h.parent = s, null !== this.shadowGenerator && this.shadowGenerator.getShadowMap().renderList.push(h);
             for (s.scaling = this.scale, o = new BABYLON.Mesh("", this.scene), a = 1; a < e.length; a += 1)h = e[a].createInstance(""), h.parent = o, null !== this.shadowGenerator && this.shadowGenerator.getShadowMap().renderList.push(h);
-            o.scaling = this.scale, this.b_wheels = [], this.b_wheels.push(o), this.b_wheels.push(s), this.b_wheels.push(i), this.b_wheels.push(t)
-        };
+            o.scaling = this.scale, this.b_wheels = [], this.b_wheels.push(o), this.b_wheels.push(s), this.b_wheels.push(i), this.b_wheels.push(t);
+        }
 
         public _cannon_addWheels(e)
         {

@@ -104,5 +104,5 @@
 
             this.setVerticesData( BABYLON.VertexBuffer.NormalKind, f );
             this.convertToFlatShadedMesh();
-        };
+        }
     }

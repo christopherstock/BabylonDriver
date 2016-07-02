@@ -13,7 +13,7 @@
         /** The preloader div container. */
         public                              divPreloader            :HTMLDivElement             = null;
         /** The loading message div container. */
-        public                              divLoadingMessage       :HTMLDivElement             = null;
+        public                              divLoadingMessage       :JQuery                     = null;
 
         /************************************************************************************
         *   Instanciates the preloading system.
@@ -21,7 +21,7 @@
         public constructor()
         {
             this.divPreloader      = <HTMLDivElement>document.getElementById( "preloader"      );
-            this.divLoadingMessage = <HTMLDivElement>document.getElementById( "loadingMessage" );
+            this.divLoadingMessage = $( "#loadingMessage" );
         }
 
         /************************************************************************************
@@ -39,6 +39,6 @@
         ************************************************************************************/
         public setLoadingMessage( msg:string )
         {
-            this.divLoadingMessage.innerText = msg;
+            this.divLoadingMessage.text( msg );
         }
     }

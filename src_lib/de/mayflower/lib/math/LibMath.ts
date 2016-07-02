@@ -31,5 +31,5 @@
             var s, o, n, h, a, r, t = null, i = null;
             for (s = 1; s < e.length; s += 1)o = e[s], n = o.getBoundingInfo().boundingBox, h = BABYLON.Matrix.RotationYawPitchRoll(o.rotation.y, o.rotation.x, o.rotation.z), a = BABYLON.Vector3.TransformCoordinates(n.minimumWorld, h), r = BABYLON.Vector3.TransformCoordinates(n.maximumWorld, h), t ? (t.MinimizeInPlace(a), i.MaximizeInPlace(r)) : (t = a, i = r);
             return [ t, i ]
-        };
+        }
     }

@@ -16,6 +16,8 @@
         public                      checkpoints             :MfgCheckpoint                  = null;
         /** The car to control. */
         public                      car                     :MfgCar                         = null;
+        /** The scene to render. */
+        public                      mfgScene                :MfgScene                       = null;
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
@@ -117,6 +119,10 @@
 
         public createScene()
         {
+            this.mfgScene = new MfgScene();
+
+
+
             MfgWorld.singleton = new MfgWorld();
 
             this.scene = new BABYLON.Scene(this.engine);
