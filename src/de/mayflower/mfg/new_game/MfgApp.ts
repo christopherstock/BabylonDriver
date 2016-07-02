@@ -24,8 +24,6 @@
 
         /** The singleton instance of the Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
-        /** The singleton instance of the Babylon.js scene. */
-        public                      scene                   :BABYLON.Scene                  = null;
         /** The shadow light. */
         public                      shadowLight             :BABYLON.Light                  = null;
         /** The shadow generator. */
@@ -56,9 +54,8 @@
         ************************************************************************************/
         public constructor()
         {
-            this.canvas            = <HTMLCanvasElement>document.getElementById("driverCanvas");
-
-            this.engine            = new BABYLON.Engine( this.canvas, !0 );
+            this.canvas = <HTMLCanvasElement>document.getElementById("driverCanvas");
+            this.engine = new BABYLON.Engine( this.canvas, !0 );
         }
 
         public startDriving()
@@ -70,7 +67,13 @@
             this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
             this.activateCamera( this.followCamera );
 
-            this.car.setPosition( new CANNON.Vec3( -19, -14, 60 ) );
+            this.car.setPosition(
+                new CANNON.Vec3(
+                    MfgSettings.CAR_STARTUP_X,
+                    MfgSettings.CAR_STARTUP_Y,
+                    MfgSettings.CAR_STARTUP_Z
+                )
+            );
             this.car.update();
 
             this.registerMoves();
@@ -334,13 +337,25 @@
 
         public resetCarPosition()
         {
-            this.car.setPosition(new CANNON.Vec3(-19, -14, 60));
+            this.car.setPosition(
+                new CANNON.Vec3(
+                    MfgSettings.CAR_STARTUP_X,
+                    MfgSettings.CAR_STARTUP_Y,
+                    MfgSettings.CAR_STARTUP_Z
+                )
+            );
             this.checkpoints.isEnabled() && this.failedStatusUpdate();
         }
 
         public hideCar()
         {
-            this.car.setPosition(new CANNON.Vec3(0, 0, 0));
+            this.car.setPosition(
+                new CANNON.Vec3(
+                    0,
+                    0,
+                    0
+                )
+            );
             this.car.update();
         }
 

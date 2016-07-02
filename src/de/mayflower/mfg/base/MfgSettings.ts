@@ -19,6 +19,12 @@
         /** The relative path from index.html where all images the app makes use of reside. */
         public      static      PATH_IMAGE_SKYBOX                           :string             = "res/image/skybox/";
 
+        /** Car startup position X. */
+        public      static      CAR_STARTUP_X                               :number             = -19.0;
+        /** Car startup position Y. */
+        public      static      CAR_STARTUP_Y                               :number             = -14.0;
+        /** Car startup position Z. */
+        public      static      CAR_STARTUP_Z                               :number             = 70.0;
 
 
 
