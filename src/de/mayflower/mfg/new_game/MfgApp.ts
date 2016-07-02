@@ -212,25 +212,6 @@
             this.checkpoints.load()
         }
 
-        public createPostProcessPipeline()
-        {
-            var e = new BABYLON.PostProcessRenderPipeline(this.engine, "standardPipeline"), t = this.engine, i = new BABYLON.PostProcessRenderEffect(this.engine, "fxaa", function() {
-                return new BABYLON.FxaaPostProcess("antialias", 2, null, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, t, !0)
-            });
-            e.addEffect(i);
-            this.mfgScene.scene.postProcessRenderPipelineManager.addPipeline(e)
-        }
-
-        public disablePostProcessPipeline()
-        {
-            this.mfgScene.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.arcCamera), this.mfgScene.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline("standardPipeline", this.followCamera)
-        }
-
-        public enablePostProcessPipeline()
-        {
-            this.mfgScene.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.arcCamera), this.mfgScene.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("standardPipeline", this.followCamera)
-        }
-
         public createLights()
         {
             var e, t, i;
@@ -408,9 +389,9 @@
                 }
             };
 
-            this.createPostProcessPipeline();
+            this.mfgScene.createPostProcessPipeline( this.engine );
 
-            this.enablePostProcessPipeline();
+            this.mfgScene.enablePostProcessPipeline();
 
             this.fpsMeter = new FPSMeter(
                 null,
