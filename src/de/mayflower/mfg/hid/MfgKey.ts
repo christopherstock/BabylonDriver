@@ -48,7 +48,6 @@
             if ( keyEvent.keyCode == MfgKey.KEYCODE_DOWN    ) MfgKey.back    = 1;
 
             if ( keyEvent.keyCode == MfgKey.KEYCODE_R       ) MfgKey.changeDir = 1;
-            if ( keyEvent.keyCode == MfgKey.KEYCODE_ESCAPE  ) MfgApp.singleton.leaveGame();
             if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE   )
             {
                 // if ( MfgApp.singleton.car.getSpeed() < 2 )

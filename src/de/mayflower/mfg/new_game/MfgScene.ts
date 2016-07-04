@@ -50,10 +50,6 @@
         {
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.camera.arcCamera
-            );
-            this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
-                "standardPipeline",
                 MfgApp.singleton.camera.followCamera
             );
         }
@@ -63,10 +59,6 @@
         ************************************************************************************/
         public disablePostProcessPipeline()
         {
-            this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
-                "standardPipeline",
-                MfgApp.singleton.camera.arcCamera
-            );
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
                 MfgApp.singleton.camera.followCamera

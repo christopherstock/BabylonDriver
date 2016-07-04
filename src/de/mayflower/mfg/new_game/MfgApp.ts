@@ -303,35 +303,6 @@
             this.checkpoints.isEnabled() && this.failedStatusUpdate();
         }
 
-        public hideCar()
-        {
-            this.car.setPosition(
-                new CANNON.Vec3(
-                    0,
-                    0,
-                    0
-                )
-            );
-            this.car.update();
-        }
-
-        public leaveGame()
-        {
-            this.mfgScene.scene.unregisterBeforeRender(this.registerBeforeRender);
-            window.removeEventListener("keydown", this.keydownHandler);
-            window.removeEventListener("keyup", this.keyupHandler);
-            $("#title_bar").toggle();
-            $("#tdb_back").toggle();
-            $("#tdb").toggle();
-            this.activateCamera( this.camera.arcCamera );
-            this.hideCar();
-            if (this.checkpoints.isEnabled())
-            {
-                this.checkpoints.resetSprites();
-                this.checkpoints.enableSprites();
-            }
-        }
-
         public start()
         {
             // enable feature 'checkpoints' on!
@@ -373,15 +344,15 @@
             this.fpsMeter = new FPSMeter(
                 null,
                 {
-                    graph: 1,
-                    decimals: 0,
+                    graph:    1,
+                    decimals: 2,
                     position: "absolute",
-                    zIndex: 10,
-                    right: "5px",
-                    top: "auto",
-                    left: "auto",
-                    bottom: "5px",
-                    margin: "0 0 0 0"
+                    zIndex:   10,
+                    right:    "5px",
+                    top:      "auto",
+                    left:     "auto",
+                    bottom:   "5px",
+                    margin:   "0"
                 }
             );
 
@@ -401,15 +372,12 @@
                 MfgApp.singleton.engine.endFrame();
                 MfgApp.singleton.fpsMeter.tick();
 
-                BABYLON.Tools.QueueNewFrame( newFrameTick )
+                BABYLON.Tools.QueueNewFrame( newFrameTick );
             };
 
-            BABYLON.Tools.QueueNewFrame(newFrameTick);
+            BABYLON.Tools.QueueNewFrame( newFrameTick );
 
-            this.activateCamera( this.camera.arcCamera );
             MfgPreloader.singleton.hidePreloader();
-
-            $("#menus").toggle();
 
             this.startDriving();
         }
