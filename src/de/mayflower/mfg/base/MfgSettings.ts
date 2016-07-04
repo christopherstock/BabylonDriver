@@ -8,7 +8,7 @@
     class MfgSettings
     {
         /** Determines the app's operation mode. */
-        public      static      MODE                                        :number             = MfgDebugSettings.MODE_DEBUG;
+        public      static      MODE                                        :number             = MfgSettingsDebug.MODE_DEBUG;
 
         /** The application's internal name. */
         public      static      TITLE                                       :string             = "Babylon.js Driver, (c) 2016 Mayflower GmbH, v. [" + MfgVersion.CURRENT_VERSION.getVersionDescriptor() + "]";

@@ -10,15 +10,11 @@
         /** The singleton instance of this class. */
         public      static          singleton               :MfgUI                          = null;
 
-        /** The button that starts the game in the menu screen. */
-        public                      buttonStart             :JQuery                         = null;
-
         /************************************************************************************
         *   Instanciates the UI system.
         ************************************************************************************/
         public constructor()
         {
-            this.buttonStart = $("#start_btn");
         }
 
         /************************************************************************************
@@ -26,17 +22,5 @@
         ************************************************************************************/
         public initMenuUI()
         {
-            this.buttonStart.click(
-                function()
-                {
-                    MfgApp.singleton.startDriving();
-                }
-            );
         }
-
-
-
-
-
-
     }

@@ -9,23 +9,23 @@
     class MfgDebug
     {
         /** A primal debug group for general debug purposes. */
-        public      static  bugfix                      :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  bugfix                      :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
 
         /** The debug group for the startup acclaim message. */
-        public      static  acclaim                     :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  acclaim                     :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the startup initialization messages. */
-        public      static  init                        :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  init                        :LibDebug                       = new LibDebug(            MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
 
         /** The debug group for the key system. */
-        public      static  key                         :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  key                         :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the image system. */
-        public      static  imageLoader                 :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  imageLoader                 :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the sound system. */
-        public      static  soundLoader                 :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  soundLoader                 :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the canvas3D system. */
-        public      static  canvas3D                    :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  canvas3D                    :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the text file loading system. */
-        public      static  textLoader                  :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  textLoader                  :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
         /** The debug group for the 3ds max .ase file parser. */
-        public      static  res3ds                      :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgDebugSettings.MODE_DEBUG );
+        public      static  res3ds                      :LibDebug                       = new LibDebug( false   && MfgSettings.MODE == MfgSettingsDebug.MODE_DEBUG );
     }
