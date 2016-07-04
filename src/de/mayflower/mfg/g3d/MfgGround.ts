@@ -303,7 +303,7 @@
         public _loadSolidBuildings()
         {
             MfgPreloader.singleton.setLoadingMessage("constructing buildings");
-            var e = MfgApp.singleton.ground;
+            var e = MfgApp.singleton.mfgScene.ground;
             BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, i = [], s = [];
                 for (o = 0; o < t.length; o++) {
@@ -387,7 +387,7 @@
                 return i * (t - e) + e
             };
 
-            var t = MfgApp.singleton.ground;
+            var t = MfgApp.singleton.mfgScene.ground;
             BABYLON.SceneLoader.ImportMesh("", this.treesPath, this.treesName, this.scene, function (i) {
                 var a, n, s = [], o = [];
                 for (a = 0; a < i.length; a++)if (n = i[a], null !== n.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {

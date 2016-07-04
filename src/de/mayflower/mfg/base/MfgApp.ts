@@ -16,8 +16,6 @@
         public                      car                     :MfgCar                         = null;
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
-        /** The ground to render. */
-        public                      ground                  :MfgGround                      = null;
         /** The cameras being used. */
         public                      camera                  :MfgCamera                      = null;
         /** The game logic. */
@@ -46,6 +44,8 @@
         ************************************************************************************/
         public constructor()
         {
+            MfgDebug.init.log( "MfgApp constructor passed" );
+
             this.canvas = <HTMLCanvasElement>document.getElementById("driverCanvas");
             this.engine = new BABYLON.Engine( this.canvas, !0 );
 
@@ -54,8 +54,6 @@
 
             //create HUD
             this.hud = new MfgHUD();
-
-
         }
 
         /************************************************************************************
@@ -86,53 +84,37 @@
 
         public createScene()
         {
+            MfgDebug.init.log( "Creating scene.." );
+
             this.mfgScene = new MfgScene( this.engine );
+
+            MfgDebug.init.log( "Creating world.." );
 
             MfgWorld.singleton = new MfgWorld();
 
+            MfgDebug.init.log( "Creating lights.." );
+
             this.mfgScene.createLights();
             this.mfgScene.createShadowGenerator();
-            this.loadGround();
+
+            MfgDebug.init.log( "Creating ground.." );
+
+            this.mfgScene.loadGround();
         }
 
-        public loadGround()
+        public onGroundLoaded()
         {
-            var e = 50;
-            this.ground = new MfgGround(
-                this.mfgScene.scene,
-                MfgWorld.singleton.world,
-                "./res/paris/",
-                "paris_heightmap.babylon",
-                "Ground",
-                6 * e,
-                MfgWorld.singleton.groundMaterial,
-                {
-                    groundTexture: "./res/paris/plan.png",
-                    groundCollisionFilterGroup: MfgWorld.GROUP1,
-                    groundCollisionFilterMask:  MfgWorld.GROUP2,
-                    scaleFactor: e,
-                    buildingBaseHeight: e,
-                    solidBuildingsPath: "./res/paris/",
-                    solidBuildingsName: "paris_solid_buildings.babylon",
-                    buildingsPath: "./res/paris/",
-                    buildingsName: "paris_3D_buildings.babylon",
-                    treesPath: "./res/paris/",
-                    treesName: "paris_trees.babylon",
-                    particlesPath: "./res/paris/",
-                    particlesName: "paris_particles.babylon",
-                    buildingCelShading: !0,
-                    outlineShaderDeltaHeight: .15 * (e / 50),
-                    shadowGenerator: this.mfgScene.shadowGenerator,
-                    onLoadFinished: this.loadCar.bind(this)
-                }
-            );
-            this.ground.load()
+            MfgDebug.init.log( "onGroundLoaded.." );
+
+            MfgApp.singleton.loadCar();
         }
 
         public loadCar()
         {
+            MfgDebug.init.log( "loadCar.." );
+
             this.car = new MfgCar(
-                this.mfgScene.scene,
+                MfgApp.singleton.mfgScene.scene,
                 MfgWorld.singleton.world,
                 "./res/ds3/caisse/",
                 "DS3_caisse.babylon",
@@ -150,30 +132,46 @@
                     bodyMass: 2e3,
                     bodyCollisionFilterGroup: MfgWorld.GROUP2,
                     bodyCollisionFilterMask:  MfgWorld.GROUP1,
-                    shadowGenerator: this.mfgScene.shadowGenerator,
-                    onLoadSuccess: this.loadCheckpoints.bind(this)
+                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
+                    onLoadSuccess: MfgApp.singleton.onCarLoaded
                 }
             );
             this.car.load()
         }
 
+        public onCarLoaded()
+        {
+            MfgDebug.init.log( "onCarLoaded.." );
+
+            MfgApp.singleton.loadCheckpoints()
+        }
+
         public loadCheckpoints()
         {
+            MfgDebug.init.log( "load checkpoints" );
+
             this.checkpoints = new MfgCheckpoint(
-                this.mfgScene.scene,
-                this.car.getCarMainMesh(),
-                this.ground,
+                MfgApp.singleton.mfgScene.scene,
+                MfgApp.singleton.car.getCarMainMesh(),
+                MfgApp.singleton.mfgScene.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
                 9,
                 512,
                 {
-                    chekpointsCallback: this.hud.checkpointsStatusUpdate.bind( this ),
-                    onLoadFinished:     this.start.bind(this)
+                    chekpointsCallback: MfgApp.singleton.hud.checkpointsStatusUpdate.bind( this ),
+                    onLoadFinished:     MfgApp.singleton.onCheckpointsLoaded
                 }
             );
-            this.checkpoints.load()
+            MfgApp.singleton.checkpoints.load()
+        }
+
+        public onCheckpointsLoaded()
+        {
+            MfgDebug.init.log( "onCheckpointsLoaded.." );
+
+            MfgApp.singleton.start();
         }
 
         public activateCamera( e )
@@ -217,6 +215,8 @@
 
         public start()
         {
+            MfgDebug.init.log( "start().." );
+
             // enable feature 'checkpoints' on!
             this.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
@@ -238,7 +238,7 @@
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
                     MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
-                    MfgApp.singleton.ground.updateShaders(
+                    MfgApp.singleton.mfgScene.ground.updateShaders(
                         MfgApp.singleton.mfgScene.scene.activeCamera.position
                     );
                     MfgApp.singleton.car.update();

@@ -10,6 +10,10 @@
         /** The native scene representation. */
         public              scene                   :BABYLON.Scene                  = null;
 
+
+
+        /** The ground to render. */
+        public              ground                  :MfgGround                      = null;
         /** The skybox that surrounds the scene. */
         private             skyBox                  :MfgSkyBox                      = null;
 
@@ -119,4 +123,43 @@
         {
             null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.scene.shadowsEnabled = !0)
         }
+
+        public loadGround()
+        {
+            MfgDebug.init.log( "Load ground.." );
+
+            var e = 50;
+            this.ground = new MfgGround(
+                MfgApp.singleton.mfgScene.scene,
+                MfgWorld.singleton.world,
+                "./res/paris/",
+                "paris_heightmap.babylon",
+                "Ground",
+                6 * e,
+                MfgWorld.singleton.groundMaterial,
+                {
+                    groundTexture: "./res/paris/plan.png",
+                    groundCollisionFilterGroup: MfgWorld.GROUP1,
+                    groundCollisionFilterMask:  MfgWorld.GROUP2,
+                    scaleFactor: e,
+                    buildingBaseHeight: e,
+                    solidBuildingsPath: "./res/paris/",
+                    solidBuildingsName: "paris_solid_buildings.babylon",
+                    buildingsPath: "./res/paris/",
+                    buildingsName: "paris_3D_buildings.babylon",
+                    treesPath: "./res/paris/",
+                    treesName: "paris_trees.babylon",
+                    particlesPath: "./res/paris/",
+                    particlesName: "paris_particles.babylon",
+                    buildingCelShading: !0,
+                    outlineShaderDeltaHeight: .15 * (e / 50),
+                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
+                    onLoadFinished: MfgApp.singleton.onGroundLoaded
+                }
+            );
+            this.ground.load()
+        }
+
+
+
     }

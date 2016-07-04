@@ -19,8 +19,12 @@
             //create preloader
             MfgPreloader.singleton = new MfgPreloader();
 
+            MfgDebug.init.log( "Creating app .." );
+
             //create app
             MfgApp.singleton = new MfgApp();
+
+            MfgDebug.init.log( "Creating UI .." );
 
 
             //create UI
@@ -29,10 +33,6 @@
 
             //create the app scene
             MfgApp.singleton.createScene();
-
-
-
-
 
 
 /*
