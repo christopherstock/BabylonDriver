@@ -3,6 +3,8 @@
     *   The main class contains the application's points of entry and termination.
     *
     *   TODO HIGH   Replace all 'any' types with the correct Type!
+    *   TODO HIGH   Prune all 'singletons'.
+    *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
     *   TODO INIT   Own car(s)?

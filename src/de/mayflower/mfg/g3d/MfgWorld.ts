@@ -11,12 +11,14 @@
         public      static      GROUP2                      :number                     = 2;
 
         public                  world                       :CANNON.World               = null;
-        public                  worldstep                   :number                     = 0;
-        public                  timeStep                    :number                     = 0;
+
         public                  groundMaterial              :CANNON.Material            = null;
         public                  carBodyMaterial             :CANNON.Material            = null;
         public                  wheelMaterial               :CANNON.Material            = null;
         public                  bodyGroundContactMaterial   :CANNON.ContactMaterial     = null;
+
+        public                  worldStep                   :number                     = 0;
+        public                  timeStep                    :number                     = 0;
 
         /************************************************************************************
         *   Creates a constant instance of the physical ambience.
@@ -29,9 +31,9 @@
             // solver is of type Solver and NOT of Type GSSolver !
             //this.world.solver.iterations    = 10;
 
-            this.world.gravity.set( 0, 0, -9.82 );
+            this.world.gravity.set( 0, 0, MfgSettings.WORLD_GRAVITY_Z );
 
-            this.worldstep                  = 2;
+            this.worldStep                  = 2;
             this.timeStep                   = 1 / 60;
             this.groundMaterial             = new CANNON.Material( "groundMaterial"  );
             this.carBodyMaterial            = new CANNON.Material( "carBodyMaterial" );
