@@ -22,6 +22,7 @@
             //create app
             MfgApp.singleton = new MfgApp();
 
+
             //create UI
             MfgUI.singleton = new MfgUI();
             MfgUI.singleton.initMenuUI();

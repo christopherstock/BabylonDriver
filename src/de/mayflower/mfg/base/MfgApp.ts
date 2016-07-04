@@ -20,7 +20,8 @@
         public                      ground                  :MfgGround                      = null;
         /** The cameras being used. */
         public                      camera                  :MfgCamera                      = null;
-
+        /** The game logic. */
+        public                      game                    :MfgGame                        = null;
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
@@ -50,6 +51,12 @@
         {
             this.canvas = <HTMLCanvasElement>document.getElementById("driverCanvas");
             this.engine = new BABYLON.Engine( this.canvas, !0 );
+
+            //create game
+            this.game = new MfgGame();
+
+
+
         }
 
         /************************************************************************************
