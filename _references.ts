@@ -29,4 +29,5 @@
 /// <reference path="src/de/mayflower/mfg/game/MfgGame.ts" />
 /// <reference path="src/de/mayflower/mfg/game/MfgTree.ts" />
 /// <reference path="src/de/mayflower/mfg/hid/MfgKey.ts" />
+/// <reference path="src/de/mayflower/mfg/ui/MfgHUD.ts" />
 /// <reference path="src/de/mayflower/mfg/ui/MfgUI.ts" />

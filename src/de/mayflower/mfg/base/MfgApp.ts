@@ -22,6 +22,8 @@
         public                      camera                  :MfgCamera                      = null;
         /** The game logic. */
         public                      game                    :MfgGame                        = null;
+        /** The HUD. */
+        public                      hud                     :MfgHUD                         = null;
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
@@ -32,10 +34,8 @@
         /** The FramesPerSecond meter. */
         public                      fpsMeter                :FPSMeter                       = null;
 
-        /** Number of failed checkpoints. */
-        public                      failed                  :number                         = null;
-        /** The current timer. */
-        public                      timer                   :number                         = null;
+
+
 
         /** The handler for the keyUp event. */
         public                      keyupHandler            :any                            = null;
@@ -55,6 +55,8 @@
             //create game
             this.game = new MfgGame();
 
+            //create HUD
+            this.hud = new MfgHUD();
 
 
         }
@@ -64,7 +66,13 @@
         ************************************************************************************/
         public startDriving()
         {
-            this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
+            if ( this.checkpoints.isEnabled() )
+            {
+                this.hud.checkpointsStatusUpdate();
+                this.game.initTimer();
+                this.game.initFailed();
+            }
+
             this.activateCamera( this.camera.followCamera );
 
             this.car.setPosition(
@@ -78,58 +86,6 @@
 
             this.registerMoves();
         }
-
-
-
-
-
-        /************************************************************************************
-        *   Displays the direction in the HUD.
-        ************************************************************************************/
-        public displayDirection( e )
-        {
-            var directionDiv = $("#direction");
-            1 === e ? directionDiv.text("") : directionDiv.text("R")
-        }
-
-        public updateTdB()
-        {
-            $("#speed_span").text( Math.round( this.car.getSpeed() ).toString() )
-        }
-
-        public checkpointsStatusUpdate()
-        {
-            $("#remaining_span").text( this.checkpoints.getNbCheckPoints() )
-        }
-
-        public failedStatusUpdate()
-        {
-            this.failed += 1;
-            $("#failed_span").text( this.failed.toString() );
-        }
-
-        public initFailed()
-        {
-            this.failed = 0
-        }
-
-        public initTimer()
-        {
-            this.timer = Date.now()
-        }
-
-        public updateTimer()
-        {
-            if (this.checkpoints.getNbCheckPoints() > 0) {
-                var e = Date.now() - this.timer, t = Math.floor(e / 6e4), i = Math.floor((e - 6e4 * t) / 1e3), s = Math.floor((e - 6e4 * t - 1e3 * i) / 10), o = "", a = "", n = "";
-                10 > t && (o = "0"), 10 > i && (a = "0"), 10 > s && (n = "0");
-                $("#timer_span").text(o + t + ":" + a + i + ":" + n + s)
-            }
-        }
-
-
-
-
 
         public createScene()
         {
@@ -216,8 +172,8 @@
                 9,
                 512,
                 {
-                    chekpointsCallback: this.checkpointsStatusUpdate.bind(this),
-                    onLoadFinished: this.start.bind(this)
+                    chekpointsCallback: this.hud.checkpointsStatusUpdate.bind( this ),
+                    onLoadFinished:     this.start.bind(this)
                 }
             );
             this.checkpoints.load()
@@ -271,7 +227,7 @@
                     MfgSettings.CAR_STARTUP_Z
                 )
             );
-            this.checkpoints.isEnabled() && this.failedStatusUpdate();
+            this.checkpoints.isEnabled() && this.game.failedStatusUpdate();
         }
 
         public start()
@@ -292,7 +248,7 @@
                     MfgApp.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                     if ( 1 === MfgKey.changeDir )
                     {
-                        MfgApp.singleton.displayDirection(MfgApp.singleton.car.getDirection());
+                        MfgApp.singleton.hud.displayDirection(MfgApp.singleton.car.getDirection());
                         MfgKey.changeDir = 0;
                     }
                     MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
@@ -301,8 +257,8 @@
                         MfgApp.singleton.mfgScene.scene.activeCamera.position
                     );
                     MfgApp.singleton.car.update();
-                    MfgApp.singleton.updateTdB();
-                    MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.updateTimer();
+                    MfgApp.singleton.hud.updateTdB();
+                    MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.game.updateTimer();
                 }
             };
 
