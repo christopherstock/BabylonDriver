@@ -31,9 +31,6 @@
         /** The singleton instance of the Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
 
-        /** The FramesPerSecond meter. */
-        public                      fpsMeter                :FPSMeter                       = null;
-
 
 
 
@@ -179,22 +176,6 @@
             this.checkpoints.load()
         }
 
-        public createTestCamera()
-        {
-            var e, t, i;
-            e = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(5, 5, 55), this.mfgScene.scene);
-            e.setTarget(BABYLON.Vector3.Zero());
-            t = this.mfgScene.scene;
-            i = MfgApp.singleton.ground;
-            this.mfgScene.scene.registerBeforeRender(
-                function()
-                {
-                    t.isReady() && i.updateShaders(t.activeCamera.position)
-                }
-            );
-            return e;
-        }
-
         public activateCamera( e )
         {
             this.mfgScene.scene.activeCamera = e;
@@ -227,7 +208,11 @@
                     MfgSettings.CAR_STARTUP_Z
                 )
             );
-            this.checkpoints.isEnabled() && this.game.failedStatusUpdate();
+
+            if ( this.checkpoints.isEnabled() )
+            {
+                this.game.failedStatusUpdate();
+            }
         }
 
         public start()
@@ -265,23 +250,7 @@
             this.camera = new MfgCamera( this.mfgScene.scene, this.car.b_bodyRoot );
 
             this.mfgScene.createPostProcessPipeline( this.engine );
-
             this.mfgScene.enablePostProcessPipeline();
-
-            this.fpsMeter = new FPSMeter(
-                null,
-                {
-                    graph:    1,
-                    decimals: 2,
-                    position: "absolute",
-                    zIndex:   10,
-                    right:    "5px",
-                    top:      "auto",
-                    left:     "auto",
-                    bottom:   "5px",
-                    margin:   "0"
-                }
-            );
 
             window.addEventListener(
                 "resize",
@@ -293,11 +262,11 @@
 
             var newFrameTick = function()
             {
-                MfgApp.singleton.fpsMeter.tickStart();
+                MfgApp.singleton.hud.fpsMeter.tickStart();
                 MfgApp.singleton.engine.beginFrame();
                 MfgApp.singleton.mfgScene.scene.render();
                 MfgApp.singleton.engine.endFrame();
-                MfgApp.singleton.fpsMeter.tick();
+                MfgApp.singleton.hud.fpsMeter.tick();
 
                 BABYLON.Tools.QueueNewFrame( newFrameTick );
             };

@@ -2,8 +2,6 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO HIGH   Extract scene class.
-    *   TODO HIGH   Create MfgCamera class.
     *   TODO HIGH   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
@@ -12,6 +10,8 @@
     *   TODO INIT   Own level data?
     *   TODO WEAK   Remove ALL compiler warnings.
     *
+    *   DONE        Extracted scene class.
+    *   DONE        Created MfgCamera class.
     *   DONE        Extracted UI class.
     *   DONE        Extracted preloader class.
     *   DONE        Improved loading messages.
