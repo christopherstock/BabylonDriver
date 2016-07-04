@@ -27,12 +27,6 @@
 
         /** The singleton instance of the Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
-        /** The shadow light. */
-        public                      shadowLight             :BABYLON.Light                  = null;
-        /** The shadow generator. */
-        public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
-        /** All meshes to be rendered by the shadow generator. */
-        public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
 
         /** The FramesPerSecond meter. */
         public                      fpsMeter                :FPSMeter                       = null;
@@ -126,8 +120,8 @@
 
             MfgWorld.singleton = new MfgWorld();
 
-            this.createLights();
-            this.createShadowGenerator( this.shadowLight );
+            this.mfgScene.createLights();
+            this.mfgScene.createShadowGenerator();
             this.loadGround();
         }
 
@@ -158,7 +152,7 @@
                     particlesName: "paris_particles.babylon",
                     buildingCelShading: !0,
                     outlineShaderDeltaHeight: .15 * (e / 50),
-                    shadowGenerator: this.shadowGenerator,
+                    shadowGenerator: this.mfgScene.shadowGenerator,
                     onLoadFinished: this.loadCar.bind(this)
                 }
             );
@@ -186,7 +180,7 @@
                     bodyMass: 2e3,
                     bodyCollisionFilterGroup: MfgWorld.GROUP2,
                     bodyCollisionFilterMask:  MfgWorld.GROUP1,
-                    shadowGenerator: this.shadowGenerator,
+                    shadowGenerator: this.mfgScene.shadowGenerator,
                     onLoadSuccess: this.loadCheckpoints.bind(this)
                 }
             );
@@ -210,46 +204,6 @@
                 }
             );
             this.checkpoints.load()
-        }
-
-        public createLights()
-        {
-            var e, t, i;
-            e = new BABYLON.DirectionalLight(
-                "dir01",
-                new BABYLON.Vector3( .2, -1, -.6 ),
-                this.mfgScene.scene
-            );
-            e.position = new BABYLON.Vector3(-200, 1e3, 600);
-            e.diffuse  = new BABYLON.Color3(1, 1, 1);
-            e.specular = new BABYLON.Color3(1, 1, 1);
-            e.intensity = .7;
-            t = BABYLON.Mesh.CreateSphere("sphere", 10, 20, this.mfgScene.scene);
-            t.position = e.position;
-            t.position.scaleInPlace( .5 );
-            t.material = new BABYLON.StandardMaterial("light", this.mfgScene.scene);
-            t.material.emissiveColor = new BABYLON.Color3(1, 1, 0);
-            i = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, -1, 0), this.mfgScene.scene);
-            i.diffuse = new BABYLON.Color3(1, 1, 1);
-            i.specular = new BABYLON.Color3(.5, .5, .4);
-            i.groundColor = new BABYLON.Color3(1, 1, 1);
-            i.intensity = .8;
-            this.shadowLight = e;
-        }
-
-        public createShadowGenerator(e)
-        {
-            this.shadowGenerator = new BABYLON.ShadowGenerator(4096, e), this.shadowGenerator.useVarianceShadowMap = !0, this.shadowGenerator.usePoissonSampling = !0, this.shadowGenerator.setTransparencyShadow(!0), this.shadowGenerator.bias = 1e-5
-        }
-
-        public disableShadows()
-        {
-            null !== this.shadowGenerator && (this.shadowRenderList = this.shadowGenerator.getShadowMap().renderList, this.shadowGenerator.getShadowMap().renderList = [])
-        }
-
-        public enableShadows()
-        {
-            null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.mfgScene.scene.shadowsEnabled = !0)
         }
 
         public createTestCamera()
