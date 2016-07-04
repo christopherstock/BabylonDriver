@@ -25,8 +25,6 @@
 
 
 
-        /** The checkpoint system. */
-        public                      checkpoints             :MfgCheckpoint                  = null;
         /** The car to control. */
         public                      car                     :MfgCar                         = null;
         /** The cameras being used. */
@@ -63,7 +61,7 @@
         ************************************************************************************/
         public startDriving()
         {
-            if ( this.checkpoints.isEnabled() )
+            if ( this.game.checkpoints.isEnabled() )
             {
                 this.hud.checkpointsStatusUpdate();
                 this.game.initTimer();
@@ -150,7 +148,7 @@
         {
             MfgDebug.init.log( "load checkpoints" );
 
-            this.checkpoints = new MfgCheckpoint(
+            this.game.checkpoints = new MfgCheckpoint(
                 MfgApp.singleton.mfgScene.scene,
                 MfgApp.singleton.car.getCarMainMesh(),
                 MfgApp.singleton.mfgScene.ground,
@@ -164,7 +162,7 @@
                     onLoadFinished:     MfgApp.singleton.onCheckpointsLoaded
                 }
             );
-            MfgApp.singleton.checkpoints.load()
+            MfgApp.singleton.game.checkpoints.load()
         }
 
         public onCheckpointsLoaded()
@@ -207,7 +205,7 @@
                 )
             );
 
-            if ( this.checkpoints.isEnabled() )
+            if ( this.game.checkpoints.isEnabled() )
             {
                 this.game.failedStatusUpdate();
             }
@@ -218,7 +216,7 @@
             MfgDebug.init.log( "start().." );
 
             // enable feature 'checkpoints' on!
-            this.checkpoints.enableSprites();
+            this.game.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
 
             MfgKey.resetKeys();
@@ -243,7 +241,7 @@
                     );
                     MfgApp.singleton.car.update();
                     MfgApp.singleton.hud.updateTdB();
-                    MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.game.updateTimer();
+                    MfgApp.singleton.game.checkpoints.isEnabled() && MfgApp.singleton.game.updateTimer();
                 }
             };
 

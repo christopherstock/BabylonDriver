@@ -53,6 +53,6 @@
         ************************************************************************************/
         public checkpointsStatusUpdate()
         {
-            $("#remaining_span").text( MfgApp.singleton.checkpoints.getNbCheckPoints() )
+            $("#remaining_span").text( MfgApp.singleton.game.checkpoints.getNbCheckPoints() )
         }
     }
