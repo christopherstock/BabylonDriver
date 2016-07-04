@@ -52,12 +52,11 @@
             this.engine = new BABYLON.Engine( this.canvas, !0 );
         }
 
+        /************************************************************************************
+        *   Starts the driving simulation process.
+        ************************************************************************************/
         public startDriving()
         {
-            $("#title_bar").toggle();
-            $("#tdb_back").toggle();
-            $("#tdb").toggle();
-
             this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
             this.activateCamera( this.camera.followCamera );
 
@@ -73,7 +72,14 @@
             this.registerMoves();
         }
 
-        public displayDirection(e)
+
+
+
+
+        /************************************************************************************
+        *   Displays the direction in the HUD.
+        ************************************************************************************/
+        public displayDirection( e )
         {
             var directionDiv = $("#direction");
             1 === e ? directionDiv.text("") : directionDiv.text("R")
@@ -113,6 +119,10 @@
                 $("#timer_span").text(o + t + ":" + a + i + ":" + n + s)
             }
         }
+
+
+
+
 
         public createScene()
         {
