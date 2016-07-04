@@ -10,25 +10,27 @@
         /** The singleton instance of this demo app. */
         public      static          singleton               :MfgApp                        = null;
 
-        /** The checkpoint system. */
-        public                      checkpoints             :MfgCheckpoint                  = null;
-        /** The car to control. */
-        public                      car                     :MfgCar                         = null;
+        /** The singleton instance of the Babylon.js engine. */
+        public                      engine                  :BABYLON.Engine                 = null;
+        /** The canvas where all drawing operations appear. */
+        public                      canvas                  :HTMLCanvasElement              = null;
+
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
-        /** The cameras being used. */
-        public                      camera                  :MfgCamera                      = null;
         /** The game logic. */
         public                      game                    :MfgGame                        = null;
         /** The HUD. */
         public                      hud                     :MfgHUD                         = null;
 
-        /** The canvas where all drawing operations appear. */
-        public                      canvas                  :HTMLCanvasElement              = null;
 
-        /** The singleton instance of the Babylon.js engine. */
-        public                      engine                  :BABYLON.Engine                 = null;
 
+
+        /** The checkpoint system. */
+        public                      checkpoints             :MfgCheckpoint                  = null;
+        /** The car to control. */
+        public                      car                     :MfgCar                         = null;
+        /** The cameras being used. */
+        public                      camera                  :MfgCamera                      = null;
 
 
 
@@ -90,8 +92,6 @@
 
             MfgDebug.init.log( "Creating world.." );
 
-            MfgWorld.singleton = new MfgWorld();
-
             MfgDebug.init.log( "Creating lights.." );
 
             this.mfgScene.createLights();
@@ -115,13 +115,13 @@
 
             this.car = new MfgCar(
                 MfgApp.singleton.mfgScene.scene,
-                MfgWorld.singleton.world,
+                MfgApp.singleton.mfgScene.world.world,
                 "./res/ds3/caisse/",
                 "DS3_caisse.babylon",
                 "./res/ds3/roue/",
                 "DS3_roue.babylon",
-                MfgWorld.singleton.carBodyMaterial,
-                MfgWorld.singleton.wheelMaterial,
+                this.mfgScene.world.carBodyMaterial,
+                this.mfgScene.world.wheelMaterial,
                 new CANNON.Vec3(1.31, .76, -.6),
                 new CANNON.Vec3(1.31, -.7, -.6),
                 new CANNON.Vec3(-1.13, .76, -.6),
@@ -236,7 +236,7 @@
                         MfgApp.singleton.hud.displayDirection(MfgApp.singleton.car.getDirection());
                         MfgKey.changeDir = 0;
                     }
-                    MfgWorld.singleton.world.step(MfgWorld.singleton.timeStep);
+                    MfgApp.singleton.mfgScene.world.world.step( MfgApp.singleton.mfgScene.world.timeStep );
                     MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
                     MfgApp.singleton.mfgScene.ground.updateShaders(
                         MfgApp.singleton.mfgScene.scene.activeCamera.position

@@ -10,8 +10,6 @@
         public      static      GROUP1                      :number                     = 1;
         public      static      GROUP2                      :number                     = 2;
 
-        public      static      singleton                   :MfgWorld                   = null;
-
         public                  world                       :CANNON.World               = null;
         public                  worldstep                   :number                     = 0;
         public                  timeStep                    :number                     = 0;

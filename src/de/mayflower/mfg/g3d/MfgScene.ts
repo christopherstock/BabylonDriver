@@ -10,10 +10,10 @@
         /** The native scene representation. */
         public              scene                   :BABYLON.Scene                  = null;
 
-
-
         /** The ground to render. */
         public              ground                  :MfgGround                      = null;
+        /** The ground to render. */
+        public              world                   :MfgWorld                       = null;
         /** The skybox that surrounds the scene. */
         private             skyBox                  :MfgSkyBox                      = null;
 
@@ -33,6 +33,8 @@
             this.scene.clearColor = new BABYLON.Color3( .8, .8, .8 );
 
             this.skyBox = new MfgSkyBox( this.scene );
+
+            this.world = new MfgWorld();
         }
 
         /************************************************************************************
@@ -126,17 +128,17 @@
 
         public loadGround()
         {
-            MfgDebug.init.log( "Load ground.." );
+            MfgDebug.init.log( "Load ground" );
 
             var e = 50;
             this.ground = new MfgGround(
                 MfgApp.singleton.mfgScene.scene,
-                MfgWorld.singleton.world,
+                MfgApp.singleton.mfgScene.world.world,
                 "./res/paris/",
                 "paris_heightmap.babylon",
                 "Ground",
                 6 * e,
-                MfgWorld.singleton.groundMaterial,
+                MfgApp.singleton.mfgScene.world.groundMaterial,
                 {
                     groundTexture: "./res/paris/plan.png",
                     groundCollisionFilterGroup: MfgWorld.GROUP1,
