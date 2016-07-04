@@ -32,7 +32,7 @@
         public              bodyCollisionFilterMask         :any                            = null;
         public              onLoadSuccess                   :any                            = null;
         public              scale                           :any                            = null;
-        public              b_bodyRoot                      :any                            = null;
+        public              b_bodyRoot                      :BABYLON.Mesh                   = null;
         public              approxBox                       :any                            = null;
         public              c_bodyRoot                      :any                            = null;
         public              b_wheels                        :any                            = null;
@@ -204,19 +204,6 @@
                 var n = 50;
                 this.brake(n)
             }
-        }
-
-        public createFollowCamera() : BABYLON.FollowCamera
-        {
-            var e = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 15, -45), this.scene);
-            e.target = this.b_bodyRoot;
-            e.radius = 8;
-            e.heightOffset = 2;
-            e.rotationOffset = 90;
-            e.cameraAcceleration = .05;
-            e.maxCameraSpeed = 20;
-
-            return e;
         }
 
         public getSpeed()

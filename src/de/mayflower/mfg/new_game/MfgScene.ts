@@ -50,11 +50,11 @@
         {
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.arcCamera
+                MfgApp.singleton.camera.arcCamera
             );
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.followCamera
+                MfgApp.singleton.camera.followCamera
             );
         }
 
@@ -65,11 +65,11 @@
         {
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.arcCamera
+                MfgApp.singleton.camera.arcCamera
             );
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.followCamera
+                MfgApp.singleton.camera.followCamera
             );
         }
     }

@@ -18,6 +18,9 @@
         public                      mfgScene                :MfgScene                       = null;
         /** The ground to render. */
         public                      ground                  :MfgGround                      = null;
+        /** The cameras being used. */
+        public                      camera                  :MfgCamera                      = null;
+
 
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
@@ -30,10 +33,7 @@
         public                      shadowGenerator         :BABYLON.ShadowGenerator        = null;
         /** All meshes to be rendered by the shadow generator. */
         public                      shadowRenderList        :BABYLON.AbstractMesh[]         = null;
-        /** The arc rotating camera. */
-        public                      arcCamera               :BABYLON.ArcRotateCamera        = null;
-        /** The car follow camera. */
-        public                      followCamera            :BABYLON.FollowCamera           = null;
+
         /** The FramesPerSecond meter. */
         public                      fpsMeter                :FPSMeter                       = null;
 
@@ -65,7 +65,7 @@
             $("#tdb").toggle();
 
             this.checkpoints.isEnabled() && ( this.checkpointsStatusUpdate(), this.initTimer(), this.initFailed() );
-            this.activateCamera( this.followCamera );
+            this.activateCamera( this.camera.followCamera );
 
             this.car.setPosition(
                 new CANNON.Vec3(
@@ -268,31 +268,6 @@
             return e;
         }
 
-        public createArcCamera() : BABYLON.ArcRotateCamera
-        {
-            var e, t, i;
-            e = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3(0, 10, 0), this.mfgScene.scene);
-            e.setPosition(new BABYLON.Vector3(200, 150, 200));
-            e.lowerAlphaLimit = e.upperAlphaLimit = 0;
-            e.lowerBetaLimit = 2;
-            e.upperBetaLimit = 1;
-            e.lowerRadiusLimit = e.upperRadiusLimit = e.radius;
-            t = this.mfgScene.scene;
-            i = MfgApp.singleton.ground;
-            this.mfgScene.scene.registerBeforeRender(
-                function() {
-                    if (t.isReady())
-                    {
-                        i.updateShaders(t.activeCamera.position);
-                        t.activeCamera.alpha += .002;
-                    }
-                }
-            );
-            e.viewport = new BABYLON.Viewport(0, 0, 1, 1);
-
-            return e;
-        }
-
         public activateCamera( e )
         {
             this.mfgScene.scene.activeCamera = e;
@@ -348,7 +323,7 @@
             $("#title_bar").toggle();
             $("#tdb_back").toggle();
             $("#tdb").toggle();
-            this.activateCamera(this.arcCamera);
+            this.activateCamera( this.camera.arcCamera );
             this.hideCar();
             if (this.checkpoints.isEnabled())
             {
@@ -388,6 +363,8 @@
                     MfgApp.singleton.checkpoints.isEnabled() && MfgApp.singleton.updateTimer();
                 }
             };
+
+            this.camera = new MfgCamera( this.mfgScene.scene, this.car.b_bodyRoot );
 
             this.mfgScene.createPostProcessPipeline( this.engine );
 
@@ -429,10 +406,7 @@
 
             BABYLON.Tools.QueueNewFrame(newFrameTick);
 
-            this.arcCamera = this.createArcCamera();
-            this.followCamera = this.car.createFollowCamera();
-
-            this.activateCamera(this.arcCamera);
+            this.activateCamera( this.camera.arcCamera );
             MfgPreloader.singleton.hidePreloader();
 
             $("#menus").toggle();
