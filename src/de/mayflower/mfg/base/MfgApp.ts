@@ -22,16 +22,6 @@
         /** The HUD. */
         public                      hud                     :MfgHUD                         = null;
 
-
-
-
-
-        /** The cameras being used. */
-        public                      camera                  :MfgCamera                      = null;
-
-
-
-
         /** The handler for the keyUp event. */
         public                      keyupHandler            :any                            = null;
         /** The handler for the keyDown event. */
@@ -68,7 +58,7 @@
                 this.game.initFailed();
             }
 
-            this.activateCamera( this.camera.followCamera );
+            this.activateCamera( this.mfgScene.camera.followCamera );
 
             this.mfgScene.car.setPosition(
                 new CANNON.Vec3(
@@ -215,7 +205,7 @@
                 }
             };
 
-            this.camera = new MfgCamera( this.mfgScene.scene, this.mfgScene.car.b_bodyRoot );
+            this.mfgScene.camera = new MfgCamera( this.mfgScene.scene, this.mfgScene.car.b_bodyRoot );
 
             this.mfgScene.createPostProcessPipeline( this.engine );
             this.mfgScene.enablePostProcessPipeline();

@@ -18,6 +18,8 @@
         private             skyBox                  :MfgSkyBox                      = null;
         /** The car to control. */
         public              car                     :MfgCar                         = null;
+        /** The cameras being used. */
+        public              camera                  :MfgCamera                      = null;
 
         /** The shadow light. */
         public              shadowLight             :BABYLON.DirectionalLight       = null;
@@ -65,7 +67,7 @@
         {
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.camera.followCamera
+                MfgApp.singleton.mfgScene.camera.followCamera
             );
         }
 
@@ -76,7 +78,7 @@
         {
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.camera.followCamera
+                MfgApp.singleton.mfgScene.camera.followCamera
             );
         }
 
