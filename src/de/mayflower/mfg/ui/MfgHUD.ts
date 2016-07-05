@@ -45,7 +45,7 @@
         ************************************************************************************/
         public updateTdB()
         {
-            $("#speed_span").text( Math.round( MfgApp.singleton.car.getSpeed() ).toString() )
+            $("#speed_span").text( Math.round( MfgApp.singleton.mfgScene.car.getSpeed() ).toString() )
         }
 
         /************************************************************************************

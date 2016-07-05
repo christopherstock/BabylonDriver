@@ -24,7 +24,7 @@
         /** Car startup position Y. */
         public      static      CAR_STARTUP_Y                               :number             = -14.0;
         /** Car startup position Z. */
-        public      static      CAR_STARTUP_Z                               :number             = 70.0;
+        public      static      CAR_STARTUP_Z                               :number             = 60.0;
 
         /** The gravity z of the physical world. */
         public      static      WORLD_GRAVITY_Z                             :number             = -9.82;

@@ -25,10 +25,10 @@
 
 
 
-        /** The car to control. */
-        public                      car                     :MfgCar                         = null;
+
         /** The cameras being used. */
         public                      camera                  :MfgCamera                      = null;
+
 
 
 
@@ -70,14 +70,14 @@
 
             this.activateCamera( this.camera.followCamera );
 
-            this.car.setPosition(
+            this.mfgScene.car.setPosition(
                 new CANNON.Vec3(
                     MfgSettings.CAR_STARTUP_X,
                     MfgSettings.CAR_STARTUP_Y,
                     MfgSettings.CAR_STARTUP_Z
                 )
             );
-            this.car.update();
+            this.mfgScene.car.update();
 
             this.registerMoves();
         }
@@ -104,37 +104,7 @@
         {
             MfgDebug.init.log( "onGroundLoaded.." );
 
-            MfgApp.singleton.loadCar();
-        }
-
-        public loadCar()
-        {
-            MfgDebug.init.log( "loadCar.." );
-
-            this.car = new MfgCar(
-                MfgApp.singleton.mfgScene.scene,
-                MfgApp.singleton.mfgScene.world.world,
-                "./res/ds3/caisse/",
-                "DS3_caisse.babylon",
-                "./res/ds3/roue/",
-                "DS3_roue.babylon",
-                this.mfgScene.world.carBodyMaterial,
-                this.mfgScene.world.wheelMaterial,
-                new CANNON.Vec3(1.31, .76, -.6),
-                new CANNON.Vec3(1.31, -.7, -.6),
-                new CANNON.Vec3(-1.13, .76, -.6),
-                new CANNON.Vec3(-1.13, -.7, -.6),
-                {
-                    scaleFactor: .001,
-                    invertX: !0,
-                    bodyMass: 2e3,
-                    bodyCollisionFilterGroup: MfgWorld.GROUP2,
-                    bodyCollisionFilterMask:  MfgWorld.GROUP1,
-                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
-                    onLoadSuccess: MfgApp.singleton.onCarLoaded
-                }
-            );
-            this.car.load()
+            MfgApp.singleton.mfgScene.loadCar();
         }
 
         public onCarLoaded()
@@ -150,7 +120,7 @@
 
             this.game.checkpoints = new MfgCheckpoint(
                 MfgApp.singleton.mfgScene.scene,
-                MfgApp.singleton.car.getCarMainMesh(),
+                MfgApp.singleton.mfgScene.car.getCarMainMesh(),
                 MfgApp.singleton.mfgScene.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
@@ -197,7 +167,7 @@
 
         public resetCarPosition()
         {
-            this.car.setPosition(
+            this.mfgScene.car.setPosition(
                 new CANNON.Vec3(
                     MfgSettings.CAR_STARTUP_X,
                     MfgSettings.CAR_STARTUP_Y,
@@ -228,24 +198,24 @@
             {
                 if (MfgApp.singleton.mfgScene.scene.isReady())
                 {
-                    MfgApp.singleton.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                    MfgApp.singleton.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                     if ( 1 === MfgKey.changeDir )
                     {
-                        MfgApp.singleton.hud.displayDirection(MfgApp.singleton.car.getDirection());
+                        MfgApp.singleton.hud.displayDirection( MfgApp.singleton.mfgScene.car.getDirection() );
                         MfgKey.changeDir = 0;
                     }
                     MfgApp.singleton.mfgScene.world.world.step( MfgApp.singleton.mfgScene.world.timeStep );
-                    MfgApp.singleton.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
+                    MfgApp.singleton.mfgScene.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
                     MfgApp.singleton.mfgScene.ground.updateShaders(
                         MfgApp.singleton.mfgScene.scene.activeCamera.position
                     );
-                    MfgApp.singleton.car.update();
+                    MfgApp.singleton.mfgScene.car.update();
                     MfgApp.singleton.hud.updateTdB();
                     MfgApp.singleton.game.checkpoints.isEnabled() && MfgApp.singleton.game.updateTimer();
                 }
             };
 
-            this.camera = new MfgCamera( this.mfgScene.scene, this.car.b_bodyRoot );
+            this.camera = new MfgCamera( this.mfgScene.scene, this.mfgScene.car.b_bodyRoot );
 
             this.mfgScene.createPostProcessPipeline( this.engine );
             this.mfgScene.enablePostProcessPipeline();

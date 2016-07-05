@@ -16,6 +16,8 @@
         public              world                   :MfgWorld                       = null;
         /** The skybox that surrounds the scene. */
         private             skyBox                  :MfgSkyBox                      = null;
+        /** The car to control. */
+        public              car                     :MfgCar                         = null;
 
         /** The shadow light. */
         public              shadowLight             :BABYLON.DirectionalLight       = null;
@@ -162,6 +164,33 @@
             this.ground.load()
         }
 
+        public loadCar()
+        {
+            MfgDebug.init.log( "loadCar.." );
 
-
+            this.car = new MfgCar(
+                MfgApp.singleton.mfgScene.scene,
+                MfgApp.singleton.mfgScene.world.world,
+                "./res/ds3/caisse/",
+                "DS3_caisse.babylon",
+                "./res/ds3/roue/",
+                "DS3_roue.babylon",
+                this.world.carBodyMaterial,
+                this.world.wheelMaterial,
+                new CANNON.Vec3( 1.31,  .76, -.6 ),
+                new CANNON.Vec3( 1.31,  -.7, -.6 ),
+                new CANNON.Vec3( -1.13, .76, -.6 ),
+                new CANNON.Vec3( -1.13, -.7, -.6 ),
+                {
+                    scaleFactor: .001,
+                    invertX: !0,
+                    bodyMass: 2e3,
+                    bodyCollisionFilterGroup: MfgWorld.GROUP2,
+                    bodyCollisionFilterMask:  MfgWorld.GROUP1,
+                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
+                    onLoadSuccess: MfgApp.singleton.onCarLoaded
+                }
+            );
+            this.car.load()
+        }
     }
