@@ -8,23 +8,22 @@
     class MfgCar
     {
         public              scene                           :BABYLON.Scene                  = null;
-
         public              world                           :CANNON.World                   = null;
-        public              bodyMeshPath                    :any                            = null;
-        public              bodyMeshName                    :any                            = null;
-        public              wheelMeshPath                   :any                            = null;
-        public              wheelMeshName                   :any                            = null;
-        public              bodyMaterial                    :any                            = null;
-        public              wheelMaterial                   :any                            = null;
-        public              wheel_rl_position               :any                            = null;
-        public              wheel_rr_position               :any                            = null;
-        public              wheel_fl_position               :any                            = null;
-        public              wheel_fr_position               :any                            = null;
+        public              bodyMeshPath                    :string                         = null;
+        public              bodyMeshName                    :string                         = null;
+        public              wheelMeshPath                   :string                         = null;
+        public              wheelMeshName                   :string                         = null;
+        public              bodyMaterial                    :CANNON.Material                = null;
+        public              wheelMaterial                   :CANNON.Material                = null;
+        public              wheel_rl_position               :CANNON.Vec3                    = null;
+        public              wheel_rr_position               :CANNON.Vec3                    = null;
+        public              wheel_fl_position               :CANNON.Vec3                    = null;
+        public              wheel_fr_position               :CANNON.Vec3                    = null;
         public              wheelsOptions                   :any                            = null;
-        public              lenk                            :any                            = null;
-        public              dyn                             :any                            = null;
-        public              direction                       :any                            = null;
-        public              scaleFactor                     :any                            = null;
+        public              lenk                            :number                         = null;
+        public              dyn                             :number                         = null;
+        public              direction                       :number                         = null;
+        public              scaleFactor                     :number                         = null;
         public              shadowGenerator                 :any                            = null;
         public              bodyMass                        :any                            = null;
         public              firstPos                        :any                            = null;
@@ -34,26 +33,43 @@
         public              scale                           :any                            = null;
         public              b_bodyRoot                      :BABYLON.Mesh                   = null;
         public              approxBox                       :any                            = null;
-        public              c_bodyRoot                      :any                            = null;
+        public              c_bodyRoot                      :CANNON.Body                    = null;
         public              b_wheels                        :any                            = null;
         public              vehicle                         :any                            = null;
 
-        public constructor( e, t, i, s, o, n, h, a, r, l, c, d, p )
+        public constructor
+        (
+            e:BABYLON.Scene,
+            t:CANNON.World,
+            i:string,
+            s:string,
+            o:string,
+            n:string,
+            h:CANNON.Material,
+            a:CANNON.Material,
+            r:CANNON.Vec3,
+            l:CANNON.Vec3,
+            c:CANNON.Vec3,
+            d:CANNON.Vec3,
+            p
+        )
         {
             p = p || {};
 
-            this.scene = e;
-            this.world = t;
-            this.bodyMeshPath = i;
-            this.bodyMeshName = s;
-            this.wheelMeshPath = o;
-            this.wheelMeshName = n;
-            this.bodyMaterial = h;
-            this.wheelMaterial = a;
+            this.scene             = e;
+            this.world             = t;
+            this.bodyMeshPath      = i;
+            this.bodyMeshName      = s;
+            this.wheelMeshPath     = o;
+            this.wheelMeshName     = n;
+            this.bodyMaterial      = h;
+            this.wheelMaterial     = a;
+
             this.wheel_rl_position = r;
             this.wheel_rr_position = l;
             this.wheel_fl_position = c;
             this.wheel_fr_position = d;
+
             this.wheelsOptions = {
                 directionLocal: new CANNON.Vec3(0, 0, -1),
                 suspensionStiffness: 30,
@@ -102,9 +118,10 @@
             t.z = Math.abs(t.z);
             t.scaleInPlace(this.scaleFactor);
             i = new CANNON.Box(new CANNON.Vec3(t.x, t.z, t.y));
+
             this.c_bodyRoot = new CANNON.Body(
                 {
-                    mass: this.bodyMass,
+                    mass:     this.bodyMass,
                     material: this.bodyMaterial
                 }
             );
