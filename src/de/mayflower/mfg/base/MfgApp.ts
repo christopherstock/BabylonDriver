@@ -6,9 +6,6 @@
     ************************************************************************************/
     class MfgApp
     {
-        /** The singleton instance of this demo app. */
-        public      static          singleton               :MfgApp                        = null;
-
         /** The singleton instance of the Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
         /** The canvas where all drawing operations appear. */
@@ -96,14 +93,14 @@
         {
             MfgDebug.init.log( "onGroundLoaded.." );
 
-            MfgApp.singleton.mfgScene.loadCar();
+            MfgInit.app.mfgScene.loadCar();
         }
 
         public onCarLoaded()
         {
             MfgDebug.init.log( "onCarLoaded.." );
 
-            MfgApp.singleton.loadCheckpoints()
+            MfgInit.app.loadCheckpoints()
         }
 
         public loadCheckpoints()
@@ -111,27 +108,27 @@
             MfgDebug.init.log( "load checkpoints" );
 
             this.game.checkpoints = new MfgCheckpoint(
-                MfgApp.singleton.mfgScene.scene,
-                MfgApp.singleton.mfgScene.car.getCarMainMesh(),
-                MfgApp.singleton.mfgScene.ground,
+                MfgInit.app.mfgScene.scene,
+                MfgInit.app.mfgScene.car.getCarMainMesh(),
+                MfgInit.app.mfgScene.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
                 9,
                 512,
                 {
-                    checkpointsCallback: MfgApp.singleton.hud.checkpointsStatusUpdate.bind( this ),
-                    onLoadFinished:     MfgApp.singleton.onCheckpointsLoaded
+                    checkpointsCallback: MfgInit.app.hud.checkpointsStatusUpdate.bind( this ),
+                    onLoadFinished:     MfgInit.app.onCheckpointsLoaded
                 }
             );
-            MfgApp.singleton.game.checkpoints.load()
+            MfgInit.app.game.checkpoints.load()
         }
 
         public onCheckpointsLoaded()
         {
             MfgDebug.init.log( "onCheckpointsLoaded.." );
 
-            MfgApp.singleton.start();
+            MfgInit.app.start();
         }
 
         public activateCamera( e )
@@ -188,22 +185,22 @@
 
             this.registerBeforeRender = function()
             {
-                if (MfgApp.singleton.mfgScene.scene.isReady())
+                if (MfgInit.app.mfgScene.scene.isReady())
                 {
-                    MfgApp.singleton.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                    MfgInit.app.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                     if ( 1 === MfgKey.changeDir )
                     {
-                        MfgApp.singleton.hud.displayDirection( MfgApp.singleton.mfgScene.car.getDirection() );
+                        MfgInit.app.hud.displayDirection( MfgInit.app.mfgScene.car.getDirection() );
                         MfgKey.changeDir = 0;
                     }
-                    MfgApp.singleton.mfgScene.world.world.step( MfgApp.singleton.mfgScene.world.timeStep );
-                    MfgApp.singleton.mfgScene.car.getAltitude() < 47 && MfgApp.singleton.resetCarPosition();
-                    MfgApp.singleton.mfgScene.ground.updateShaders(
-                        MfgApp.singleton.mfgScene.scene.activeCamera.position
+                    MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
+                    MfgInit.app.mfgScene.car.getAltitude() < 47 && MfgInit.app.resetCarPosition();
+                    MfgInit.app.mfgScene.ground.updateShaders(
+                        MfgInit.app.mfgScene.scene.activeCamera.position
                     );
-                    MfgApp.singleton.mfgScene.car.update();
-                    MfgApp.singleton.hud.updateTdB();
-                    MfgApp.singleton.game.checkpoints.isEnabled() && MfgApp.singleton.game.updateTimer();
+                    MfgInit.app.mfgScene.car.update();
+                    MfgInit.app.hud.updateTdB();
+                    MfgInit.app.game.checkpoints.isEnabled() && MfgInit.app.game.updateTimer();
                 }
             };
 
@@ -216,24 +213,24 @@
                 "resize",
                 function()
                 {
-                    MfgApp.singleton.engine.resize()
+                    MfgInit.app.engine.resize()
                 }
             );
 
             var newFrameTick = function()
             {
-                MfgApp.singleton.hud.fpsMeter.tickStart();
-                MfgApp.singleton.engine.beginFrame();
-                MfgApp.singleton.mfgScene.scene.render();
-                MfgApp.singleton.engine.endFrame();
-                MfgApp.singleton.hud.fpsMeter.tick();
+                MfgInit.app.hud.fpsMeter.tickStart();
+                MfgInit.app.engine.beginFrame();
+                MfgInit.app.mfgScene.scene.render();
+                MfgInit.app.engine.endFrame();
+                MfgInit.app.hud.fpsMeter.tick();
 
                 BABYLON.Tools.QueueNewFrame( newFrameTick );
             };
 
             BABYLON.Tools.QueueNewFrame( newFrameTick );
 
-            MfgPreloader.singleton.hidePreloader();
+            MfgInit.preloader.hidePreloader();
 
             this.startDriving();
         }

@@ -212,7 +212,7 @@
 
         public _createGround()
         {
-            MfgPreloader.singleton.setLoadingMessage("creating landscape");
+            MfgInit.preloader.setLoadingMessage("creating landscape");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
                 var i, s;
@@ -302,8 +302,8 @@
 
         public _loadSolidBuildings()
         {
-            MfgPreloader.singleton.setLoadingMessage("constructing buildings");
-            var e = MfgApp.singleton.mfgScene.ground;
+            MfgInit.preloader.setLoadingMessage("constructing buildings");
+            var e = MfgInit.app.mfgScene.ground;
             BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, i = [], s = [];
                 for (o = 0; o < t.length; o++) {
@@ -362,7 +362,7 @@
 
         public _load3dBuildings()
         {
-            MfgPreloader.singleton.setLoadingMessage("creating special buildings and monuments");
+            MfgInit.preloader.setLoadingMessage("creating special buildings and monuments");
             var e = this;
             BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
                 var o, a, n, i = [], s = [];
@@ -379,7 +379,7 @@
 
         public _loadTrees()
         {
-            MfgPreloader.singleton.setLoadingMessage("creating trees");
+            MfgInit.preloader.setLoadingMessage("creating trees");
 
             var e = function (e, t) {
                 if (e === t)return e;
@@ -387,7 +387,7 @@
                 return i * (t - e) + e
             };
 
-            var t = MfgApp.singleton.mfgScene.ground;
+            var t = MfgInit.app.mfgScene.ground;
             BABYLON.SceneLoader.ImportMesh("", this.treesPath, this.treesName, this.scene, function (i) {
                 var a, n, s = [], o = [];
                 for (a = 0; a < i.length; a++)if (n = i[a], null !== n.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
@@ -428,7 +428,7 @@
 
         public _loadParticleSystems()
         {
-            MfgPreloader.singleton.setLoadingMessage( "creating particle systems" );
+            MfgInit.preloader.setLoadingMessage( "creating particle systems" );
             var e, t, i = this;
             BABYLON.SceneLoader.ImportMesh("", this.particlesPath, this.particlesName, this.scene, function (s) {
                 for (t = 0; t < s.length; t++)if (e = s[t], null !== e.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {

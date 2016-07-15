@@ -67,7 +67,7 @@
         {
             this.scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.mfgScene.camera.followCamera
+                MfgInit.app.mfgScene.camera.followCamera
             );
         }
 
@@ -78,7 +78,7 @@
         {
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
-                MfgApp.singleton.mfgScene.camera.followCamera
+                MfgInit.app.mfgScene.camera.followCamera
             );
         }
 
@@ -136,13 +136,13 @@
 
             var e = 50;
             this.ground = new MfgGround(
-                MfgApp.singleton.mfgScene.scene,
-                MfgApp.singleton.mfgScene.world.world,
+                MfgInit.app.mfgScene.scene,
+                MfgInit.app.mfgScene.world.world,
                 "./res/paris/",
                 "paris_heightmap.babylon",
                 "Ground",
                 6 * e,
-                MfgApp.singleton.mfgScene.world.groundMaterial,
+                MfgInit.app.mfgScene.world.groundMaterial,
                 {
                     groundTexture: "./res/paris/plan.png",
                     groundCollisionFilterGroup: MfgWorld.GROUP1,
@@ -159,8 +159,8 @@
                     particlesName: "paris_particles.babylon",
                     buildingCelShading: !0,
                     outlineShaderDeltaHeight: .15 * (e / 50),
-                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
-                    onLoadFinished: MfgApp.singleton.onGroundLoaded
+                    shadowGenerator: MfgInit.app.mfgScene.shadowGenerator,
+                    onLoadFinished: MfgInit.app.onGroundLoaded
                 }
             );
             this.ground.load()
@@ -171,8 +171,8 @@
             MfgDebug.init.log( "loadCar.." );
 
             this.car = new MfgCar(
-                MfgApp.singleton.mfgScene.scene,
-                MfgApp.singleton.mfgScene.world.world,
+                MfgInit.app.mfgScene.scene,
+                MfgInit.app.mfgScene.world.world,
                 "./res/ds3/caisse/",
                 "DS3_caisse.babylon",
                 "./res/ds3/roue/",
@@ -189,8 +189,8 @@
                     bodyMass: 2e3,
                     bodyCollisionFilterGroup: MfgWorld.GROUP2,
                     bodyCollisionFilterMask:  MfgWorld.GROUP1,
-                    shadowGenerator: MfgApp.singleton.mfgScene.shadowGenerator,
-                    onLoadSuccess: MfgApp.singleton.onCarLoaded
+                    shadowGenerator: MfgInit.app.mfgScene.shadowGenerator,
+                    onLoadSuccess: MfgInit.app.onCarLoaded
                 }
             );
             this.car.load()

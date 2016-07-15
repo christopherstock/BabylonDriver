@@ -43,7 +43,7 @@
                 sprite      :BABYLON.Sprite,
                 self        :MfgCheckpoint              = this;
 
-            MfgPreloader.singleton.setLoadingMessage("placing checkpoints");
+            MfgInit.preloader.setLoadingMessage("placing checkpoints");
 
             this.spriteArray = [];
             this.nbCheckPoints = 0;

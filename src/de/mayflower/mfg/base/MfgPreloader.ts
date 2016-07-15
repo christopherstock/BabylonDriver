@@ -7,9 +7,6 @@
     ************************************************************************************/
     class MfgPreloader
     {
-        /** The singleton instance of this class. */
-        public          static              singleton               :MfgPreloader               = null;
-
         /** The preloader div container. */
         public                              divPreloader            :HTMLDivElement             = null;
         /** The loading message div container. */

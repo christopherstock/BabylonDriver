@@ -7,6 +7,12 @@
     *****************************************************************************/
     class MfgInit
     {
+        /** The preloading system. */
+        public          static              preloader               :MfgPreloader               = null;
+
+        /** The singleton instance of this demo app. */
+        public          static              app                     :MfgApp                     = null;
+
         /*****************************************************************************
         *   Inits this app from scratch.
         *****************************************************************************/
@@ -16,23 +22,17 @@
             MfgDebug.acclaim.log( MfgSettings.TITLE );
             document.title = MfgSettings.TITLE;
 
-            //create preloader
-            MfgPreloader.singleton = new MfgPreloader();
+            MfgInit.preloader = new MfgPreloader();
+            MfgInit.app = new MfgApp();
 
-            MfgDebug.init.log( "Creating app .." );
-
-            //create app
-            MfgApp.singleton = new MfgApp();
-
-            MfgDebug.init.log( "Creating UI .." );
 
 
             //create UI
-            MfgApp.singleton.ui = new MfgUI();
-            MfgApp.singleton.ui.initMenuUI();
+            MfgInit.app.ui = new MfgUI();
+            MfgInit.app.ui.initMenuUI();
 
             //create the app scene
-            MfgApp.singleton.createScene();
+            MfgInit.app.createScene();
 
 
 /*

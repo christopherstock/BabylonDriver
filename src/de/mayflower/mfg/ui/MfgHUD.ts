@@ -45,7 +45,7 @@
         ************************************************************************************/
         public updateTdB()
         {
-            $("#speed_span").text( Math.round( MfgApp.singleton.mfgScene.car.getSpeed() ).toString() )
+            $("#speed_span").text( Math.round( MfgInit.app.mfgScene.car.getSpeed() ).toString() )
         }
 
         /************************************************************************************
@@ -53,6 +53,6 @@
         ************************************************************************************/
         public checkpointsStatusUpdate()
         {
-            $("#remaining_span").text( MfgApp.singleton.game.checkpoints.getNbCheckPoints() )
+            $("#remaining_span").text( MfgInit.app.game.checkpoints.getNbCheckPoints() )
         }
     }

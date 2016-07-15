@@ -52,7 +52,7 @@
             {
                 // if ( MfgApp.singleton.car.getSpeed() < 2 )
                 {
-                    MfgApp.singleton.resetCarPosition();
+                    MfgInit.app.resetCarPosition();
                 }
             }
         }

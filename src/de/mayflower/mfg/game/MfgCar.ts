@@ -168,7 +168,7 @@
 
         public load()
         {
-            MfgPreloader.singleton.setLoadingMessage( "importing MF vehicle" );
+            MfgInit.preloader.setLoadingMessage( "importing MF vehicle" );
             var e = this;
             BABYLON.SceneLoader.ImportMesh(
                 "",
