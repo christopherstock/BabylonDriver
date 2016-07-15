@@ -7,27 +7,19 @@
     ************************************************************************************/
     class MfgApp
     {
-        /** The Babylon.js engine. */
-        public                      engine                  :BABYLON.Engine                 = null;
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
+        /** The Babylon.js engine. */
+        public                      engine                  :BABYLON.Engine                 = null;
 
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
         /** The game logic. */
-        public                      game                    :MfgGame                        = null;
+        public                      mfgGame                 :MfgGame                        = null;
         /** The HUD. */
-        public                      hud                     :MfgHUD                         = null;
-
+        public                      mfgHud                  :MfgHUD                         = null;
         /** The user interface. */
-        public                      ui                      :MfgUI                          = null;
-
-        /** The handler for the keyUp event. */
-        public                      keyupHandler            :any                            = null;
-        /** The handler for the keyDown event. */
-        public                      keydownHandler          :any                            = null;
-        /** Unknown by now. */
-        public                      registerBeforeRender    :any                            = null;
+        public                      mfgUi                   :MfgUI                          = null;
 
         /************************************************************************************
         *   Instanciates the demo application.
@@ -40,14 +32,14 @@
             this.engine = new BABYLON.Engine( this.canvas, !0 );
 
             //create game
-            this.game = new MfgGame();
+            this.mfgGame = new MfgGame();
 
             //create HUD
-            this.hud = new MfgHUD();
+            this.mfgHud = new MfgHUD();
 
             //create UI
-            this.ui = new MfgUI();
-            this.ui.initMenuUI();
+            this.mfgUi = new MfgUI();
+            this.mfgUi.initMenuUI();
         }
 
         /************************************************************************************
@@ -76,11 +68,11 @@
         ************************************************************************************/
         public startDriving()
         {
-            if ( this.game.checkpoints.isEnabled() )
+            if ( this.mfgGame.checkpoints.isEnabled() )
             {
-                this.hud.checkpointsStatusUpdate();
-                this.game.initTimer();
-                this.game.initFailed();
+                this.mfgHud.checkpointsStatusUpdate();
+                this.mfgGame.initTimer();
+                this.mfgGame.initFailed();
             }
 
             this.activateCamera( this.mfgScene.camera.followCamera );
@@ -115,7 +107,7 @@
         {
             MfgDebug.init.log( "load checkpoints" );
 
-            this.game.checkpoints = new MfgCheckpoint(
+            this.mfgGame.checkpoints = new MfgCheckpoint(
                 MfgInit.app.mfgScene.scene,
                 MfgInit.app.mfgScene.car.getCarMainMesh(),
                 MfgInit.app.mfgScene.ground,
@@ -125,11 +117,11 @@
                 9,
                 512,
                 {
-                    checkpointsCallback: MfgInit.app.hud.checkpointsStatusUpdate.bind( this ),
+                    checkpointsCallback: MfgInit.app.mfgHud.checkpointsStatusUpdate.bind( this ),
                     onLoadFinished:     MfgInit.app.onCheckpointsLoaded
                 }
             );
-            MfgInit.app.game.checkpoints.load()
+            MfgInit.app.mfgGame.checkpoints.load()
         }
 
         public onCheckpointsLoaded()
@@ -149,16 +141,16 @@
         {
             window.addEventListener(
                 "keydown",
-                this.keydownHandler
+                MfgKey.onKeyDown
             );
 
             window.addEventListener(
                 "keyup",
-                this.keyupHandler
+                MfgKey.onKeyUp
             );
 
             this.mfgScene.scene.registerBeforeRender(
-                this.registerBeforeRender
+                MfgInit.app.tick
             );
         }
 
@@ -172,9 +164,9 @@
                 )
             );
 
-            if ( this.game.checkpoints.isEnabled() )
+            if ( this.mfgGame.checkpoints.isEnabled() )
             {
-                this.game.failedStatusUpdate();
+                this.mfgGame.failedStatusUpdate();
             }
         }
 
@@ -183,34 +175,10 @@
             MfgDebug.init.log( "start().." );
 
             // enable feature 'checkpoints' on!
-            this.game.checkpoints.enableSprites();
+            this.mfgGame.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
 
             MfgKey.resetKeys();
-
-            this.keydownHandler = MfgKey.onKeyDown;
-            this.keyupHandler   = MfgKey.onKeyUp;
-
-            this.registerBeforeRender = function()
-            {
-                if (MfgInit.app.mfgScene.scene.isReady())
-                {
-                    MfgInit.app.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
-                    if ( 1 === MfgKey.changeDir )
-                    {
-                        MfgInit.app.hud.displayDirection( MfgInit.app.mfgScene.car.getDirection() );
-                        MfgKey.changeDir = 0;
-                    }
-                    MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
-                    MfgInit.app.mfgScene.car.getAltitude() < 47 && MfgInit.app.resetCarPosition();
-                    MfgInit.app.mfgScene.ground.updateShaders(
-                        MfgInit.app.mfgScene.scene.activeCamera.position
-                    );
-                    MfgInit.app.mfgScene.car.update();
-                    MfgInit.app.hud.updateTdB();
-                    MfgInit.app.game.checkpoints.isEnabled() && MfgInit.app.game.updateTimer();
-                }
-            };
 
             this.mfgScene.camera = new MfgCamera( this.mfgScene.scene, this.mfgScene.car.b_bodyRoot );
 
@@ -227,11 +195,11 @@
 
             var newFrameTick = function()
             {
-                MfgInit.app.hud.fpsMeter.tickStart();
+                MfgInit.app.mfgHud.fpsMeter.tickStart();
                 MfgInit.app.engine.beginFrame();
                 MfgInit.app.mfgScene.scene.render();
                 MfgInit.app.engine.endFrame();
-                MfgInit.app.hud.fpsMeter.tick();
+                MfgInit.app.mfgHud.fpsMeter.tick();
 
                 BABYLON.Tools.QueueNewFrame( newFrameTick );
             };
@@ -242,4 +210,25 @@
 
             this.startDriving();
         }
+
+        public tick() : void
+        {
+            if (MfgInit.app.mfgScene.scene.isReady())
+            {
+                MfgInit.app.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
+                if ( 1 === MfgKey.changeDir )
+                {
+                    MfgInit.app.mfgHud.displayDirection( MfgInit.app.mfgScene.car.getDirection() );
+                    MfgKey.changeDir = 0;
+                }
+                MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
+                MfgInit.app.mfgScene.car.getAltitude() < 47 && MfgInit.app.resetCarPosition();
+                MfgInit.app.mfgScene.ground.updateShaders(
+                    MfgInit.app.mfgScene.scene.activeCamera.position
+                );
+                MfgInit.app.mfgScene.car.update();
+                MfgInit.app.mfgHud.updateTdB();
+                MfgInit.app.mfgGame.checkpoints.isEnabled() && MfgInit.app.mfgGame.updateTimer();
+            }
+        };
     }

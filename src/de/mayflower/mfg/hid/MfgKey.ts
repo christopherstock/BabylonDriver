@@ -53,7 +53,7 @@
                 MfgInit.app.resetCarPosition();
             }
         }
-            
+
         /*****************************************************************************
         *   Being invoked when a key is up.
         *
