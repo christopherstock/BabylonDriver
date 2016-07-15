@@ -1,4 +1,3 @@
-
     /************************************************************************************
     *   Represents the whole application.
     *
@@ -118,7 +117,7 @@
                 9,
                 512,
                 {
-                    chekpointsCallback: MfgApp.singleton.hud.checkpointsStatusUpdate.bind( this ),
+                    checkpointsCallback: MfgApp.singleton.hud.checkpointsStatusUpdate.bind( this ),
                     onLoadFinished:     MfgApp.singleton.onCheckpointsLoaded
                 }
             );
