@@ -51,6 +51,27 @@
         }
 
         /************************************************************************************
+        *   Creates the 3D scene.
+        ************************************************************************************/
+        public createScene()
+        {
+            MfgDebug.init.log( "Creating scene.." );
+
+            this.mfgScene = new MfgScene( this.engine );
+
+            MfgDebug.init.log( "Creating world.." );
+
+            MfgDebug.init.log( "Creating lights.." );
+
+            this.mfgScene.createLights();
+            this.mfgScene.createShadowGenerator();
+
+            MfgDebug.init.log( "Creating ground.." );
+
+            this.mfgScene.loadGround();
+        }
+
+        /************************************************************************************
         *   Starts the driving simulation process.
         ************************************************************************************/
         public startDriving()
@@ -74,24 +95,6 @@
             this.mfgScene.car.update();
 
             this.registerMoves();
-        }
-
-        public createScene()
-        {
-            MfgDebug.init.log( "Creating scene.." );
-
-            this.mfgScene = new MfgScene( this.engine );
-
-            MfgDebug.init.log( "Creating world.." );
-
-            MfgDebug.init.log( "Creating lights.." );
-
-            this.mfgScene.createLights();
-            this.mfgScene.createShadowGenerator();
-
-            MfgDebug.init.log( "Creating ground.." );
-
-            this.mfgScene.loadGround();
         }
 
         public onGroundLoaded()
