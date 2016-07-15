@@ -29,13 +29,13 @@
         public              firstPos                        :any                            = null;
         public              bodyCollisionFilterGroup        :any                            = null;
         public              bodyCollisionFilterMask         :any                            = null;
-        public              onLoadSuccess                   :any                            = null;
-        public              scale                           :any                            = null;
+        public              onLoadSuccess                   :() => void                     = null;
+        public              scale                           :BABYLON.Vector3                = null;
         public              b_bodyRoot                      :BABYLON.Mesh                   = null;
-        public              approxBox                       :any                            = null;
+        public              approxBox                       :BABYLON.Mesh                   = null;
         public              c_bodyRoot                      :CANNON.Body                    = null;
-        public              b_wheels                        :any                            = null;
-        public              vehicle                         :any                            = null;
+        public              b_wheels                        :BABYLON.Mesh[]                 = null;
+        public              vehicle                         :CANNON.RaycastVehicle          = null;
 
         public constructor
         (

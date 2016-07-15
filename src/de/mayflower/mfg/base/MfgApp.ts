@@ -21,6 +21,9 @@
         /** The HUD. */
         public                      hud                     :MfgHUD                         = null;
 
+        /** The user interface. */
+        public                      ui                      :MfgUI                          = null;
+
         /** The handler for the keyUp event. */
         public                      keyupHandler            :any                            = null;
         /** The handler for the keyDown event. */

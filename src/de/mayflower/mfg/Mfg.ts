@@ -2,16 +2,18 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO HIGH   Replace all 'any' types with the correct Type!
     *   TODO HIGH   Prune all 'singletons'.
+    *   TODO HIGH   Remove ALL compiler errors.
+    *   TODO HIGH   Remove ALL compiler warnings.
     *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format?
     *   TODO INIT   Own car(s)?
-    *   TODO INIT   Own driving physics?
-    *   TODO INIT   Own level data?
-    *   TODO WEAK   Remove ALL compiler warnings.
+    *   TODO WEAK   Move menu hud initilization to MfgUI ?
+    *   TODO WEAK   Own driving physics?
+    *   TODO WEAK   Own level data?
     *
+    *   DONE        Replaced all 'any' types with the correct Type.
     *   DONE        Extracted scene class.
     *   DONE        Created MfgCamera class.
     *   DONE        Extracted UI class.
