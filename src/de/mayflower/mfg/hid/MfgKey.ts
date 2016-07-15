@@ -50,10 +50,7 @@
             if ( keyEvent.keyCode == MfgKey.KEYCODE_R       ) MfgKey.changeDir = 1;
             if ( keyEvent.keyCode == MfgKey.KEYCODE_SPACE   )
             {
-                // if ( MfgApp.singleton.car.getSpeed() < 2 )
-                {
-                    MfgInit.app.resetCarPosition();
-                }
+                MfgInit.app.resetCarPosition();
             }
         }
             

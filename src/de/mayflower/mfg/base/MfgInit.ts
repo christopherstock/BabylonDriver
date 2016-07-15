@@ -10,7 +10,7 @@
         /** The preloading system. */
         public          static              preloader               :MfgPreloader               = null;
 
-        /** The singleton instance of this demo app. */
+        /** The app instance. */
         public          static              app                     :MfgApp                     = null;
 
         /*****************************************************************************

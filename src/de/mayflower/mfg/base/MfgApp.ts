@@ -6,7 +6,7 @@
     ************************************************************************************/
     class MfgApp
     {
-        /** The singleton instance of the Babylon.js engine. */
+        /** The Babylon.js engine. */
         public                      engine                  :BABYLON.Engine                 = null;
         /** The canvas where all drawing operations appear. */
         public                      canvas                  :HTMLCanvasElement              = null;
