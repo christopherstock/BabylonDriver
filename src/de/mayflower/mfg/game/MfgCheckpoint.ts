@@ -55,13 +55,15 @@
                 this.poiMeshName, 
                 this.scene, 
                 function (meshes :BABYLON.AbstractMesh[]) {
-                    for (var index = 0; index < meshes.length; index += 1) {
-                        if (null !== meshes[index].getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
-                            self.ground._moveAndScaleMesh(meshes[index]);
+                    for ( var i = 0; i < meshes.length; i += 1 )
+                    {
+                        if ( null !== meshes[i].getVerticesData( BABYLON.VertexBuffer.PositionKind ) )
+                        {
+                            self.ground._moveAndScaleMesh(meshes[i]);
                             sprite = new BABYLON.Sprite("poi", sm); 
                             sprite.size = 0;
-                            sprite.position = meshes[index].position;
-                            self.spriteArray.push([meshes[index], sprite]);
+                            sprite.position = meshes[i].position;
+                            self.spriteArray.push([meshes[i], sprite]);
                             self.nbCheckPoints += 1;  
                         } 
                     }
@@ -75,19 +77,21 @@
             return this.enabled
         }
 
-        public enableSprites() {
-            var mesh        :BABYLON.AbstractMesh, 
-                sprite      :BABYLON.Sprite, 
-                self        :MfgCheckpoint              = this, 
-                action      :BABYLON.ExecuteCodeAction, 
-                callback    :() => void;
+        public enableSprites()
+        {
+            var mesh        :BABYLON.AbstractMesh;
+            var sprite      :BABYLON.Sprite;
+            var self        :MfgCheckpoint             = this;
+            var action      :BABYLON.ExecuteCodeAction;
+            var callback    :() => void;
 
             if (null !== this.carBox.actionManager) {
                 this.carBox.actionManager.dispose();
             }
             this.carBox.actionManager = new BABYLON.ActionManager(this.scene);
             
-            callback = function () {
+            callback = function ()
+            {
                 var e = this.triggerOptions.parameter;
                 if (self.spriteArray[e.index][1].size > 0) {
                     self.spriteArray[e.index][1].size = 0; 
@@ -97,13 +101,18 @@
             };
             this.nbCheckPoints = 0;
 
-            for (var index = 0; index < this.spriteArray.length; index += 1) {
-                mesh = this.spriteArray[index][0]; 
-                sprite = this.spriteArray[index][1]; 
-                mesh.index = index; 
-                sprite.size = 10; 
-                action = new BABYLON.ExecuteCodeAction({
-                        trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
+            for ( var i = 0; i < this.spriteArray.length; i += 1 )
+            {
+                mesh   = this.spriteArray[i][0];
+                sprite = this.spriteArray[i][1];
+
+                // property 'index' does not exist!
+                mesh.index = i;
+
+                sprite.size = 10;
+                action = new BABYLON.ExecuteCodeAction(
+                    {
+                        trigger:   BABYLON.ActionManager.OnIntersectionEnterTrigger,
                         parameter: mesh
                     }, 
                     callback
@@ -136,8 +145,8 @@
             var mesh :BABYLON.AbstractMesh, 
                 i :number;
             
-            for (var index = 0; index < this.carBox._intersectionsInProgress.length; index += 1) {
-                mesh = this.carBox._intersectionsInProgress[index];
+            for (var i = 0; i < this.carBox._intersectionsInProgress.length; i += 1) {
+                mesh = this.carBox._intersectionsInProgress[i];
                 i = mesh._intersectionsInProgress.indexOf(this);
                 mesh._intersectionsInProgress.splice(i, 1);
             }

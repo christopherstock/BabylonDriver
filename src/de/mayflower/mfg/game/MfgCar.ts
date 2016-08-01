@@ -121,8 +121,11 @@
 
             this.c_bodyRoot = new CANNON.Body(
                 {
-                    mass:     this.bodyMass,
+                    mass:     this.bodyMass
+/*
+                    // this specification is obnsolete (number expected!)
                     material: this.bodyMaterial
+*/
                 }
             );
             this.c_bodyRoot.addShape(i);
