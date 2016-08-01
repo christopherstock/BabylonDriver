@@ -1,3 +1,4 @@
+
     /************************************************************************************
     *   Represents the checkpoints.
     *
@@ -6,19 +7,22 @@
     ************************************************************************************/
     class MfgCheckpoint
     {
-        public                scene                             :BABYLON.Scene        = null;
-        public                carBox                            :BABYLON.AbstractMesh = null;
-        public                ground                            :MfgGround            = null;
-        public                poiPath                           :string               = null;
-        public                poiMeshName                       :string               = null;
-        public                spriteFile                        :string               = null;
-        public                nbSprites                         :number               = null;
-        public                spriteSize                        :number               = null;
-        public                checkpointsCallback               :() => void           = null;
-        public                onLoadFinished                    :() => void           = null;
-        public                enabled                           :boolean              = null;
-        public                spriteArray                       :any                  = null;
-        public                nbCheckPoints                     :number               = null;
+        public              scene                           :BABYLON.Scene          = null;
+        public              carBox                          :BABYLON.AbstractMesh   = null;
+        public              ground                          :MfgGround              = null;
+        public              poiPath                         :string                 = null;
+        public              poiMeshName                     :string                 = null;
+        public              spriteFile                      :string                 = null;
+        public              nbSprites                       :number                 = null;
+        public              spriteSize                      :number                 = null;
+        public              checkpointsCallback             :() => void             = null;
+        public              onLoadFinished                  :() => void             = null;
+        public              enabled                         :boolean                = null;
+        public              nbCheckPoints                   :number                 = null;
+
+        //TODO separate into separate mesh and sprite arrays
+        private             spriteArray                     :any                    = null;
+
 
         public constructor( scene:BABYLON.Scene, carMesh:BABYLON.AbstractMesh, ground:MfgGround, poiPath:string, poiMeshName:string, file:string, nbSprites:number, spriteSize:number, h )
         {
@@ -93,8 +97,9 @@
             callback = function ()
             {
                 var e = this.triggerOptions.parameter;
-                if (self.spriteArray[e.index][1].size > 0) {
-                    self.spriteArray[e.index][1].size = 0; 
+                if ( self.spriteArray[ e.index ][ 1 ].size > 0 )
+                {
+                    self.spriteArray[ e.index ][ 1 ].size = 0;
                     self.nbCheckPoints -= 1;
                     self.checkpointsCallback();
                 }
@@ -103,11 +108,13 @@
 
             for ( var i = 0; i < this.spriteArray.length; i += 1 )
             {
-                mesh   = this.spriteArray[i][0];
-                sprite = this.spriteArray[i][1];
+                mesh   = this.spriteArray[ i ][ 0 ];
+                sprite = this.spriteArray[ i ][ 1 ];
+
 
                 // property 'index' does not exist!
                 mesh.index = i;
+
 
                 sprite.size = 10;
                 action = new BABYLON.ExecuteCodeAction(
@@ -132,8 +139,9 @@
             }
             this.carBox.actionManager = null;
             
-            for (var index = 0; index < this.spriteArray.length; index += 1) {
-                sprite = this.spriteArray[index][1]; 
+            for (var index = 0; index < this.spriteArray.length; index += 1)
+            {
+                sprite = this.spriteArray[ index ][ 1 ];
                 sprite.size = 0;
             }
             this.enabled = !1;
@@ -142,13 +150,15 @@
 
         public resetSprites() 
         {
-            var mesh :BABYLON.AbstractMesh, 
-                i :number;
-            
-            for (var i = 0; i < this.carBox._intersectionsInProgress.length; i += 1) {
-                mesh = this.carBox._intersectionsInProgress[i];
-                i = mesh._intersectionsInProgress.indexOf(this);
-                mesh._intersectionsInProgress.splice(i, 1);
+            var mesh:BABYLON.AbstractMesh;
+
+            for ( var i:number = 0; i < this.carBox._intersectionsInProgress.length; i += 1 )
+            {
+                mesh = this.carBox._intersectionsInProgress[ i ];
+
+                var foundIndex = mesh._intersectionsInProgress.indexOf( this );
+
+                mesh._intersectionsInProgress.splice( foundIndex, 1 );
             }
             this.carBox._intersectionsInProgress = [];
         }
