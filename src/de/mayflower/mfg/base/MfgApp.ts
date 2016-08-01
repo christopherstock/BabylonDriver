@@ -15,11 +15,11 @@
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
         /** The game logic. */
-        public                      mfgGame                 :MfgGame                        = null;
+        public                      game                    :MfgGame                        = null;
         /** The HUD. */
-        public                      mfgHud                  :MfgHUD                         = null;
+        public                      hud                     :MfgHUD                         = null;
         /** The user interface. */
-        public                      mfgUi                   :MfgUI                          = null;
+        public                      ui                      :MfgUI                          = null;
 
         /************************************************************************************
         *   Instanciates the demo application.
@@ -32,14 +32,14 @@
             this.engine = new BABYLON.Engine( this.canvas, !0 );
 
             //create game
-            this.mfgGame = new MfgGame();
+            this.game = new MfgGame();
 
             //create HUD
-            this.mfgHud = new MfgHUD();
+            this.hud = new MfgHUD();
 
             //create UI
-            this.mfgUi = new MfgUI();
-            this.mfgUi.initMenuUI();
+            this.ui = new MfgUI();
+            this.ui.initMenuUI();
         }
 
         /************************************************************************************
@@ -48,18 +48,15 @@
         public createScene()
         {
             MfgDebug.init.log( "Creating scene.." );
-
             this.mfgScene = new MfgScene( this.engine );
 
-            MfgDebug.init.log( "Creating world.." );
-
             MfgDebug.init.log( "Creating lights.." );
-
             this.mfgScene.createLights();
+
+            MfgDebug.init.log( "Creating shadows.." );
             this.mfgScene.createShadowGenerator();
 
             MfgDebug.init.log( "Creating ground.." );
-
             this.mfgScene.loadGround();
         }
 
@@ -68,11 +65,11 @@
         ************************************************************************************/
         public startDriving()
         {
-            if ( this.mfgGame.checkpoints.isEnabled() )
+            if ( this.game.checkpoints.isEnabled() )
             {
-                this.mfgHud.checkpointsStatusUpdate();
-                this.mfgGame.initTimer();
-                this.mfgGame.initFailed();
+                this.hud.checkpointsStatusUpdate();
+                this.game.initTimer();
+                this.game.initFailed();
             }
 
             this.activateCamera( this.mfgScene.camera.followCamera );
@@ -107,7 +104,7 @@
         {
             MfgDebug.init.log( "load checkpoints" );
 
-            this.mfgGame.checkpoints = new MfgCheckpoint(
+            this.game.checkpoints = new MfgCheckpoint(
                 MfgInit.app.mfgScene.scene,
                 MfgInit.app.mfgScene.car.getCarMainMesh(),
                 MfgInit.app.mfgScene.ground,
@@ -117,11 +114,11 @@
                 9,
                 512,
                 {
-                    checkpointsCallback: MfgInit.app.mfgHud.checkpointsStatusUpdate.bind( this ),
+                    checkpointsCallback: MfgInit.app.hud.checkpointsStatusUpdate.bind( this ),
                     onLoadFinished:     MfgInit.app.onCheckpointsLoaded
                 }
             );
-            MfgInit.app.mfgGame.checkpoints.load()
+            MfgInit.app.game.checkpoints.load()
         }
 
         public onCheckpointsLoaded()
@@ -164,18 +161,18 @@
                 )
             );
 
-            if ( this.mfgGame.checkpoints.isEnabled() )
+            if ( this.game.checkpoints.isEnabled() )
             {
-                this.mfgGame.failedStatusUpdate();
+                this.game.failedStatusUpdate();
             }
         }
 
         public start()
         {
-            MfgDebug.init.log( "start().." );
+            MfgDebug.init.log( "start() app .." );
 
-            // enable feature 'checkpoints' on!
-            this.mfgGame.checkpoints.enableSprites();
+            //enable feature 'checkpoints'
+            this.game.checkpoints.enableSprites();
             $( "#tdb_checkpoints" ).toggle();
 
             MfgKey.resetKeys();
@@ -195,11 +192,11 @@
 
             var newFrameTick = function()
             {
-                MfgInit.app.mfgHud.fpsMeter.tickStart();
+                MfgInit.app.hud.fpsMeter.tickStart();
                 MfgInit.app.engine.beginFrame();
                 MfgInit.app.mfgScene.scene.render();
                 MfgInit.app.engine.endFrame();
-                MfgInit.app.mfgHud.fpsMeter.tick();
+                MfgInit.app.hud.fpsMeter.tick();
 
                 BABYLON.Tools.QueueNewFrame( newFrameTick );
             };
@@ -218,7 +215,7 @@
                 MfgInit.app.mfgScene.car.moves(MfgKey.forward, MfgKey.back, MfgKey.left, MfgKey.right, MfgKey.changeDir);
                 if ( 1 === MfgKey.changeDir )
                 {
-                    MfgInit.app.mfgHud.displayDirection( MfgInit.app.mfgScene.car.getDirection() );
+                    MfgInit.app.hud.displayDirection( MfgInit.app.mfgScene.car.getDirection() );
                     MfgKey.changeDir = 0;
                 }
                 MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
@@ -227,8 +224,8 @@
                     MfgInit.app.mfgScene.scene.activeCamera.position
                 );
                 MfgInit.app.mfgScene.car.update();
-                MfgInit.app.mfgHud.updateTdB();
-                MfgInit.app.mfgGame.checkpoints.isEnabled() && MfgInit.app.mfgGame.updateTimer();
+                MfgInit.app.hud.updateTdB();
+                MfgInit.app.game.checkpoints.isEnabled() && MfgInit.app.game.updateTimer();
             }
         };
     }

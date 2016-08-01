@@ -12,7 +12,7 @@
 
         /** The ground to render. */
         public              ground                  :MfgGround                      = null;
-        /** The ground to render. */
+        /** The world to render. */
         public              world                   :MfgWorld                       = null;
         /** The skybox that surrounds the scene. */
         private             skyBox                  :MfgSkyBox                      = null;

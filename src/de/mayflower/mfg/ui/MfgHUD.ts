@@ -53,6 +53,8 @@
         ************************************************************************************/
         public checkpointsStatusUpdate()
         {
-            $("#remaining_span").text( MfgInit.app.mfgGame.checkpoints.getNbCheckPoints() )
+            // TODO what was the right solution to cast a numnber into a string again?
+
+            $("#remaining_span").text( "" + MfgInit.app.game.checkpoints.getNbCheckPoints() );
         }
     }

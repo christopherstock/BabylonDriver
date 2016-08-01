@@ -29,18 +29,4 @@
             //create the app scene
             MfgInit.app.createScene();
         }
-
-        /*****************************************************************************
-        *   Being invoked when all items are initialized and loaded.
-        *****************************************************************************/
-        public static onInitCompleted()
-        {
-            MfgDebug.init.log( "onInitCompleted" );
-/*
-            MfgScene.scene.executeWhenReady
-            (
-                MfgScene.initSceneCompleted
-            );
-*/
-        }
     }

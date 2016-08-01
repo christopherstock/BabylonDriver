@@ -27,6 +27,7 @@
 /// <reference path="src/de/mayflower/mfg/game/MfgCar.ts" />
 /// <reference path="src/de/mayflower/mfg/game/MfgCheckpoint.ts" />
 /// <reference path="src/de/mayflower/mfg/game/MfgGame.ts" />
+/// <reference path="src/de/mayflower/mfg/game/MfgLevel.ts" />
 /// <reference path="src/de/mayflower/mfg/game/MfgTree.ts" />
 /// <reference path="src/de/mayflower/mfg/hid/MfgKey.ts" />
 /// <reference path="src/de/mayflower/mfg/ui/MfgHUD.ts" />
