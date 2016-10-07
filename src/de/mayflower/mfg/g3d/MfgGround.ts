@@ -32,8 +32,6 @@
         public                          solidBuildingsName          :any                        = null;
         public                          buildingsPath               :any                        = null;
         public                          buildingsName               :any                        = null;
-        public                          treesPath                   :any                        = null;
-        public                          treesName                   :any                        = null;
         public                          particlesPath               :any                        = null;
         public                          particlesName               :any                        = null;
         public                          buildingCelShading          :any                        = null;
@@ -72,13 +70,12 @@
             this.scaleFactor = "number" == typeof r.scaleFactor ? r.scaleFactor : 1;
             this.buildingsScale = new BABYLON.Vector3(this.scaleFactor, this.scaleFactor, this.scaleFactor);
             this.buildingBaseHeight = "number" == typeof r.buildingBaseHeight ? r.buildingBaseHeight : 0;
+
             this.outlineShaderDeltaHeight = "number" == typeof r.outlineShaderDeltaHeight ? r.outlineShaderDeltaHeight : 0;
             this.solidBuildingsPath = "string" == typeof r.solidBuildingsPath ? r.solidBuildingsPath : null;
             this.solidBuildingsName = "string" == typeof r.solidBuildingsPath ? r.solidBuildingsName : null;
             this.buildingsPath = "string" == typeof r.buildingsPath ? r.buildingsPath : null;
             this.buildingsName = "string" == typeof r.buildingsName ? r.buildingsName : null;
-            this.treesPath = "string" == typeof r.treesPath ? r.treesPath : null;
-            this.treesName = "string" == typeof r.treesName ? r.treesName : null;
             this.particlesPath = "string" == typeof r.particlesPath ? r.particlesPath : null;
             this.particlesName = "string" == typeof r.particlesName ? r.particlesName : null;
             this.buildingCelShading = "boolean" == typeof r.buildingCelShading ? r.buildingCelShading : !1;
@@ -323,9 +320,7 @@
 
                     null !== e.buildingsName
                 ?   e._load3dBuildings()
-                :   null !== e.treesName
-                    ?   e._loadTrees()
-                    :   null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
+                :   MfgTree.loadTrees()
             })
         }
 
@@ -364,7 +359,12 @@
         {
             MfgInit.preloader.setLoadingMessage("creating special buildings and monuments");
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.buildingsPath, this.buildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.buildingsPath,
+                this.buildingsName,
+                this.scene,
+                function ( t:BABYLON.Mesh[] ) {
                 var o, a, n, i = [], s = [];
                 for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
                 if (i.length > 0) {
@@ -373,45 +373,7 @@
                     e.buildingCelShading && e._setCellShading(r, !0)
                 }
                 s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
-                null !== e.treesName ? e._loadTrees() : null !== e.onLoadFinished && (e._mergeOutlineMeshes(), e.onLoadFinished())
-            })
-        }
-
-        public _loadTrees()
-        {
-            MfgInit.preloader.setLoadingMessage("creating trees");
-
-            var e = function (e, t) {
-                if (e === t)return e;
-                var i = Math.random();
-                return i * (t - e) + e
-            };
-
-            var t = MfgInit.app.mfgScene.ground;
-            BABYLON.SceneLoader.ImportMesh("", this.treesPath, this.treesName, this.scene, function (i) {
-                var a, n, s = [], o = [];
-                for (a = 0; a < i.length; a++)if (n = i[a], null !== n.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
-                    t._moveAndScaleMesh(n);
-
-                    var r = e(t.minSizeBranch, t.maxSizeBranch);
-                    var d = e(t.minSizeTrunk, t.maxSizeTrunk);
-                    var h = e(t.minRadius, t.maxRadius);
-                    var l = new MfgTree(r, d, h, t.scene);
-
-                    l.scaling = new BABYLON.Vector3(.3, .3, .3), l.scaling.scaleInPlace(t.scaleFactor / 50), l.position.x = n.position.x, l.position.y *= .3, l.position.y += n.position.y, l.position.z = n.position.z, t._createCannonTrunk(l.trunk, n.position), n.dispose(), t.buildingCelShading && (t._addDeltaHeight(l), t._addOutlineMesh(l, !0, null)), l.computeWorldMatrix(!0), l.trunk.computeWorldMatrix(!0), s.push(l), o.push(l.trunk)
-                } else t._testEmptyMesh(n);
-                if (o.length > 0) {
-                    var c = BABYLON.Mesh.MergeMeshes(o, !0, !1);
-                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(c);
-                    c.material = t.trunksMaterial
-                }
-                if (s.length > 0) {
-                    var p = BABYLON.Mesh.MergeMeshes(s, !0, !1);
-                    null !== t.shadowGenerator && t.shadowGenerator.getShadowMap().renderList.push(p);
-                    p.material = t.treesMaterial
-                }
-                t._mergeOutlineMeshes();
-                null !== t.particlesName ? t._loadParticleSystems() : null !== t.onLoadFinished && t.onLoadFinished()
+                MfgTree.loadTrees()
             })
         }
 

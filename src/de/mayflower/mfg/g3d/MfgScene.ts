@@ -153,8 +153,6 @@
                     solidBuildingsName: "paris_solid_buildings.babylon",
                     buildingsPath: "./res/paris/",
                     buildingsName: "paris_3D_buildings.babylon",
-                    treesPath: "./res/paris/",
-                    treesName: "paris_trees.babylon",
                     particlesPath: "./res/paris/",
                     particlesName: "paris_particles.babylon",
                     buildingCelShading: !0,

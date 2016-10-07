@@ -2,6 +2,9 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
+    *   TODO HIGH   Feature toggle for ground.
+    *   TODO HIGH   Feature toggle for trees.
+    *
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Remove ALL compiler warnings.
     *
