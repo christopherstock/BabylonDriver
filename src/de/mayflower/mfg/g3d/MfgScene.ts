@@ -135,7 +135,7 @@
             MfgDebug.init.log( "Load ground" );
 
             this.ground = new MfgGround();
-            this.ground.load()
+            this.ground.init();
         }
 
         public loadCar()

@@ -23,7 +23,6 @@
         //TODO separate into separate mesh and sprite arrays
         private             spriteArray                     :any                    = null;
 
-
         public constructor(
             scene:BABYLON.Scene,
             carMesh:BABYLON.AbstractMesh,

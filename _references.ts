@@ -5,6 +5,7 @@
 /// <reference path="lib/ts/FPSMeter.0.3.0.d.ts" />
 
 /// <reference path="src_lib/de/mayflower/lib/math/LibMath.ts" />
+/// <reference path="src_lib/de/mayflower/lib/math3d/LibMath3D.ts" />
 /// <reference path="src_lib/de/mayflower/lib/ui/LibStringFormat.ts" />
 /// <reference path="src_lib/de/mayflower/lib/ui/LibUI.ts" />
 /// <reference path="src_lib/de/mayflower/lib/ui/LibString.ts" />
