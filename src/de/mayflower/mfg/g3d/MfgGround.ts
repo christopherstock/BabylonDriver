@@ -138,56 +138,67 @@
         {
             MfgInit.preloader.setLoadingMessage("creating landscape");
             var e = this;
-            BABYLON.SceneLoader.ImportMesh("", this.groundPath, this.groundMesh, this.scene, function (t:BABYLON.Mesh[]) {
-                var i, s;
-                for (i = 0; i < t.length; i++) {
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.groundPath,
+                this.groundMesh,
+                this.scene,
+                this.onHeightmapLoaded
+            )
+        }
 
-                    var o:BABYLON.Mesh = t[i];
+        public onHeightmapLoaded=( t:BABYLON.Mesh[] )=>
+        {
+            for ( var i:number = 0; i < t.length; i++ )
+            {
+                var o:BABYLON.Mesh = t[i];
 
-                    (-1 !== o.name.indexOf( "Water"   ) && ( o.receiveShadows = !0 ) );
-                    (-1 !== o.name.indexOf( "Support" ) && ( o.receiveShadows = !0 ) );
+                MfgDebug.bugfix.log( "Mesh loaded [" + o.name + "]" );
 
-                    if (null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
+                (-1 !== o.name.indexOf( "Water"   ) && ( o.receiveShadows = !0 ) );
+                (-1 !== o.name.indexOf( "Support" ) && ( o.receiveShadows = !0 ) );
+
+                if (null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
+                {
+                    if (o.name === this.groundMeshName)
                     {
-                        if (o.name === e.groundMeshName)
-                        {
-                            e.ground = new BABYLON.GroundMesh("", e.scene);
-                            e.ground._setReady(!1);
-                            e.ground._subdivisions = e.subdivision;
+                        this.ground = new BABYLON.GroundMesh("", this.scene);
+                        this.ground._setReady(!1);
+                        this.ground._subdivisions = this.subdivision;
 
-                            var a = BABYLON.VertexData.CreateGround(e.width, e.depth, e.subdivision);
-                            if (null !== e.groundTexture) {
-                                var n = new BABYLON.StandardMaterial("", e.scene);
-                                n.diffuseTexture = new BABYLON.Texture(e.groundTexture, e.scene);
-                                n.backFaceCulling = !0;
-                                e.ground.material = n;
-                            }
-                            var r = a.positions, d = o.getVerticesData(BABYLON.VertexBuffer.PositionKind), h = d.length / 3, l = e.width / e.scaleFactor;
-                            for (s = 0; h > s; s++) {
-                                var c = d[3 * s] * o.scaling.x, p = d[3 * s + 1] * o.scaling.y, u = d[3 * s + 2] * o.scaling.z, g = Math.round((c + l / 2) * e.subdivision / l), f = Math.round((u + l / 2) * e.subdivision / l), m = g, w = e.subdivision - f, B = m + (e.subdivision + 1) * w;
-                                r[3 * B + 1] = p * e.scaleFactor + e.buildingBaseHeight
-                            }
-                            var C = a.normals, y = a.indices;
-                            BABYLON.VertexData.ComputeNormals(r, y, C);
-                            a.applyToMesh(e.ground, !1);
-                            e.ground._setReady(!0);
-                            o.dispose();
-                            e.ground.receiveShadows = !0;
-                            e._createCannonHeightfield();
+                        var a = BABYLON.VertexData.CreateGround(this.width, this.depth, this.subdivision);
+                        if (null !== this.groundTexture) {
+                            var n = new BABYLON.StandardMaterial("", this.scene);
+                            n.diffuseTexture = new BABYLON.Texture(this.groundTexture, this.scene);
+                            n.backFaceCulling = !0;
+                            this.ground.material = n;
                         }
-                        else
-                        {
-                            e._moveAndScaleMesh(o);
-                            o.convertToFlatShadedMesh();
+                        var r = a.positions, d = o.getVerticesData(BABYLON.VertexBuffer.PositionKind), h = d.length / 3, l = this.width / this.scaleFactor;
+                        for (var s:number = 0; h > s; s++) {
+                            var c = d[3 * s] * o.scaling.x, p = d[3 * s + 1] * o.scaling.y, u = d[3 * s + 2] * o.scaling.z, g = Math.round((c + l / 2) * this.subdivision / l), f = Math.round((u + l / 2) * this.subdivision / l), m = g, w = this.subdivision - f, B = m + (this.subdivision + 1) * w;
+                            r[3 * B + 1] = p * this.scaleFactor + this.buildingBaseHeight
                         }
+                        var C = a.normals, y = a.indices;
+                        BABYLON.VertexData.ComputeNormals(r, y, C);
+                        a.applyToMesh(this.ground, !1);
+                        this.ground._setReady(!0);
+                        o.dispose();
+                        this.ground.receiveShadows = !0;
+
+                        this._createCannonHeightfield();
                     }
                     else
                     {
-                        e._testEmptyMesh(o)
+                        this._moveAndScaleMesh(o);
+                        o.convertToFlatShadedMesh();
                     }
                 }
-            })
-        }
+                else
+                {
+                    this._testEmptyMesh(o)
+                }
+            }
+        };
 
         public _addOutlineMesh( t, addOutlineMesh:boolean, s )
         {
