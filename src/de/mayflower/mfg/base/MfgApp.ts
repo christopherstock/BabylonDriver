@@ -230,7 +230,11 @@
                     MfgKey.changeDir = 0;
                 }
                 MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
-                MfgInit.app.mfgScene.car.getAltitude() < 47 && MfgInit.app.resetCarPosition();
+
+                if ( MfgInit.app.mfgScene.car.getAltitude() < MfgSetting.CAR_ALTITUDE_RESET )
+                {
+                    MfgInit.app.resetCarPosition();
+                }
 
                 if ( MfgSetting.FEATURE_3D_GROUND )
                 {

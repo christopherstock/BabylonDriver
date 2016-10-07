@@ -117,6 +117,7 @@
             t.y = Math.abs(t.y);
             t.z = Math.abs(t.z);
             t.scaleInPlace(this.scaleFactor);
+
             i = new CANNON.Box(new CANNON.Vec3(t.x, t.z, t.y));
 
             this.c_bodyRoot = new CANNON.Body(

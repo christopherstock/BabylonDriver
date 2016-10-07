@@ -132,7 +132,6 @@
         public init()
         {
             MfgInit.preloader.setLoadingMessage("creating landscape");
-            var e = this;
             BABYLON.SceneLoader.ImportMesh(
                 "",
                 this.groundPath,
@@ -150,14 +149,10 @@
 
                 MfgDebug.bugfix.log( "Mesh parsed [" + o.name + "]" );
 
-
-
                 if ( o.name != "Ground" )
                 {
                     continue;
                 }
-
-
 
                 (-1 !== o.name.indexOf( "Water"   ) && ( o.receiveShadows = !0 ) );
                 (-1 !== o.name.indexOf( "Support" ) && ( o.receiveShadows = !0 ) );
