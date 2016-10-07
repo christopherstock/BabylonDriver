@@ -57,36 +57,15 @@
             this.mfgScene.createShadowGenerator();
 
             MfgDebug.init.log( "Creating ground.." );
-            this.mfgScene.loadGround();
-        }
 
-        /************************************************************************************
-        *   Starts the driving simulation process.
-        ************************************************************************************/
-        public startDriving()
-        {
-            if ( MfgSetting.FEATURE_CHECKPOINTS )
+            if ( MfgSetting.FEATURE_3D_GROUND )
             {
-                if ( this.game.checkpoints.isEnabled() )
-                {
-                    this.hud.checkpointsStatusUpdate();
-                    this.game.initTimer();
-                    this.game.initFailed();
-                }
+                this.mfgScene.loadGround();
             }
-
-            this.activateCamera( this.mfgScene.camera.followCamera );
-
-            this.mfgScene.car.setPosition(
-                new CANNON.Vec3(
-                    MfgSetting.CAR_STARTUP_X,
-                    MfgSetting.CAR_STARTUP_Y,
-                    MfgSetting.CAR_STARTUP_Z
-                )
-            );
-            this.mfgScene.car.update();
-
-            this.registerMoves();
+            else
+            {
+                this.onGroundLoaded();
+            }
         }
 
         public onGroundLoaded=()=>
@@ -137,6 +116,35 @@
 
             this.start();
         };
+
+        /************************************************************************************
+        *   Starts the driving simulation process.
+        ************************************************************************************/
+        public startDriving()
+        {
+            if ( MfgSetting.FEATURE_CHECKPOINTS )
+            {
+                if ( this.game.checkpoints.isEnabled() )
+                {
+                    this.hud.checkpointsStatusUpdate();
+                    this.game.initTimer();
+                    this.game.initFailed();
+                }
+            }
+
+            this.activateCamera( this.mfgScene.camera.followCamera );
+
+            this.mfgScene.car.setPosition(
+                new CANNON.Vec3(
+                    MfgSetting.CAR_STARTUP_X,
+                    MfgSetting.CAR_STARTUP_Y,
+                    MfgSetting.CAR_STARTUP_Z
+                )
+            );
+            this.mfgScene.car.update();
+
+            this.registerMoves();
+        }
 
         public activateCamera( e )
         {
@@ -236,9 +244,14 @@
                 }
                 MfgInit.app.mfgScene.world.world.step( MfgInit.app.mfgScene.world.timeStep );
                 MfgInit.app.mfgScene.car.getAltitude() < 47 && MfgInit.app.resetCarPosition();
-                MfgInit.app.mfgScene.ground.updateShaders(
-                    MfgInit.app.mfgScene.scene.activeCamera.position
-                );
+
+                if ( MfgSetting.FEATURE_3D_GROUND )
+                {
+                    MfgInit.app.mfgScene.ground.updateShaders(
+                        MfgInit.app.mfgScene.scene.activeCamera.position
+                    );
+                }
+
                 MfgInit.app.mfgScene.car.update();
                 MfgInit.app.hud.updateTdB();
 

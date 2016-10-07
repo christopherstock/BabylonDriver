@@ -116,6 +116,7 @@
                 return i * (t - e) + e
             };
 
+            // TODO refactor!
             var t = MfgInit.app.mfgScene.ground;
 
             BABYLON.SceneLoader.ImportMesh(
