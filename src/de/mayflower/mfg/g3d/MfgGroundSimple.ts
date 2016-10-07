@@ -9,12 +9,13 @@
     {
         public static init()
         {
+
             var materialGround:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "groundMat", MfgInit.app.mfgScene.scene );
             materialGround.diffuseColor = new BABYLON.Color3( 0.5, 0.5, 0.5 );
             materialGround.emissiveColor = new BABYLON.Color3( 0.2, 0.2, 0.2 );
             materialGround.backFaceCulling = false;
 
-            var ground:BABYLON.Mesh = MfgGroundSimple.createBox
+            var babylonGround:BABYLON.Mesh = MfgGroundSimple.createBox
             (
                 "Ground1",
                 new BABYLON.Vector3( -25.0, 50.0, -20.0 ),
@@ -27,8 +28,38 @@
                 MfgInit.app.mfgScene.scene
             );
 
+            var boundingBox = babylonGround.getBoundingInfo().boundingBox;
+            var minVec3 = boundingBox.minimumWorld;
+            var maxVec3 = boundingBox.maximumWorld;
+
+            var cannonBox  = new CANNON.Box( new CANNON.Vec3( 10.0, 10.0, 10.0 ) );
+            var cannonBody = new CANNON.Body(
+                {
+                    mass: 0,
+                    material: MfgInit.app.mfgScene.world.groundMaterial
+                }
+            );
+            cannonBody.addShape(cannonBox);
+            cannonBody.collisionFilterGroup = MfgWorld.GROUP1;
+            cannonBody.collisionFilterMask  = MfgWorld.GROUP2;
+            cannonBody.position.set( 10.0, 1.0, 10.0 );
+
+            MfgInit.app.mfgScene.world.world.addBody( cannonBody );
 
 
+/*
+            var cannonPlane:CANNON.Plane = new CANNON.Plane();
+            var shapeBody:CANNON.Body    = new CANNON.Body( { mass: 30 } );
+            shapeBody.addShape( cannonPlane );
+
+            //var pos = new CANNON.Vec3( -25.0, 50.0, -20.0 );
+            shapeBody.position.set( -25.0, 50.0, -20.0 );
+            //shapeBody.
+            shapeBody.velocity.set( 0, 0, 0 );
+            shapeBody.angularVelocity.set( 0, 0, 0 );
+
+            MfgInit.app.mfgScene.world.world.addBody( shapeBody );
+*/
 
 /*
             var groundBodyBox:CANNON.Box = new CANNON.Box( new CANNON.Vec3( 100.0, 100.0, 100.0 ) );
@@ -95,57 +126,8 @@
             box.material        = material;
             box.receiveShadows  = false;
 
+            //box.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
 
-
-            //ground.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
-/*
-            box.setPhysicsState
-            (
-                BABYLON.PhysicsEngine.BoxImpostor,
-                {
-                    mass:        0,
-                    friction:    0.5,
-                    restitution: 0.7
-                }
-            );
-*/
             return box;
-        }
-
-        /*****************************************************************************
-        *   Creates a box the OLD style.
-        *****************************************************************************/
-        public static createOldBox
-        (
-            id              :string,
-            position        :BABYLON.Vector3,
-            scaling         :BABYLON.Vector3,
-            rotationAxis    :BABYLON.Vector3,
-            rotationAmount  :number,
-            material        :BABYLON.Material,
-            scene           :BABYLON.Scene
-        )
-        :BABYLON.Mesh
-        {
-            var ground:BABYLON.Mesh = BABYLON.Mesh.CreateBox( id, 1, scene );
-
-            ground.position         = position;
-            ground.scaling          = scaling;
-            ground.checkCollisions  = true;
-            ground.material         = material;
-            ground.receiveShadows   = true;
-
-            ground.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
-            ground.setPhysicsState
-            (
-                BABYLON.PhysicsEngine.BoxImpostor,
-                {
-                    mass:        0,
-                    friction:    0.5,
-                    restitution: 0.7
-                }
-            );
-
-            return ground;
         }
     }
