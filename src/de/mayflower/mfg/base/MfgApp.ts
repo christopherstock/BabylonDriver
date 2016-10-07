@@ -64,7 +64,7 @@
             }
             else
             {
-                this.onGroundLoaded();
+                MfgGroundSimple.init();
             }
         }
 
@@ -143,30 +143,17 @@
             );
             this.mfgScene.car.update();
 
-            this.registerMoves();
+            MfgKey.init();
+
+            this.mfgScene.scene.registerBeforeRender(
+                this.tick
+            );
         }
 
         public activateCamera( e )
         {
             this.mfgScene.scene.activeCamera = e;
             e.attachControl(this.canvas, !1);
-        }
-
-        public registerMoves()
-        {
-            window.addEventListener(
-                "keydown",
-                MfgKey.onKeyDown
-            );
-
-            window.addEventListener(
-                "keyup",
-                MfgKey.onKeyUp
-            );
-
-            this.mfgScene.scene.registerBeforeRender(
-                this.tick
-            );
         }
 
         public resetCarPosition()

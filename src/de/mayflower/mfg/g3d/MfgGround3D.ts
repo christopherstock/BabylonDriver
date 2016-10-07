@@ -5,7 +5,7 @@
     *   @author     Christopher Stock
     *   @version    0.0.1
     ************************************************************************************/
-    class MfgGround
+    class MfgGround3D
     {
         public                          scene                       :any                        = null;
         public                          world                       :any                        = null;

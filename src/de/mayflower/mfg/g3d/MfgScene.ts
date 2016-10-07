@@ -11,7 +11,7 @@
         public              scene                   :BABYLON.Scene                  = null;
 
         /** The ground to render. */
-        public              ground                  :MfgGround                      = null;
+        public              ground                  :MfgGround3D                      = null;
         /** The world to render. */
         public              world                   :MfgWorld                       = null;
         /** The skybox that surrounds the scene. */
@@ -134,7 +134,7 @@
         {
             MfgDebug.init.log( "Load ground" );
 
-            this.ground = new MfgGround();
+            this.ground = new MfgGround3D();
             this.ground.init();
         }
 

@@ -44,7 +44,7 @@
         /** The player's y dimension (height). */
         public      static      PLAYER_SIZE_Y                               :number             = 2.0;
 
-        public      static      FEATURE_3D_GROUND                           :boolean            = true;
+        public      static      FEATURE_3D_GROUND                           :boolean            = false;
         public      static      FEATURE_3D_BUILDINGS                        :boolean            = false;
         public      static      FEATURE_TREES                               :boolean            = false;
         public      static      FEATURE_PARTICLE_SYSTEM                     :boolean            = false;

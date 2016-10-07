@@ -23,6 +23,19 @@
         public          static          back                        :number             = 0;
         public          static          changeDir                   :number             = 0;
 
+        public static init()
+        {
+            window.addEventListener(
+                "keydown",
+                MfgKey.onKeyDown
+            );
+
+            window.addEventListener(
+                "keyup",
+                MfgKey.onKeyUp
+            );
+        }
+
         /*****************************************************************************
         *   Resets all key states to the 'unpushed' state.
         *****************************************************************************/

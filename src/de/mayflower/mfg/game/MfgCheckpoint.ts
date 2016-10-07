@@ -9,7 +9,7 @@
     {
         public              scene                           :BABYLON.Scene          = null;
         public              carBox                          :BABYLON.AbstractMesh   = null;
-        public              ground                          :MfgGround              = null;
+        public              ground                          :MfgGround3D              = null;
         public              poiPath                         :string                 = null;
         public              poiMeshName                     :string                 = null;
         public              spriteFile                      :string                 = null;
@@ -26,7 +26,7 @@
         public constructor(
             scene:BABYLON.Scene,
             carMesh:BABYLON.AbstractMesh,
-            ground:MfgGround,
+            ground:MfgGround3D,
             poiPath:string,
             poiMeshName:string,
             file:string,
