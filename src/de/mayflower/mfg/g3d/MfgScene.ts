@@ -134,33 +134,7 @@
         {
             MfgDebug.init.log( "Load ground" );
 
-            var e = 50;
-            this.ground = new MfgGround(
-                MfgInit.app.mfgScene.scene,
-                MfgInit.app.mfgScene.world.world,
-                "./res/paris/",
-                "paris_heightmap.babylon",
-                "Ground",
-                6 * e,
-                MfgInit.app.mfgScene.world.groundMaterial,
-                {
-                    groundTexture: "./res/paris/plan.png",
-                    groundCollisionFilterGroup: MfgWorld.GROUP1,
-                    groundCollisionFilterMask:  MfgWorld.GROUP2,
-                    scaleFactor: e,
-                    buildingBaseHeight: e,
-                    solidBuildingsPath: "./res/paris/",
-                    solidBuildingsName: "paris_solid_buildings.babylon",
-                    buildingsPath: "./res/paris/",
-                    buildingsName: "paris_3D_buildings.babylon",
-                    particlesPath: "./res/paris/",
-                    particlesName: "paris_particles.babylon",
-                    buildingCelShading: !0,
-                    outlineShaderDeltaHeight: .15 * (e / 50),
-                    shadowGenerator: MfgInit.app.mfgScene.shadowGenerator,
-                    onLoadFinished: MfgInit.app.onGroundLoaded
-                }
-            );
+            this.ground = new MfgGround();
             this.ground.load()
         }
 

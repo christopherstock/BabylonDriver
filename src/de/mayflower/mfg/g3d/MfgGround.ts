@@ -52,17 +52,39 @@
         public                          groundBody                  :any                        = null;
         public                          water                       :any                        = null;
 
-        public constructor( e, t, i, s, o, a, n, r )
+        public constructor()
         {
-            r = r || {};
-            this.scene = e;
-            this.world = t;
-            this.groundPath = i;
-            this.groundMesh = s;
-            this.groundMeshName = o;
-            this.groundMaterial = n;
-            this.width = a;
-            this.depth = this.width;
+            var e:number = 50;
+
+            // TODO prune this!
+            var r:any = {
+                groundTexture: "./res/paris/plan.png",
+                groundCollisionFilterGroup: MfgWorld.GROUP1,
+                groundCollisionFilterMask:  MfgWorld.GROUP2,
+                scaleFactor: e,
+                buildingBaseHeight: e,
+                solidBuildingsPath: "./res/paris/",
+                solidBuildingsName: "paris_solid_buildings.babylon",
+                buildingsPath: "./res/paris/",
+                buildingsName: "paris_3D_buildings.babylon",
+                particlesPath: "./res/paris/",
+                particlesName: "paris_particles.babylon",
+                buildingCelShading: !0,
+                outlineShaderDeltaHeight: .15 * (e / 50),
+                shadowGenerator: MfgInit.app.mfgScene.shadowGenerator,
+                onLoadFinished: MfgInit.app.onGroundLoaded
+            };
+
+            this.scene = MfgInit.app.mfgScene.scene;
+            this.world = MfgInit.app.mfgScene.world.world;
+            this.groundPath = "./res/paris/";
+            this.groundMesh = "paris_heightmap.babylon";
+            this.groundMeshName = "Ground";
+            this.groundMaterial = MfgInit.app.mfgScene.world.groundMaterial;
+
+            this.width = 300;
+            this.depth = 300;
+
             this.groundTexture = "string" == typeof r.groundTexture ? r.groundTexture : null;
             this.waterLevel = "number" == typeof r.waterLevel ? r.waterLevel : null;
             this.groundCollisionFilterGroup = "number" == typeof r.groundCollisionFilterGroup ? r.groundCollisionFilterGroup : 0;

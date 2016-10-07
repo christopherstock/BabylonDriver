@@ -5,6 +5,8 @@
     *   TODO HIGH   Feature toggle for ground.
     *   TODO HIGH   Feature toggle for trees.
     *
+    *   TODO HIGH   Prune ALL constructors!
+    *
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Remove ALL compiler warnings.
     *
