@@ -35,7 +35,9 @@
         public static createBox
         (
             id              :string,
-            position        :BABYLON.Vector3,
+            x               :number,
+            y               :number,
+            z               :number,
             width           :number,
             height          :number,
             depth           :number,
@@ -55,7 +57,7 @@
                 scene
             );
 
-            box.position        = position;
+            box.position = new BABYLON.Vector3( x, y, z );
 
             box.position.x += width  / 2;
             box.position.y += height / 2;
@@ -66,6 +68,20 @@
             box.receiveShadows  = false;
 
             //box.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
+
+            var cannonBox  = new CANNON.Box( new CANNON.Vec3( width / 2, depth / 2, height / 2 ) );
+            var cannonBody = new CANNON.Body(
+                {
+                    mass: 0,
+                    material: MfgInit.app.mfgScene.world.groundMaterial
+                }
+            );
+            cannonBody.addShape(cannonBox);
+            cannonBody.collisionFilterGroup = MfgWorld.GROUP1;
+            cannonBody.collisionFilterMask  = MfgWorld.GROUP2;
+            cannonBody.position.set( x + width / 2, z + depth / 2, y + height / 2 );
+
+            MfgInit.app.mfgScene.world.world.addBody( cannonBody );
 
             return box;
         }

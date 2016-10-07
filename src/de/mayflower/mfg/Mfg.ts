@@ -6,6 +6,8 @@
     *   TODO HIGH   Move all features to separate classes.
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Remove ALL compiler warnings.
+    *   TODO HIGH   Detect collision with obstacles? (Crash car in this case!)
+    *   TODO HIGH   Implement reluctant obstacles!
     *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
     *   TODO ASAP   Extract level data to own class.
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
