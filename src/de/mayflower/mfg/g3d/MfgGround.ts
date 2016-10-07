@@ -11,7 +11,6 @@
         public                          world                       :any                        = null;
         public                          groundPath                  :any                        = null;
         public                          groundMesh                  :any                        = null;
-        public                          groundMeshName              :any                        = null;
         public                          groundMaterial              :any                        = null;
         public                          width                       :any                        = null;
         public                          height                      :any                        = null;
@@ -79,7 +78,6 @@
             this.world = MfgInit.app.mfgScene.world.world;
             this.groundPath = "./res/paris/";
             this.groundMesh = "paris_heightmap.babylon";
-            this.groundMeshName = "Ground";
             this.groundMaterial = MfgInit.app.mfgScene.world.groundMaterial;
 
             this.width = 300;
@@ -153,14 +151,23 @@
             {
                 var o:BABYLON.Mesh = t[i];
 
-                MfgDebug.bugfix.log( "Mesh loaded [" + o.name + "]" );
+                MfgDebug.bugfix.log( "Mesh parsed [" + o.name + "]" );
+
+
+
+                if ( o.name != "Ground" )
+                {
+                    continue;
+                }
+
+
 
                 (-1 !== o.name.indexOf( "Water"   ) && ( o.receiveShadows = !0 ) );
                 (-1 !== o.name.indexOf( "Support" ) && ( o.receiveShadows = !0 ) );
 
                 if (null !== o.getVerticesData(BABYLON.VertexBuffer.PositionKind))
                 {
-                    if (o.name === this.groundMeshName)
+                    if (o.name === "Ground")
                     {
                         this.ground = new BABYLON.GroundMesh("", this.scene);
                         this.ground._setReady(!1);
