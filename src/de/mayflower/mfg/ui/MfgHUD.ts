@@ -51,10 +51,10 @@
         /************************************************************************************
         *   Updates remaining checkpoint count in the HUD.
         ************************************************************************************/
-        public checkpointsStatusUpdate()
+        public checkpointsStatusUpdate=()=>
         {
             // TODO what was the right solution to cast a numnber into a string again?
 
             $("#remaining_span").text( "" + MfgInit.app.game.checkpoints.getNbCheckPoints() );
-        }
+        };
     }

@@ -267,6 +267,7 @@
                 t = s[3 * r + 1];
                 o[a].push(t);
             }
+
             var d = new CANNON.Heightfield(o, {elementSize: this.width / this.subdivision});
             this.groundBody = new CANNON.Body({
                 mass: 0,
@@ -276,10 +277,13 @@
             this.groundBody.position.set(-this.width / 2, -this.depth / 2, 0);
             this.groundBody.collisionFilterGroup = this.groundCollisionFilterGroup;
             this.groundBody.collisionFilterMask = this.groundCollisionFilterMask;
+
             this.world.add(this.groundBody);
 
-            null !== this.waterLevel && this.addWater();
-
+            if ( MfgSetting.FEATURE_WATER )
+            {
+                this.addWater();
+            }
 
             if ( MfgSetting.FEATURE_SOLID_BUILDINGS )
             {
@@ -334,7 +338,14 @@
                 null !== this.shadowGenerator && this.shadowGenerator.getShadowMap().renderList.push(r);
             }
 
-            this.load3dBuildings();
+            if ( MfgSetting.FEATURE_3D_BUILDINGS )
+            {
+                this.load3dBuildings();
+            }
+            else
+            {
+                this.on3dBuildingsLoaded( [] );
+            }
         };
 
         public _createCannonBuilding(e)
@@ -393,11 +404,17 @@
                 var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
                 this.buildingCelShading && this._setCellShading(r, !0)
             }
-            s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
+            if (s.length > 0)
+            {
+                BABYLON.Mesh.MergeMeshes(s, !0, !1);
+            }
 
-            if (MfgSetting.FEATURE_TREES) {
+            if (MfgSetting.FEATURE_TREES)
+            {
                 MfgTree.loadTrees();
-            } else {
+            }
+            else
+            {
                 this.onTreesLoaded();
             }
         };

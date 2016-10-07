@@ -6,6 +6,7 @@
     *   TODO HIGH   Feature toggle for trees.
     *
     *   TODO HIGH   Prune ALL constructors!
+    *   TODO HIGH   Move all features to separate classes.
     *
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Remove ALL compiler warnings.

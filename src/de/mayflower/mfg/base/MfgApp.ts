@@ -86,47 +86,54 @@
             this.registerMoves();
         }
 
-        public onGroundLoaded()
+        public onGroundLoaded=()=>
         {
             MfgDebug.init.log( "onGroundLoaded.." );
 
-            MfgInit.app.mfgScene.loadCar();
-        }
+            this.mfgScene.loadCar();
+        };
 
-        public onCarLoaded()
+        public onCarLoaded=()=>
         {
             MfgDebug.init.log( "onCarLoaded.." );
 
-            MfgInit.app.loadCheckpoints()
-        }
+            if ( MfgSetting.FEATURE_CHECKPOINTS )
+            {
+                this.loadCheckpoints()
+            }
+            else
+            {
+                this.onCheckpointsLoaded();
+            }
+        };
 
         public loadCheckpoints()
         {
             MfgDebug.init.log( "load checkpoints" );
 
             this.game.checkpoints = new MfgCheckpoint(
-                MfgInit.app.mfgScene.scene,
-                MfgInit.app.mfgScene.car.getCarMainMesh(),
-                MfgInit.app.mfgScene.ground,
+                this.mfgScene.scene,
+                this.mfgScene.car.getCarMainMesh(),
+                this.mfgScene.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
                 9,
                 512,
                 {
-                    checkpointsCallback: MfgInit.app.hud.checkpointsStatusUpdate.bind( this ),
-                    onLoadFinished:     MfgInit.app.onCheckpointsLoaded
+                    checkpointsCallback: this.hud.checkpointsStatusUpdate.bind( this ),
+                    onLoadFinished:      this.onCheckpointsLoaded
                 }
             );
-            MfgInit.app.game.checkpoints.load()
+            this.game.checkpoints.load()
         }
 
-        public onCheckpointsLoaded()
+        public onCheckpointsLoaded=()=>
         {
             MfgDebug.init.log( "onCheckpointsLoaded.." );
 
-            MfgInit.app.start();
-        }
+            this.start();
+        };
 
         public activateCamera( e )
         {
@@ -147,7 +154,7 @@
             );
 
             this.mfgScene.scene.registerBeforeRender(
-                MfgInit.app.tick
+                this.tick
             );
         }
 
@@ -208,7 +215,7 @@
             this.startDriving();
         }
 
-        public tick() : void
+        public tick=()=>
         {
             if (MfgInit.app.mfgScene.scene.isReady())
             {
