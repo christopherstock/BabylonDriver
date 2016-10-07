@@ -9,7 +9,6 @@
     {
         public static init()
         {
-
             var materialGround:BABYLON.StandardMaterial = new BABYLON.StandardMaterial( "groundMat", MfgInit.app.mfgScene.scene );
             materialGround.diffuseColor = new BABYLON.Color3( 0.5, 0.5, 0.5 );
             materialGround.emissiveColor = new BABYLON.Color3( 0.2, 0.2, 0.2 );
@@ -32,7 +31,7 @@
             var minVec3 = boundingBox.minimumWorld;
             var maxVec3 = boundingBox.maximumWorld;
 
-            var cannonBox  = new CANNON.Box( new CANNON.Vec3( 10.0, 10.0, 10.0 ) );
+            var cannonBox  = new CANNON.Box( new CANNON.Vec3( 10.0, 10.0, 1.0 ) );
             var cannonBody = new CANNON.Body(
                 {
                     mass: 0,
@@ -42,7 +41,7 @@
             cannonBody.addShape(cannonBox);
             cannonBody.collisionFilterGroup = MfgWorld.GROUP1;
             cannonBody.collisionFilterMask  = MfgWorld.GROUP2;
-            cannonBody.position.set( 10.0, 1.0, 10.0 );
+            cannonBody.position.set( -25.0, -20.0, 50.0 );
 
             MfgInit.app.mfgScene.world.world.addBody( cannonBody );
 
