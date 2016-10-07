@@ -2,15 +2,10 @@
     /************************************************************************************
     *   The main class contains the application's points of entry and termination.
     *
-    *   TODO HIGH   Feature toggle for ground.
-    *   TODO HIGH   Feature toggle for trees.
-    *
     *   TODO HIGH   Prune ALL constructors!
     *   TODO HIGH   Move all features to separate classes.
-    *
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Remove ALL compiler warnings.
-    *
     *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
     *   TODO ASAP   Extract level data to own class.
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
@@ -20,6 +15,7 @@
     *   TODO WEAK   Own driving physics?
     *   TODO WEAK   Own level data?
     *
+    *   DONE        Feature toggle for all features.
     *   DONE        Pruned init system.
     *   DONE        Pruned all 'singletons'.
     *   DONE        Replaced all 'any' types with the correct Type.

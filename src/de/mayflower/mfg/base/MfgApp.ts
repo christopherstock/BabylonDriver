@@ -79,9 +79,9 @@
 
             this.mfgScene.car.setPosition(
                 new CANNON.Vec3(
-                    MfgSettings.CAR_STARTUP_X,
-                    MfgSettings.CAR_STARTUP_Y,
-                    MfgSettings.CAR_STARTUP_Z
+                    MfgSetting.CAR_STARTUP_X,
+                    MfgSetting.CAR_STARTUP_Y,
+                    MfgSetting.CAR_STARTUP_Z
                 )
             );
             this.mfgScene.car.update();
@@ -165,9 +165,9 @@
         {
             this.mfgScene.car.setPosition(
                 new CANNON.Vec3(
-                    MfgSettings.CAR_STARTUP_X,
-                    MfgSettings.CAR_STARTUP_Y,
-                    MfgSettings.CAR_STARTUP_Z
+                    MfgSetting.CAR_STARTUP_X,
+                    MfgSetting.CAR_STARTUP_Y,
+                    MfgSetting.CAR_STARTUP_Z
                 )
             );
 

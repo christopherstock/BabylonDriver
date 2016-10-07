@@ -31,7 +31,7 @@
             // solver is of type Solver and NOT of Type GSSolver !
             //this.world.solver.iterations    = 10;
 
-            this.world.gravity.set( 0, 0, MfgSettings.WORLD_GRAVITY_Z );
+            this.world.gravity.set( 0, 0, MfgSetting.WORLD_GRAVITY_Z );
 
             this.worldStep                  = 2;
             this.timeStep                   = 1 / 60;

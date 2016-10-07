@@ -17,7 +17,7 @@
         ************************************************************************************/
         public constructor( scene:BABYLON.Scene )
         {
-            this.box = BABYLON.Mesh.CreateBox( "skyBox", MfgSettings.SIZE_SKYBOX, scene );
+            this.box = BABYLON.Mesh.CreateBox( "skyBox", MfgSetting.SIZE_SKYBOX, scene );
             this.createBoxMaterial( scene );
         }
 
@@ -32,7 +32,7 @@
 
             boxMaterial.backFaceCulling                   = false;
             boxMaterial.reflectionTexture                 = new BABYLON.CubeTexture(
-                MfgSettings.PATH_IMAGE_SKYBOX + "skybox",
+                MfgSetting.PATH_IMAGE_SKYBOX + "skybox",
                 scene
             );
             boxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
