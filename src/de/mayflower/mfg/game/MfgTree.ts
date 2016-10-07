@@ -148,7 +148,7 @@
                     }
                     t._mergeOutlineMeshes();
 
-                    t._loadParticleSystems();
+                    MfgInit.app.mfgScene.ground.onTreesLoaded();
                 }
             )
         }

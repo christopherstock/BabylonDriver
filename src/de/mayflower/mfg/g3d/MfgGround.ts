@@ -404,9 +404,14 @@
             if (MfgSetting.FEATURE_TREES) {
                 MfgTree.loadTrees();
             } else {
-                MfgInit.app.mfgScene.ground._loadParticleSystems();
+                this.onTreesLoaded();
             }
         };
+
+        public onTreesLoaded()
+        {
+            this._loadParticleSystems();
+        }
 
         public _createCannonTrunk(e, t)
         {
