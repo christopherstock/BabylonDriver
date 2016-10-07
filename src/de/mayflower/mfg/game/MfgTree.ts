@@ -11,7 +11,7 @@
         public                      material                    :BABYLON.StandardMaterial           = null;
 
         /** The mesh model. */
-        public                      trunk                       :BABYLON.Mesh                       = null;
+        private                     trunk                       :BABYLON.Mesh                       = null;
 
         /************************************************************************************
         *   Creates a new tree mesh.
