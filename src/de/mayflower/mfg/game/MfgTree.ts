@@ -147,7 +147,8 @@
                         p.material = t.treesMaterial
                     }
                     t._mergeOutlineMeshes();
-                    null !== t.particlesName ? t._loadParticleSystems() : null !== t.onLoadFinished && t.onLoadFinished()
+
+                    t._loadParticleSystems();
                 }
             )
         }

@@ -340,9 +340,7 @@
                     null !== e.shadowGenerator && e.shadowGenerator.getShadowMap().renderList.push(r);
                 }
 
-                    null !== e.buildingsName
-                ?   e._load3dBuildings()
-                :   MfgTree.loadTrees()
+                e._load3dBuildings();
             })
         }
 
@@ -395,6 +393,7 @@
                     e.buildingCelShading && e._setCellShading(r, !0)
                 }
                 s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
+
                 MfgTree.loadTrees()
             })
         }

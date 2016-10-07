@@ -24,7 +24,17 @@
         private             spriteArray                     :any                    = null;
 
 
-        public constructor( scene:BABYLON.Scene, carMesh:BABYLON.AbstractMesh, ground:MfgGround, poiPath:string, poiMeshName:string, file:string, nbSprites:number, spriteSize:number, h )
+        public constructor(
+            scene:BABYLON.Scene,
+            carMesh:BABYLON.AbstractMesh,
+            ground:MfgGround,
+            poiPath:string,
+            poiMeshName:string,
+            file:string,
+            nbSprites:number,
+            spriteSize:number,
+            h
+        )
         {
             h = h || {};
             this.scene = scene;
