@@ -115,21 +115,23 @@
             this.minRadius = 2;
             this.maxRadius = 4;
 
-            var d, h, l;
-            d = BABYLON.Color3.FromInts(145, 73, 10);
-                this.trunksMaterial = new BABYLON.StandardMaterial("trunk", this.scene);
-                this.trunksMaterial.diffuseColor = new BABYLON.Color3(d.r, d.g, d.b);
-                this.trunksMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-                h = BABYLON.Color3.FromInts(5, 116, 5);
-                this.treesMaterial = new BABYLON.StandardMaterial("tree", this.scene);
-                this.treesMaterial.diffuseColor = new BABYLON.Color3(h.r, h.g, h.b);
-                this.treesMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-                l = BABYLON.Color3.FromInts(24, 25, 28);
-                this.outlineMaterial = new BABYLON.StandardMaterial("outline", this.scene);
-                this.outlineMaterial.diffuseColor = new BABYLON.Color3(l.r, l.g, l.b);
-                this.outlineMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-                this.outlineMaterial.backFaceCulling = !0;
-                this.outlineMeshes = [];
+            this.outlineMeshes = [];
+
+            var d:BABYLON.Color3 = BABYLON.Color3.FromInts(145, 73, 10);
+            this.trunksMaterial = new BABYLON.StandardMaterial("trunk", this.scene);
+            this.trunksMaterial.diffuseColor = new BABYLON.Color3(d.r, d.g, d.b);
+            this.trunksMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+
+            var h:BABYLON.Color3 = BABYLON.Color3.FromInts(5, 116, 5);
+            this.treesMaterial = new BABYLON.StandardMaterial("tree", this.scene);
+            this.treesMaterial.diffuseColor = new BABYLON.Color3(h.r, h.g, h.b);
+            this.treesMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+
+            var l:BABYLON.Color3 = BABYLON.Color3.FromInts(24, 25, 28);
+            this.outlineMaterial = new BABYLON.StandardMaterial("outline", this.scene);
+            this.outlineMaterial.diffuseColor = new BABYLON.Color3(l.r, l.g, l.b);
+            this.outlineMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            this.outlineMaterial.backFaceCulling = !0;
         }
 
         public init()
@@ -275,8 +277,18 @@
             this.groundBody.collisionFilterGroup = this.groundCollisionFilterGroup;
             this.groundBody.collisionFilterMask = this.groundCollisionFilterMask;
             this.world.add(this.groundBody);
+
             null !== this.waterLevel && this.addWater();
-            null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this.load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished();
+
+
+            if ( MfgSetting.FEATURE_SOLID_BUILDINGS )
+            {
+                this.loadSolidBuildings();
+            }
+            else
+            {
+                this.onSolidBuildingsLoaded( [] );
+            }
         }
 
         public _testEmptyMesh( e )
@@ -292,30 +304,38 @@
             i ? e.setEnabled(!0) : e.dispose()
         }
 
-        public _loadSolidBuildings()
+        public loadSolidBuildings()
         {
             MfgInit.preloader.setLoadingMessage("constructing buildings");
-            var e = MfgInit.app.mfgScene.ground;
-            BABYLON.SceneLoader.ImportMesh("", this.solidBuildingsPath, this.solidBuildingsName, this.scene, function ( t:BABYLON.Mesh[] ) {
-                var o, i = [], s = [];
-                for (o = 0; o < t.length; o++) {
-                    var a:BABYLON.Mesh = t[o];
-                    null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), e.buildingCelShading && e._addDeltaHeight(a), e._createCannonBuilding(a), a.isVisible !== !1 ? (e.buildingCelShading && e._addOutlineMesh(a, null, null), a.convertToFlatShadedMesh(), a.parent && (-1 !== a.parent.name.indexOf("Building") && i.push(a), -1 !== a.parent.name.indexOf("Bridges") && s.push(a))) : a.dispose()) : e._testEmptyMesh(a)
-                }
-                if (i.length > 0) {
-                    null !== e.shadowGenerator && e._setShadowImpostor(i);
-                    var n = BABYLON.Mesh.MergeMeshes(i, !0, !1);
-                    e.buildingCelShading && e._setCellShading(n, !0)
-                }
-                if (s.length > 0) {
-                    var r = BABYLON.Mesh.MergeMeshes(s, !0, !1);
-                    e.buildingCelShading && e._setCellShading(r, !0);
-                    null !== e.shadowGenerator && e.shadowGenerator.getShadowMap().renderList.push(r);
-                }
-
-                e.load3dBuildings();
-            })
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.solidBuildingsPath,
+                this.solidBuildingsName,
+                this.scene,
+                this.onSolidBuildingsLoaded
+            )
         }
+
+        public onSolidBuildingsLoaded=( t:BABYLON.Mesh[] )=>
+        {
+            var o, i = [], s = [];
+            for (o = 0; o < t.length; o++) {
+                var a:BABYLON.Mesh = t[o];
+                null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (this._moveAndScaleMesh(a), this.buildingCelShading && this._addDeltaHeight(a), this._createCannonBuilding(a), a.isVisible !== !1 ? (this.buildingCelShading && this._addOutlineMesh(a, null, null), a.convertToFlatShadedMesh(), a.parent && (-1 !== a.parent.name.indexOf("Building") && i.push(a), -1 !== a.parent.name.indexOf("Bridges") && s.push(a))) : a.dispose()) : this._testEmptyMesh(a)
+            }
+            if (i.length > 0) {
+                null !== this.shadowGenerator && this._setShadowImpostor(i);
+                var n = BABYLON.Mesh.MergeMeshes(i, !0, !1);
+                this.buildingCelShading && this._setCellShading(n, !0)
+            }
+            if (s.length > 0) {
+                var r = BABYLON.Mesh.MergeMeshes(s, !0, !1);
+                this.buildingCelShading && this._setCellShading(r, !0);
+                null !== this.shadowGenerator && this.shadowGenerator.getShadowMap().renderList.push(r);
+            }
+
+            this.load3dBuildings();
+        };
 
         public _createCannonBuilding(e)
         {
@@ -350,7 +370,7 @@
 
         public load3dBuildings()
         {
-            MfgInit.preloader.setLoadingMessage("creating special buildings and monuments");
+            MfgInit.preloader.setLoadingMessage("creating special buildings and monuments (non-collidable)");
             BABYLON.SceneLoader.ImportMesh(
                 "",
                 this.buildingsPath,

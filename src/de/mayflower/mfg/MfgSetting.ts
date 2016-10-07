@@ -9,4 +9,5 @@
     {
         public          static          FEATURE_TREES               :boolean            = false;
         public          static          FEATURE_PARTICLE_SYSTEM     :boolean            = false;
+        public          static          FEATURE_SOLID_BUILDINGS     :boolean            = true;
     }
