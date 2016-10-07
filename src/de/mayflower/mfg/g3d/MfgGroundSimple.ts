@@ -34,7 +34,7 @@
                 MfgInit.app.mfgScene.scene
             );
 
-            var cannonBox  = new CANNON.Box( new CANNON.Vec3( width, depth, height ) );
+            var cannonBox  = new CANNON.Box( new CANNON.Vec3( width / 2, depth / 2, height / 2 ) );
             var cannonBody = new CANNON.Body(
                 {
                     mass: 0,
@@ -44,7 +44,7 @@
             cannonBody.addShape(cannonBox);
             cannonBody.collisionFilterGroup = MfgWorld.GROUP1;
             cannonBody.collisionFilterMask  = MfgWorld.GROUP2;
-            cannonBody.position.set( x, z, y );
+            cannonBody.position.set( x + width / 2, z + depth / 2, y + height / 2 );
 
             MfgInit.app.mfgScene.world.world.addBody( cannonBody );
 
