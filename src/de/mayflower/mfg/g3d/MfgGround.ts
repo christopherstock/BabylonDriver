@@ -35,7 +35,6 @@
         public                          particlesName               :any                        = null;
         public                          buildingCelShading          :any                        = null;
         public                          shadowGenerator             :any                        = null;
-        public                          onLoadFinished              :any                        = null;
         public                          subdivision                 :any                        = null;
         public                          shadowRenderList            :any                        = null;
         public                          buildingsShaderMaterials    :any                        = null;
@@ -70,8 +69,7 @@
                 particlesName: "paris_particles.babylon",
                 buildingCelShading: !0,
                 outlineShaderDeltaHeight: .15 * (e / 50),
-                shadowGenerator: MfgInit.app.mfgScene.shadowGenerator,
-                onLoadFinished: MfgInit.app.onGroundLoaded
+                shadowGenerator: MfgInit.app.mfgScene.shadowGenerator
             };
 
             this.scene = MfgInit.app.mfgScene.scene;
@@ -100,7 +98,6 @@
             this.particlesName = "string" == typeof r.particlesName ? r.particlesName : null;
             this.buildingCelShading = "boolean" == typeof r.buildingCelShading ? r.buildingCelShading : !1;
             this.shadowGenerator = "object" == typeof r.shadowGenerator ? r.shadowGenerator : null;
-            this.onLoadFinished = "function" == typeof r.onLoadFinished ? r.onLoadFinished : null;
             this.subdivision = 64;
             this.shadowRenderList = null;
             this.buildingsShaderMaterials = [];
@@ -445,7 +442,7 @@
             }
             else
             {
-                this.onLoadFinished();
+                MfgInit.app.onGroundLoaded();
             }
         }
 
@@ -486,7 +483,7 @@
                 } else i._testEmptyMesh(e);
             }
 
-            i.onLoadFinished();
+            MfgInit.app.onGroundLoaded();
         };
 
         public _setShadowImpostor(e)
