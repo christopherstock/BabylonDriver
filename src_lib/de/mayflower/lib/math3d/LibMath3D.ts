@@ -28,4 +28,45 @@
             o.applyToMesh(s);
             return s;
         }
+
+        /*****************************************************************************
+        *   Creates a box.
+        *****************************************************************************/
+        public static createBox
+        (
+            id              :string,
+            position        :BABYLON.Vector3,
+            width           :number,
+            height          :number,
+            depth           :number,
+            material        :BABYLON.Material,
+            scene           :BABYLON.Scene
+        )
+        :BABYLON.Mesh
+        {
+            var box:BABYLON.Mesh = BABYLON.Mesh.CreateBox
+            (
+                id,
+                {
+                    width:  width,
+                    height: height,
+                    depth:  depth,
+                },
+                scene
+            );
+
+            box.position        = position;
+
+            box.position.x += width  / 2;
+            box.position.y += height / 2;
+            box.position.z += depth  / 2;
+
+            box.checkCollisions = true;
+            box.material        = material;
+            box.receiveShadows  = false;
+
+            //box.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
+
+            return box;
+        }
     }
