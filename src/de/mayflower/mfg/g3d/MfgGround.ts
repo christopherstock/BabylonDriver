@@ -207,7 +207,6 @@
             this.outlineMeshes.push(o)
         }
 
-        // TODO to lib!
         public _mergeOutlineMeshes()
         {
             this.outlineMeshes.length > 0 && BABYLON.Mesh.MergeMeshes(this.outlineMeshes, !0, !0)
@@ -384,18 +383,24 @@
                 this.buildingsPath,
                 this.buildingsName,
                 this.scene,
-                function ( t:BABYLON.Mesh[] ) {
-                var o, a, n, i = [], s = [];
-                for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
-                if (i.length > 0) {
-                    null !== e.shadowGenerator && e._setShadowImpostor(i);
-                    var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
-                    e.buildingCelShading && e._setCellShading(r, !0)
-                }
-                s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
+                function ( t:BABYLON.Mesh[] )
+                {
+                    var o, a, n, i = [], s = [];
+                    for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
+                    if (i.length > 0) {
+                        null !== e.shadowGenerator && e._setShadowImpostor(i);
+                        var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
+                        e.buildingCelShading && e._setCellShading(r, !0)
+                    }
+                    s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
 
-                MfgTree.loadTrees()
-            })
+                    if (MfgSetting.FEATURE_TREES) {
+                        MfgTree.loadTrees();
+                    } else {
+                        MfgInit.app.mfgScene.ground._loadParticleSystems();
+                    }
+                }
+            )
         }
 
         public _createCannonTrunk(e, t)
