@@ -22,11 +22,11 @@
             MfgDebug.acclaim.log( MfgSettings.TITLE );
             document.title = MfgSettings.TITLE;
 
-            //create preloader and app
+            //create preloader
             MfgInit.preloader = new MfgPreloader();
-            MfgInit.app = new MfgApp();
 
-            //create the app scene
+            //create app and it's scene
+            MfgInit.app = new MfgApp();
             MfgInit.app.createScene();
         }
     }

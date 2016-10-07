@@ -302,7 +302,7 @@
             this.groundBody.collisionFilterMask = this.groundCollisionFilterMask;
             this.world.add(this.groundBody);
             null !== this.waterLevel && this.addWater();
-            null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this._load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished();
+            null !== this.solidBuildingsName ? this._loadSolidBuildings() : null !== this.buildingsName ? this.load3dBuildings() : null !== this.onLoadFinished && this.onLoadFinished();
         }
 
         public _testEmptyMesh( e )
@@ -339,7 +339,7 @@
                     null !== e.shadowGenerator && e.shadowGenerator.getShadowMap().renderList.push(r);
                 }
 
-                e._load3dBuildings();
+                e.load3dBuildings();
             })
         }
 
@@ -374,34 +374,39 @@
             this.world.add( O );
         }
 
-        public _load3dBuildings()
+        public load3dBuildings()
         {
             MfgInit.preloader.setLoadingMessage("creating special buildings and monuments");
-            var e = this;
             BABYLON.SceneLoader.ImportMesh(
                 "",
                 this.buildingsPath,
                 this.buildingsName,
                 this.scene,
-                function ( t:BABYLON.Mesh[] )
-                {
-                    var o, a, n, i = [], s = [];
-                    for (o = 0; o < t.length; o++)a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (e._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (e.buildingCelShading && (e._addDeltaHeight(a), e._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== e.shadowGenerator ? i.push(a) : s.push(a)) : e._setFlagShader(a)) : e._testEmptyMesh(a);
-                    if (i.length > 0) {
-                        null !== e.shadowGenerator && e._setShadowImpostor(i);
-                        var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
-                        e.buildingCelShading && e._setCellShading(r, !0)
-                    }
-                    s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
-
-                    if (MfgSetting.FEATURE_TREES) {
-                        MfgTree.loadTrees();
-                    } else {
-                        MfgInit.app.mfgScene.ground._loadParticleSystems();
-                    }
-                }
+                this.on3dBuildingsLoaded
             )
         }
+
+        public on3dBuildingsLoaded=( t:BABYLON.Mesh[] )=>
+        {
+            var o, a, n, i = [], s = [];
+            for (o = 0; o < t.length; o++)
+            {
+                a = t[o], null !== a.getVerticesData(BABYLON.VertexBuffer.PositionKind) ? (this._moveAndScaleMesh(a), -1 === a.name.indexOf("Flag") ? (this.buildingCelShading && (this._addDeltaHeight(a), this._addOutlineMesh(a, null, null)), -1 === t[o].name.indexOf("Sphere") && -1 === t[o].name.indexOf("Sacre") && t[o].convertToFlatShadedMesh(), n = !0, a.parent && -1 !== a.parent.name.indexOf("no shadow") && (n = !1), null !== this.shadowGenerator ? i.push(a) : s.push(a)) : this._setFlagShader(a)) : this._testEmptyMesh(a);
+            }
+
+            if (i.length > 0) {
+                null !== this.shadowGenerator && this._setShadowImpostor(i);
+                var r = BABYLON.Mesh.MergeMeshes(i, !0, !0);
+                this.buildingCelShading && this._setCellShading(r, !0)
+            }
+            s.length > 0 && BABYLON.Mesh.MergeMeshes(s, !0, !1);
+
+            if (MfgSetting.FEATURE_TREES) {
+                MfgTree.loadTrees();
+            } else {
+                MfgInit.app.mfgScene.ground._loadParticleSystems();
+            }
+        };
 
         public _createCannonTrunk(e, t)
         {
