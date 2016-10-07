@@ -65,11 +65,14 @@
         ************************************************************************************/
         public startDriving()
         {
-            if ( this.game.checkpoints.isEnabled() )
+            if ( MfgSetting.FEATURE_CHECKPOINTS )
             {
-                this.hud.checkpointsStatusUpdate();
-                this.game.initTimer();
-                this.game.initFailed();
+                if ( this.game.checkpoints.isEnabled() )
+                {
+                    this.hud.checkpointsStatusUpdate();
+                    this.game.initTimer();
+                    this.game.initFailed();
+                }
             }
 
             this.activateCamera( this.mfgScene.camera.followCamera );
@@ -168,9 +171,12 @@
                 )
             );
 
-            if ( this.game.checkpoints.isEnabled() )
+            if ( MfgSetting.FEATURE_CHECKPOINTS )
             {
-                this.game.failedStatusUpdate();
+                if ( this.game.checkpoints.isEnabled() )
+                {
+                    this.game.failedStatusUpdate();
+                }
             }
         }
 
@@ -178,9 +184,12 @@
         {
             MfgDebug.init.log( "start() app .." );
 
-            //enable feature 'checkpoints'
-            this.game.checkpoints.enableSprites();
-            $( "#tdb_checkpoints" ).toggle();
+            if ( MfgSetting.FEATURE_CHECKPOINTS )
+            {
+                //enable feature 'checkpoints'
+                this.game.checkpoints.enableSprites();
+                $( "#tdb_checkpoints" ).toggle();
+            }
 
             MfgKey.resetKeys();
 
@@ -232,7 +241,11 @@
                 );
                 MfgInit.app.mfgScene.car.update();
                 MfgInit.app.hud.updateTdB();
-                MfgInit.app.game.checkpoints.isEnabled() && MfgInit.app.game.updateTimer();
+
+                if ( MfgSetting.FEATURE_CHECKPOINTS )
+                {
+                    MfgInit.app.game.checkpoints.isEnabled() && MfgInit.app.game.updateTimer();
+                }
             }
         };
     }
