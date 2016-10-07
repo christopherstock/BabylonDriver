@@ -7,5 +7,6 @@
     ************************************************************************************/
     class MfgSetting
     {
-        public          static          FEATURE_TREES           :boolean            = false;
+        public          static          FEATURE_TREES               :boolean            = false;
+        public          static          FEATURE_PARTICLE_SYSTEM     :boolean            = false;
     }

@@ -410,7 +410,14 @@
 
         public onTreesLoaded()
         {
-            this._loadParticleSystems();
+            if (MfgSetting.FEATURE_PARTICLE_SYSTEM)
+            {
+                this.loadParticleSystems();
+            }
+            else
+            {
+                this.onLoadFinished();
+            }
         }
 
         public _createCannonTrunk(e, t)
@@ -424,19 +431,34 @@
             r.addShape(n), r.collisionFilterGroup = this.groundCollisionFilterGroup, r.collisionFilterMask = this.groundCollisionFilterMask, r.position.set(t.x, t.z + a.z / 2, t.y), this.world.add(r)
         }
 
-        public _loadParticleSystems()
+        public loadParticleSystems()
         {
             MfgInit.preloader.setLoadingMessage( "creating particle systems" );
+
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                this.particlesPath,
+                this.particlesName,
+                this.scene,
+                this.onParticleSystemsLoaded
+            )
+        }
+
+        public onParticleSystemsLoaded=( s:BABYLON.Mesh[] )=>
+        {
             var e, t, i = this;
-            BABYLON.SceneLoader.ImportMesh("", this.particlesPath, this.particlesName, this.scene, function (s) {
-                for (t = 0; t < s.length; t++)if (e = s[t], null !== e.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
+
+            for (t = 0; t < s.length; t++)
+            {
+                if (e = s[t], null !== e.getVerticesData(BABYLON.VertexBuffer.PositionKind)) {
                     i._moveAndScaleMesh(e);
                     var o = new BABYLON.ParticleSystem("particles", 4e3, i.scene);
                     o.disposeOnStop = !0, o.targetStopDuration = 0, o.emitter = e.position, e.parent && (-1 !== e.parent.name.indexOf("Smoke") && (o.particleTexture = new BABYLON.Texture("res/image/misc/smoke.png", i.scene), o.minAngularSpeed = -1.5, o.maxAngularSpeed = 4, o.minSize = .1, o.maxSize = .5, o.minLifeTime = .5, o.maxLifeTime = 2, o.minEmitPower = .1, o.maxEmitPower = .3, o.emitRate = 400, o.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD, o.direction1 = new BABYLON.Vector3(-.1, 25, -.1), o.direction2 = new BABYLON.Vector3(.2, 12, .2), o.color1 = new BABYLON.Color4(.2, .2, .2, .5), o.color2 = new BABYLON.Color4(.6, .6, .6, .1), o.colorDead = new BABYLON.Color4(.8, .8, .8, .2), o.gravity = new BABYLON.Vector3(-.5, .5, .5), o.start()), -1 !== e.parent.name.indexOf("Fountain") && (o.particleTexture = new BABYLON.Texture("res/image/misc/water.png", i.scene), o.minAngularSpeed = -1.5, o.maxAngularSpeed = 1.5, o.minSize = .1, o.maxSize = .5, o.minLifeTime = .5, o.maxLifeTime = 2, o.minEmitPower = .5, o.maxEmitPower = 1, o.emitRate = 300, o.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD, o.direction1 = new BABYLON.Vector3(-2, 8, -2), o.direction2 = new BABYLON.Vector3(2, 8, 2), o.color1 = new BABYLON.Color4(54 / 255, 159 / 255, 207 / 255, .9), o.color2 = new BABYLON.Color4(22 / 255, 106 / 255, 145 / 255, .8), o.colorDead = new BABYLON.Color4(1, 1, 1, 1), o.gravity = new BABYLON.Vector3(0, -9, 0), o.start())), e.dispose()
                 } else i._testEmptyMesh(e);
-                null !== i.onLoadFinished && i.onLoadFinished()
-            })
-        }
+            }
+
+            i.onLoadFinished();
+        };
 
         public _setShadowImpostor(e)
         {
