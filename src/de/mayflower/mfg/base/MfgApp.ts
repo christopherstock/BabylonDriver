@@ -96,7 +96,6 @@
             this.game.checkpoints = new MfgCheckpoint(
                 this.mfgScene.scene,
                 this.mfgScene.car.getCarMainMesh(),
-                this.mfgScene.ground,
                 "./res/paris/",
                 "paris_poi.babylon",
                 "./res/image/misc/poi.png",
@@ -238,7 +237,7 @@
 
                 if ( MfgSetting.FEATURE_3D_GROUND )
                 {
-                    MfgInit.app.mfgScene.ground.updateShaders(
+                    MfgInit.app.mfgScene.ground3D.updateShaders(
                         MfgInit.app.mfgScene.scene.activeCamera.position
                     );
                 }

@@ -7,9 +7,17 @@
     *****************************************************************************/
     class LibMath3D
     {
-        public static copyMesh(scene, e, t, i )
+        /*****************************************************************************
+        *   Creates a copy of the specified mesh.
+        *
+        *   @param scene The scene for the new mesh to appear in.
+        *   @param e     The original mesh to copy.
+        *   @param t     The new name for the copied mesh.
+        *   @param i     The initial scaling for the new mesh.
+        *****************************************************************************/
+        public static copyMesh( scene:BABYLON.Scene, e:BABYLON.Mesh, t:string, i:BABYLON.Vector3 )
         {
-            var s = new BABYLON.Mesh(t, scene, e.parent);
+            var s = new BABYLON.Mesh( t, scene, e.parent );
             s.position = new BABYLON.Vector3(e.position.x, e.position.y, e.position.z);
             s.rotation = new BABYLON.Vector3(e.rotation.x, e.rotation.y, e.rotation.z);
             s.scaling = new BABYLON.Vector3(e.scaling.x * i.x, e.scaling.y * i.y, e.scaling.z * i.z);
@@ -26,6 +34,7 @@
             var d = e.getVerticesData(BABYLON.VertexBuffer.NormalKind);
             for (a = 0; a < d.length; a++)o.normals.push(d[a]);
             o.applyToMesh(s);
+
             return s;
         }
 
@@ -72,8 +81,8 @@
             var cannonBox  = new CANNON.Box( new CANNON.Vec3( width / 2, depth / 2, height / 2 ) );
             var cannonBody = new CANNON.Body(
                 {
-                    mass: 0,
-                    material: MfgInit.app.mfgScene.world.groundMaterial
+                    mass:       0,
+//                    material:   MfgInit.app.mfgScene.world.groundMaterial
                 }
             );
             cannonBody.addShape(cannonBox);

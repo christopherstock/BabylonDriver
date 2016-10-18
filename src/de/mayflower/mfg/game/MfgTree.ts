@@ -117,7 +117,7 @@
             };
 
             // TODO refactor!
-            var t = MfgInit.app.mfgScene.ground;
+            var t = MfgInit.app.mfgScene.ground3D;
 
             BABYLON.SceneLoader.ImportMesh(
                 "",
@@ -149,7 +149,7 @@
                     }
                     t._mergeOutlineMeshes();
 
-                    MfgInit.app.mfgScene.ground.onTreesLoaded();
+                    MfgInit.app.mfgScene.ground3D.onTreesLoaded();
                 }
             )
         }

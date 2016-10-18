@@ -7,26 +7,25 @@
     ************************************************************************************/
     class MfgCheckpoint
     {
-        public              scene                           :BABYLON.Scene          = null;
-        public              carBox                          :BABYLON.AbstractMesh   = null;
-        public              ground                          :MfgGround3D              = null;
-        public              poiPath                         :string                 = null;
-        public              poiMeshName                     :string                 = null;
-        public              spriteFile                      :string                 = null;
-        public              nbSprites                       :number                 = null;
-        public              spriteSize                      :number                 = null;
-        public              checkpointsCallback             :() => void             = null;
-        public              onLoadFinished                  :() => void             = null;
-        public              enabled                         :boolean                = null;
-        public              nbCheckPoints                   :number                 = null;
+        public              scene                           :BABYLON.Scene              = null;
+        public              carBox                          :BABYLON.AbstractMesh       = null;
+        public              ground                          :MfgGround3D                = null;
+        public              poiPath                         :string                     = null;
+        public              poiMeshName                     :string                     = null;
+        public              spriteFile                      :string                     = null;
+        public              nbSprites                       :number                     = null;
+        public              spriteSize                      :number                     = null;
+        public              checkpointsCallback             :() => void                 = null;
+        public              onLoadFinished                  :() => void                 = null;
+        public              enabled                         :boolean                    = null;
+        public              nbCheckPoints                   :number                     = null;
 
         //TODO separate into separate mesh and sprite arrays
-        private             spriteArray                     :any                    = null;
+        private             spriteArray                     :any                        = null;
 
         public constructor(
             scene:BABYLON.Scene,
             carMesh:BABYLON.AbstractMesh,
-            ground:MfgGround3D,
             poiPath:string,
             poiMeshName:string,
             file:string,
@@ -38,7 +37,6 @@
             h = h || {};
             this.scene = scene;
             this.carBox = carMesh;
-            this.ground = ground;
             this.poiPath = poiPath;
             this.poiMeshName = poiMeshName;
             this.spriteFile = file;
@@ -72,7 +70,7 @@
                     {
                         if ( null !== meshes[i].getVerticesData( BABYLON.VertexBuffer.PositionKind ) )
                         {
-                            self.ground._moveAndScaleMesh(meshes[i]);
+                            MfgInit.app.mfgScene.ground3D._moveAndScaleMesh(meshes[i]);
                             sprite = new BABYLON.Sprite("poi", sm); 
                             sprite.size = 0;
                             sprite.position = meshes[i].position;
