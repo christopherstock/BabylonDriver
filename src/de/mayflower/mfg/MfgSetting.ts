@@ -50,8 +50,8 @@
         public      static      FEATURE_SOLID_BUILDINGS                     :boolean            = false;
         public      static      FEATURE_WATER                               :boolean            = false;
 
-        public      static      FEATURE_CHECKPOINTS                         :boolean            = false;
-        public      static      FEATURE_3D_GROUND                           :boolean            = false;
+        public      static      FEATURE_CHECKPOINTS                         :boolean            = true;
+        public      static      FEATURE_3D_GROUND                           :boolean            = true;
 
         public      static      CAR_ALTITUDE_RESET                          :number             = -50;
     }

@@ -7,19 +7,19 @@
     ************************************************************************************/
     class MfgApp
     {
-        /** The canvas where all drawing operations appear. */
-        public                      canvas                  :HTMLCanvasElement              = null;
-        /** The Babylon.js engine. */
-        public                      engine                  :BABYLON.Engine                 = null;
-
         /** The scene to render. */
         public                      mfgScene                :MfgScene                       = null;
+
+        /** The canvas where all drawing operations appear. */
+        private                     canvas                  :HTMLCanvasElement              = null;
+        /** The Babylon.js engine. */
+        private                     engine                  :BABYLON.Engine                 = null;
         /** The game logic. */
-        public                      game                    :MfgGame                        = null;
+        private                     game                    :MfgGame                        = null;
         /** The HUD. */
-        public                      hud                     :MfgHUD                         = null;
+        private                     hud                     :MfgHUD                         = null;
         /** The user interface. */
-        public                      ui                      :MfgUI                          = null;
+        private                     ui                      :MfgUI                          = null;
 
         /************************************************************************************
         *   Instanciates the demo application.

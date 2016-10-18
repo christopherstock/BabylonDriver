@@ -1,12 +1,14 @@
 
     /************************************************************************************
-    *   Represents the checkpoints.
+    *   Represents the checkpoint system .. not a single checkpoint!
     *
     *   @author     Christopher Stock
     *   @version    0.0.1
     ************************************************************************************/
     class MfgCheckpoint
     {
+        private static      nbCheckPoints                   :number                     = null;
+
         public              scene                           :BABYLON.Scene              = null;
         public              carBox                          :BABYLON.AbstractMesh       = null;
         public              ground                          :MfgGround3D                = null;
@@ -18,7 +20,6 @@
         public              checkpointsCallback             :() => void                 = null;
         public              onLoadFinished                  :() => void                 = null;
         public              enabled                         :boolean                    = null;
-        public              nbCheckPoints                   :number                     = null;
 
         //TODO separate into separate mesh and sprite arrays
         private             spriteArray                     :any                        = null;
@@ -57,7 +58,7 @@
             MfgInit.preloader.setLoadingMessage("placing checkpoints");
 
             this.spriteArray = [];
-            this.nbCheckPoints = 0;
+            MfgCheckpoint.nbCheckPoints = 0;
             
             sm = new BABYLON.SpriteManager("POImanager", this.spriteFile, this.nbSprites, this.spriteSize, this.scene);
             BABYLON.SceneLoader.ImportMesh(
@@ -75,7 +76,7 @@
                             sprite.size = 0;
                             sprite.position = meshes[i].position;
                             self.spriteArray.push([meshes[i], sprite]);
-                            self.nbCheckPoints += 1;  
+                            MfgCheckpoint.nbCheckPoints += 1;
                         } 
                     }
                     self.onLoadFinished()
@@ -107,11 +108,11 @@
                 if ( self.spriteArray[ e.index ][ 1 ].size > 0 )
                 {
                     self.spriteArray[ e.index ][ 1 ].size = 0;
-                    self.nbCheckPoints -= 1;
+                    MfgCheckpoint.nbCheckPoints -= 1;
                     self.checkpointsCallback();
                 }
             };
-            this.nbCheckPoints = 0;
+            MfgCheckpoint.nbCheckPoints = 0;
 
             for ( var i = 0; i < this.spriteArray.length; i += 1 )
             {
@@ -132,7 +133,7 @@
                     callback
                 );
                 this.carBox.actionManager.registerAction(action); 
-                self.nbCheckPoints += 1;
+                MfgCheckpoint.nbCheckPoints += 1;
             }
             this.enabled = !0
         }
@@ -152,7 +153,7 @@
                 sprite.size = 0;
             }
             this.enabled = !1;
-            this.nbCheckPoints = 0;
+            MfgCheckpoint.nbCheckPoints = 0;
         }
 
         public resetSprites() 
@@ -170,8 +171,8 @@
             this.carBox._intersectionsInProgress = [];
         }
 
-        public getNbCheckPoints()
+        public static getNbCheckPoints()
         {
-            return this.nbCheckPoints
+            return MfgCheckpoint.nbCheckPoints
         }
     }
