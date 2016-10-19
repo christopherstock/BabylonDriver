@@ -74,7 +74,7 @@
 
             box.checkCollisions = true;
             box.material        = material;
-            box.receiveShadows  = false;
+            box.receiveShadows  = true;
 
             //box.rotate( rotationAxis, rotationAmount, BABYLON.Space.WORLD );
 

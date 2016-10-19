@@ -57,6 +57,11 @@
                 MfgInit.app.mfgScene.scene
             );
 
+
+            MfgInit.app.mfgScene.shadowGenerator.getShadowMap().renderList.push( MfgGroundSimple.box1 );
+            MfgInit.app.mfgScene.shadowGenerator.getShadowMap().renderList.push( MfgGroundSimple.box2 );
+
+
             MfgInit.app.onGroundLoaded();
         }
     }
