@@ -11,9 +11,9 @@
         public                      checkpoints             :MfgCheckpoint                  = null;
 
         /** Number of failed checkpoints. */
-        public                      failed                  :number                         = null;
+        private                     failed                  :number                         = null;
         /** The current timer. */
-        public                      timer                   :number                         = null;
+        private                     timer                   :number                         = null;
 
         /************************************************************************************
         *   Instanciates a new game instance.
@@ -32,13 +32,13 @@
             this.timer = Date.now()
         }
 
-        public failedStatusUpdate()
+        public  failedStatusUpdate()
         {
             this.failed += 1;
             $("#failed_span").text( this.failed.toString() );
         }
 
-        public updateTimer()
+        public  updateTimer()
         {
             if ( MfgSetting.FEATURE_CHECKPOINTS )
             {
