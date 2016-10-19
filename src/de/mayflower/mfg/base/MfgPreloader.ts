@@ -8,9 +8,10 @@
     class MfgPreloader
     {
         /** The preloader div container. */
-        public                              divPreloader            :HTMLDivElement             = null;
+        private                              divPreloader            :HTMLDivElement             = null;
+        
         /** The loading message div container. */
-        public                              divLoadingMessage       :JQuery                     = null;
+        private                             divLoadingMessage       :JQuery                     = null;
 
         /************************************************************************************
         *   Instanciates the preloading system.

@@ -7,6 +7,8 @@
     *****************************************************************************/
     class MfgInit
     {
+        // TODO move to MfgApp!
+
         /** The preloading system. */
         public          static              preloader               :MfgPreloader               = null;
 

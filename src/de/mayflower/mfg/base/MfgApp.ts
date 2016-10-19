@@ -89,7 +89,7 @@
             }
         };
 
-        public loadCheckpoints()
+        private loadCheckpoints()
         {
             MfgDebug.init.log( "load checkpoints" );
 
@@ -109,7 +109,7 @@
             this.game.checkpoints.load()
         }
 
-        public onCheckpointsLoaded=()=>
+        private onCheckpointsLoaded=()=>
         {
             MfgDebug.init.log( "onCheckpointsLoaded.." );
 
@@ -119,7 +119,7 @@
         /************************************************************************************
         *   Starts the driving simulation process.
         ************************************************************************************/
-        public startDriving()
+        private startDriving()
         {
             if ( MfgSetting.FEATURE_CHECKPOINTS )
             {
@@ -149,7 +149,7 @@
             );
         }
 
-        public activateCamera( e )
+        private activateCamera( e )
         {
             this.mfgScene.scene.activeCamera = e;
             e.attachControl(this.canvas, !1);
@@ -174,7 +174,7 @@
             }
         }
 
-        public start()
+        private start()
         {
             MfgDebug.init.log( "start() app .." );
 
@@ -218,7 +218,7 @@
             this.startDriving();
         }
 
-        public tick=()=>
+        private tick=()=>
         {
             if (MfgInit.app.mfgScene.scene.isReady())
             {

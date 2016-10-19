@@ -3,6 +3,7 @@
     *   The main class contains the application's points of entry and termination.
     *
     *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
+    *
     *   TODO HIGH   Prune ALL constructors!
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Detect collision with obstacles? (Crash car in this case!)
