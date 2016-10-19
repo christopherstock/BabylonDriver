@@ -7,35 +7,36 @@
     ************************************************************************************/
     class MfgCar
     {
-        public              scene                           :BABYLON.Scene                  = null;
-        public              world                           :CANNON.World                   = null;
-        public              bodyMeshPath                    :string                         = null;
-        public              bodyMeshName                    :string                         = null;
-        public              wheelMeshPath                   :string                         = null;
-        public              wheelMeshName                   :string                         = null;
-        public              bodyMaterial                    :CANNON.Material                = null;
-        public              wheelMaterial                   :CANNON.Material                = null;
-        public              wheel_rl_position               :CANNON.Vec3                    = null;
-        public              wheel_rr_position               :CANNON.Vec3                    = null;
-        public              wheel_fl_position               :CANNON.Vec3                    = null;
-        public              wheel_fr_position               :CANNON.Vec3                    = null;
-        public              wheelsOptions                   :any                            = null;
-        public              lenk                            :number                         = null;
-        public              dyn                             :number                         = null;
-        public              direction                       :number                         = null;
-        public              scaleFactor                     :number                         = null;
-        public              shadowGenerator                 :any                            = null;
-        public              bodyMass                        :any                            = null;
-        public              firstPos                        :any                            = null;
-        public              bodyCollisionFilterGroup        :any                            = null;
-        public              bodyCollisionFilterMask         :any                            = null;
-        public              onLoadSuccess                   :() => void                     = null;
-        public              scale                           :BABYLON.Vector3                = null;
-        public              b_bodyRoot                      :BABYLON.Mesh                   = null;
-        public              approxBox                       :BABYLON.Mesh                   = null;
-        public              c_bodyRoot                      :CANNON.Body                    = null;
-        public              b_wheels                        :BABYLON.Mesh[]                 = null;
-        public              vehicle                         :CANNON.RaycastVehicle          = null;
+        public               b_bodyRoot                      :BABYLON.Mesh                   = null;
+
+        private              scene                           :BABYLON.Scene                  = null;
+        private              world                           :CANNON.World                   = null;
+        private              bodyMeshPath                    :string                         = null;
+        private              bodyMeshName                    :string                         = null;
+        private              wheelMeshPath                   :string                         = null;
+        private              wheelMeshName                   :string                         = null;
+        private              bodyMaterial                    :CANNON.Material                = null;
+        private              wheelMaterial                   :CANNON.Material                = null;
+        private              wheel_rl_position               :CANNON.Vec3                    = null;
+        private              wheel_rr_position               :CANNON.Vec3                    = null;
+        private              wheel_fl_position               :CANNON.Vec3                    = null;
+        private              wheel_fr_position               :CANNON.Vec3                    = null;
+        private              wheelsOptions                   :any                            = null;
+        private              lenk                            :number                         = null;
+        private              dyn                             :number                         = null;
+        private              direction                       :number                         = null;
+        private              scaleFactor                     :number                         = null;
+        private              shadowGenerator                 :any                            = null;
+        private              bodyMass                        :any                            = null;
+        private              firstPos                        :any                            = null;
+        private              bodyCollisionFilterGroup        :any                            = null;
+        private              bodyCollisionFilterMask         :any                            = null;
+        private              onLoadSuccess                   :() => void                     = null;
+        private              scale                           :BABYLON.Vector3                = null;
+        private              approxBox                       :BABYLON.Mesh                   = null;
+        private              c_bodyRoot                      :CANNON.Body                    = null;
+        private              b_wheels                        :BABYLON.Mesh[]                 = null;
+        private              vehicle                         :CANNON.RaycastVehicle          = null;
 
         public constructor
         (
@@ -100,7 +101,7 @@
             this.onLoadSuccess = "function" == typeof p.onLoadSuccess ? p.onLoadSuccess : null;
         }
 
-        public _babylon_addBody(e)
+        private _babylon_addBody(e)
         {
             var t, i, s;
             for (this.b_bodyRoot = e[0], this.b_bodyRoot.name = this.bodyMeshName, t = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 2), i = LibMath.toEulerAngles(t), s = 1; s < e.length; s += 1)e[s].rotationQuaternion = t, e[s].rotation = new BABYLON.Vector3(i.x, i.y, i.z);
@@ -108,7 +109,7 @@
             this.approxBox = e[1]
         }
 
-        public _cannon_addBody(e)
+        private _cannon_addBody(e)
         {
             var t, i;
             t = e[0].negate().add(e[1]);
@@ -138,7 +139,7 @@
             this.vehicle = new CANNON.RaycastVehicle({chassisBody: this.c_bodyRoot});
         }
 
-        public _loadWheels()
+        private _loadWheels()
         {
             var e = this;
             BABYLON.SceneLoader.ImportMesh(
@@ -153,7 +154,7 @@
             )
         }
 
-        public _babylon_addWheels(e)
+        private _babylon_addWheels(e)
         {
             var t, i, s, o, n, h, a;
             if (t = e[0], t.scaling = this.scale, null !== this.shadowGenerator)for (a = 1; a < e.length; a += 1)this.shadowGenerator.getShadowMap().renderList.push(e[a]);
@@ -164,7 +165,7 @@
             o.scaling = this.scale, this.b_wheels = [], this.b_wheels.push(o), this.b_wheels.push(s), this.b_wheels.push(i), this.b_wheels.push(t);
         }
 
-        public _cannon_addWheels(e)
+        private _cannon_addWheels(e)
         {
             var t = Math.abs(e[0].y - e[1].y) / 2 * this.scaleFactor;
             this.wheelsOptions.radius = t, this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_fr_position.x, this.wheel_fr_position.y, this.wheel_fr_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_fl_position.x, this.wheel_fl_position.y, this.wheel_fl_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_rr_position.x, this.wheel_rr_position.y, this.wheel_rr_position.z), this.vehicle.addWheel(this.wheelsOptions), this.wheelsOptions.chassisConnectionPointLocal.set(this.wheel_rl_position.x, this.wheel_rl_position.y, this.wheel_rl_position.z), this.vehicle.addWheel(this.wheelsOptions), this.vehicle.addToWorld(this.world), null !== this.onLoadSuccess && this.onLoadSuccess()
@@ -202,18 +203,18 @@
             this.vehicle.chassisBody.position.set(e.x, e.y, e.z), this.vehicle.chassisBody.quaternion.set(0, 0, 0, 1), this.vehicle.chassisBody.angularVelocity.set(0, 0, 0), this.vehicle.chassisBody.velocity.set(0, 0, 0)
         }
 
-        public steering( e )
+        private steering( e )
         {
             this.vehicle.setSteeringValue( e, 0 );
             this.vehicle.setSteeringValue( e, 1 );
         }
 
-        public brake( e )
+        private brake( e )
         {
             this.vehicle.applyEngineForce(0, 0), this.vehicle.applyEngineForce(0, 1), this.vehicle.setBrake(e, 0), this.vehicle.setBrake(e, 1), this.vehicle.setBrake(e, 2), this.vehicle.setBrake(e, 3)
         }
 
-        public accelerate( e )
+        private accelerate( e )
         {
             this.vehicle.setBrake(0, 0), this.vehicle.setBrake(0, 1), this.vehicle.setBrake(0, 2), this.vehicle.setBrake(0, 3), this.vehicle.applyEngineForce(e, 0), this.vehicle.applyEngineForce(e, 1)
         }
@@ -232,7 +233,7 @@
             return 3.6 * this.c_bodyRoot.velocity.norm()
         }
 
-        public getLenk()
+        private getLenk()
         {
             return this.lenk
         }

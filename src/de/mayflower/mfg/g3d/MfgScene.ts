@@ -167,6 +167,7 @@
                     onLoadSuccess: MfgInit.app.onCarLoaded
                 }
             );
+
             this.car.load()
         }
     }
