@@ -7,8 +7,8 @@
     ************************************************************************************/
     class MfgGroundSimple
     {
-        public          static      box1                :BABYLON.Mesh           = null;
-        public          static      box2                :BABYLON.Mesh           = null;
+        private         static      box1                :BABYLON.Mesh           = null;
+        private         static      box2                :BABYLON.Mesh           = null;
 
         /*****************************************************************************
         *   Initializes the custom ground.

@@ -21,7 +21,7 @@
         public              onLoadFinished                  :() => void                 = null;
         public              enabled                         :boolean                    = null;
 
-        //TODO separate into separate mesh and sprite arrays
+        //TODO separate into separate mesh and sprite arrays - fix this mess!
         private             spriteArray                     :any                        = null;
 
         public constructor(

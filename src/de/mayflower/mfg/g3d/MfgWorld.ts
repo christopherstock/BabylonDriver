@@ -10,15 +10,15 @@
         public      static      GROUP1                      :number                     = 1;
         public      static      GROUP2                      :number                     = 2;
 
+        // TODO outsource!!
         public                  world                       :CANNON.World               = null;
-
         public                  groundMaterial              :CANNON.Material            = null;
+        public                  timeStep                    :number                     = 0;
         public                  carBodyMaterial             :CANNON.Material            = null;
         public                  wheelMaterial               :CANNON.Material            = null;
-        public                  bodyGroundContactMaterial   :CANNON.ContactMaterial     = null;
 
-        public                  worldStep                   :number                     = 0;
-        public                  timeStep                    :number                     = 0;
+        private                 bodyGroundContactMaterial   :CANNON.ContactMaterial     = null;
+        private                 worldStep                   :number                     = 0;
 
         /************************************************************************************
         *   Creates a constant instance of the physical ambience.

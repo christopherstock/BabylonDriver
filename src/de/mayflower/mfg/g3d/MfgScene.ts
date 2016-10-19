@@ -8,25 +8,27 @@
     class MfgScene
     {
         /** The native scene representation. */
-        public              scene                   :BABYLON.Scene                  = null;
-
-        /** The ground to render. */
-        public              ground3D                  :MfgGround3D                      = null;
-        /** The world to render. */
-        public              world                   :MfgWorld                       = null;
-        /** The skybox that surrounds the scene. */
-        private             skyBox                  :MfgSkyBox                      = null;
-        /** The car to control. */
-        public              car                     :MfgCar                         = null;
+        public              scene                       :BABYLON.Scene                  = null;
         /** The cameras being used. */
-        public              camera                  :MfgCamera                      = null;
+        public              camera                      :MfgCamera                      = null;
+        /** The world to render. */
+        public              world                       :MfgWorld                       = null;
+        /** The car to control. */
+        public              car                         :MfgCar                         = null;
+        /** The ground to render. */
+        public              ground3D                    :MfgGround3D                    = null;
 
-        /** The shadow light. */
-        public              shadowLight             :BABYLON.DirectionalLight       = null;
+        //TODO prune duplicate instance!
+
         /** The shadow generator. */
-        public              shadowGenerator         :BABYLON.ShadowGenerator        = null;
+        public              shadowGenerator             :BABYLON.ShadowGenerator        = null;
+
+        /** The skybox that surrounds the scene. */
+        private             skyBox                      :MfgSkyBox                      = null;
+        /** The shadow light. */
+        private             shadowLight                 :BABYLON.DirectionalLight       = null;
         /** All meshes to be rendered by the shadow generator. */
-        public              shadowRenderList        :BABYLON.AbstractMesh[]         = null;
+        private             shadowRenderList            :BABYLON.AbstractMesh[]         = null;
 
         /************************************************************************************
         *   Creates a new instance of the scene.
@@ -74,7 +76,7 @@
         /************************************************************************************
         *   Disabled the post processing pipeline.
         ************************************************************************************/
-        public disablePostProcessPipeline()
+        private disablePostProcessPipeline()
         {
             this.scene.postProcessRenderPipelineManager.detachCamerasFromRenderPipeline(
                 "standardPipeline",
@@ -120,12 +122,12 @@
             this.shadowGenerator.bias = 1e-5;
         }
 
-        public disableShadows()
+        private disableShadows()
         {
             null !== this.shadowGenerator && (this.shadowRenderList = this.shadowGenerator.getShadowMap().renderList, this.shadowGenerator.getShadowMap().renderList = [])
         }
 
-        public enableShadows()
+        private enableShadows()
         {
             null !== this.shadowRenderList && (this.shadowGenerator.getShadowMap().renderList = this.shadowRenderList, this.scene.shadowsEnabled = !0)
         }
