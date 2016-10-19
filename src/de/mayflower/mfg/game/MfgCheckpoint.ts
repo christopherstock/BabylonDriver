@@ -9,17 +9,17 @@
     {
         private static      nbCheckPoints                   :number                     = null;
 
-        public              scene                           :BABYLON.Scene              = null;
-        public              carBox                          :BABYLON.AbstractMesh       = null;
-        public              ground                          :MfgGround3D                = null;
-        public              poiPath                         :string                     = null;
-        public              poiMeshName                     :string                     = null;
-        public              spriteFile                      :string                     = null;
-        public              nbSprites                       :number                     = null;
-        public              spriteSize                      :number                     = null;
-        public              checkpointsCallback             :() => void                 = null;
-        public              onLoadFinished                  :() => void                 = null;
-        public              enabled                         :boolean                    = null;
+        private              scene                           :BABYLON.Scene              = null;
+        private              carBox                          :BABYLON.AbstractMesh       = null;
+        private              ground                          :MfgGround3D                = null;
+        private              poiPath                         :string                     = null;
+        private              poiMeshName                     :string                     = null;
+        private              spriteFile                      :string                     = null;
+        private              nbSprites                       :number                     = null;
+        private              spriteSize                      :number                     = null;
+        private              checkpointsCallback             :() => void                 = null;
+        private              onLoadFinished                  :() => void                 = null;
+        private              enabled                         :boolean                    = null;
 
         //TODO separate into separate mesh and sprite arrays - fix this mess!
         private             spriteArray                     :any                        = null;
@@ -138,7 +138,7 @@
             this.enabled = !0
         }
 
-        public disableSprites()
+        private disableSprites()
         {
             var sprite :BABYLON.Sprite;
             
@@ -156,7 +156,7 @@
             MfgCheckpoint.nbCheckPoints = 0;
         }
 
-        public resetSprites() 
+        private resetSprites() 
         {
             var mesh:BABYLON.AbstractMesh;
 

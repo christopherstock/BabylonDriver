@@ -5,6 +5,7 @@
     *   TODO HIGH   Turn all 'public' fields and methods to 'private' where possible.
     *
     *   TODO HIGH   Prune ALL constructors!
+    *
     *   TODO HIGH   Remove ALL compiler errors.
     *   TODO HIGH   Detect collision with obstacles? (Crash car in this case!)
     *   TODO HIGH   Implement reluctant obstacles!
@@ -12,6 +13,7 @@
     *   TODO HIGH   Remove unused startup / intro / hud control and set default settings.
     *   TODO INIT   Checkout .babylon 3d format.
     *   TODO INIT   Own car(s).
+    *   TODO INIT   Enrich documentation for all fields and methods.
     *   TODO WEAK   Move menu hud initilization to MfgUI ?
     *   TODO WEAK   Own driving physics!
     *   TODO WEAK   Own level data!
