@@ -8,7 +8,7 @@
     class MfgCamera
     {
         /** The car follow camera. */
-        public                      followCamera            :BABYLON.FollowCamera           = null;
+        public                  followCamera            :BABYLON.FollowCamera           = null;
 
         /************************************************************************************
         *   Instanciates the cameras being used in the app.
@@ -17,6 +17,8 @@
         {
             this.followCamera = this.createFollowCamera( scene, target );
         }
+
+        // TODO extract to lib
 
         private createFollowCamera( scene:BABYLON.Scene, target:BABYLON.Mesh ) : BABYLON.FollowCamera
         {
@@ -29,6 +31,7 @@
                 ),
                 scene
             );
+
             e.target = target;
             e.radius = 8;
             e.heightOffset = 2;

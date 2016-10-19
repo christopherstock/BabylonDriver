@@ -7,48 +7,49 @@
     ************************************************************************************/
     class MfgGround3D
     {
-        public                          scene                       :any                        = null;
-        public                          world                       :any                        = null;
-        public                          groundPath                  :any                        = null;
-        public                          groundMesh                  :any                        = null;
-        public                          groundMaterial              :any                        = null;
-        public                          width                       :any                        = null;
-        public                          height                      :any                        = null;
-        public                          depth                       :any                        = null;
-        public                          trunksMaterial              :any                        = null;
-        public                          treesMaterial               :any                        = null;
-        public                          outlineMaterial             :any                        = null;
-        public                          outlineMeshes               :any                        = null;
-        public                          groundTexture               :any                        = null;
-        public                          waterLevel                  :any                        = null;
-        public                          groundCollisionFilterGroup  :any                        = null;
-        public                          groundCollisionFilterMask   :any                        = null;
-        public                          scaleFactor                 :any                        = null;
-        public                          buildingsScale              :any                        = null;
-        public                          buildingBaseHeight          :any                        = null;
-        public                          outlineShaderDeltaHeight    :any                        = null;
-        public                          solidBuildingsPath          :any                        = null;
-        public                          solidBuildingsName          :any                        = null;
-        public                          buildingsPath               :any                        = null;
-        public                          buildingsName               :any                        = null;
-        public                          particlesPath               :any                        = null;
-        public                          particlesName               :any                        = null;
-        public                          buildingCelShading          :any                        = null;
-        public                          shadowGenerator             :any                        = null;
-        public                          subdivision                 :any                        = null;
-        public                          shadowRenderList            :any                        = null;
-        public                          buildingsShaderMaterials    :any                        = null;
-        public                          flagShaderMaterials         :any                        = null;
-        public                          time                        :any                        = null;
-        public                          minSizeBranch               :any                        = null;
-        public                          maxSizeBranch               :any                        = null;
-        public                          minSizeTrunk                :any                        = null;
-        public                          maxSizeTrunk                :any                        = null;
-        public                          minRadius                   :any                        = null;
-        public                          maxRadius                   :any                        = null;
-        public                          ground                      :BABYLON.GroundMesh         = null;
-        public                          groundBody                  :any                        = null;
-        public                          water                       :any                        = null;
+        public                           minSizeBranch               :any                        = null;
+        public                           maxSizeBranch               :any                        = null;
+        public                           minSizeTrunk                :any                        = null;
+        public                           maxSizeTrunk                :any                        = null;
+        public                           minRadius                   :any                        = null;
+        public                           maxRadius                   :any                        = null;
+        public                           scene                       :any                        = null;
+        public                           scaleFactor                 :any                        = null;
+        public                           buildingCelShading          :any                        = null;
+        public                           shadowGenerator             :any                        = null;
+        public                           trunksMaterial              :any                        = null;
+        public                           treesMaterial               :any                        = null;
+
+        private                          world                       :any                        = null;
+        private                          groundPath                  :any                        = null;
+        private                          groundMesh                  :any                        = null;
+        private                          groundMaterial              :any                        = null;
+        private                          width                       :any                        = null;
+        private                          height                      :any                        = null;
+        private                          depth                       :any                        = null;
+        private                          outlineMaterial             :any                        = null;
+        private                          outlineMeshes               :any                        = null;
+        private                          groundTexture               :any                        = null;
+        private                          waterLevel                  :any                        = null;
+        private                          groundCollisionFilterGroup  :any                        = null;
+        private                          groundCollisionFilterMask   :any                        = null;
+        private                          buildingsScale              :any                        = null;
+        private                          buildingBaseHeight          :any                        = null;
+        private                          outlineShaderDeltaHeight    :any                        = null;
+        private                          solidBuildingsPath          :any                        = null;
+        private                          solidBuildingsName          :any                        = null;
+        private                          buildingsPath               :any                        = null;
+        private                          buildingsName               :any                        = null;
+        private                          particlesPath               :any                        = null;
+        private                          particlesName               :any                        = null;
+        private                          subdivision                 :any                        = null;
+        private                          shadowRenderList            :any                        = null;
+        private                          buildingsShaderMaterials    :any                        = null;
+        private                          flagShaderMaterials         :any                        = null;
+        private                          time                        :any                        = null;
+        private                          ground                      :BABYLON.GroundMesh         = null;
+        private                          groundBody                  :any                        = null;
+        private                          water                       :any                        = null;
 
         public constructor()
         {
@@ -141,7 +142,7 @@
             )
         }
 
-        public onHeightmapLoaded=( t:BABYLON.Mesh[] )=>
+        private onHeightmapLoaded=( t:BABYLON.Mesh[] )=>
         {
             for ( var i:number = 0; i < t.length; i++ )
             {
@@ -269,7 +270,7 @@
             e.computeWorldMatrix( !0 );
         }
 
-        public _createCannonHeightfield()
+        private _createCannonHeightfield()
         {
             var t, a, n, s = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind), o = [];
             for (a = 0; a <= this.subdivision; a++)for (o.push([]), n = 0; n <= this.subdivision; n++) {
@@ -318,7 +319,7 @@
             i ? e.setEnabled(!0) : e.dispose()
         }
 
-        public loadSolidBuildings()
+        private loadSolidBuildings()
         {
             MfgInit.preloader.setLoadingMessage("constructing buildings");
             BABYLON.SceneLoader.ImportMesh(
@@ -330,7 +331,7 @@
             )
         }
 
-        public onSolidBuildingsLoaded=( t:BABYLON.Mesh[] )=>
+        private onSolidBuildingsLoaded=( t:BABYLON.Mesh[] )=>
         {
             var o, i = [], s = [];
             for (o = 0; o < t.length; o++) {
@@ -358,7 +359,7 @@
             }
         };
 
-        public _createCannonBuilding(e)
+        private _createCannonBuilding(e)
         {
             var n, r, d, h, l, c, p, t = function (e, t, i) {
                 return new CANNON.Quaternion(-e.w * t * i.x + e.x * -i.w + e.z * i.y - e.y * i.z, -e.w * t * i.z + e.z * -i.w + e.y * i.x - e.x * i.y, -e.w * t * i.y + e.y * -i.w + e.x * i.z - e.z * i.x, -e.w * t * -i.w - e.x * i.x - e.z * i.z - e.y * i.y)
@@ -389,7 +390,7 @@
             this.world.add( O );
         }
 
-        public load3dBuildings()
+        private load3dBuildings()
         {
             MfgInit.preloader.setLoadingMessage("creating special buildings and monuments (non-collidable)");
             BABYLON.SceneLoader.ImportMesh(
@@ -401,7 +402,7 @@
             )
         }
 
-        public on3dBuildingsLoaded=( t:BABYLON.Mesh[] )=>
+        private on3dBuildingsLoaded=( t:BABYLON.Mesh[] )=>
         {
             var o, a, n, i = [], s = [];
             for (o = 0; o < t.length; o++)
@@ -452,7 +453,7 @@
             r.addShape(n), r.collisionFilterGroup = this.groundCollisionFilterGroup, r.collisionFilterMask = this.groundCollisionFilterMask, r.position.set(t.x, t.z + a.z / 2, t.y), this.world.add(r)
         }
 
-        public loadParticleSystems()
+        private loadParticleSystems()
         {
             MfgInit.preloader.setLoadingMessage( "creating particle systems" );
 
@@ -465,7 +466,7 @@
             )
         }
 
-        public onParticleSystemsLoaded=( s:BABYLON.Mesh[] )=>
+        private onParticleSystemsLoaded=( s:BABYLON.Mesh[] )=>
         {
             var e, t, i = this;
 
@@ -481,7 +482,7 @@
             MfgInit.app.onGroundLoaded();
         };
 
-        public _setShadowImpostor(e)
+        private _setShadowImpostor(e)
         {
             var t, i, s = [];
             for (t = 0; t < e.length; t++)
@@ -495,7 +496,7 @@
             o.visibility = 0;
         }
 
-        public _setCellShading(e, t)
+        private _setCellShading(e, t)
         {
             var i = null !== e.material ? e.material.diffuseColor : null;
             if (i) {
@@ -507,7 +508,7 @@
             }
         }
 
-        public _setFlagShader(e)
+        private _setFlagShader(e)
         {
             var t = new BABYLON.ShaderMaterial("", this.scene, "./res/shader/flag", {
                 attributes: ["position", "uv"],
@@ -521,7 +522,7 @@
             this.flagShaderMaterials.push(t);
         }
 
-        public addWater()
+        private addWater()
         {
             this.water = BABYLON.Mesh.CreateGround("", this.width, this.width, 1, this.scene);
             this.water.position = new BABYLON.Vector3(0, this.waterLevel, 0);
